@@ -35,6 +35,9 @@ namespace Fingerprint_Voting.Models
         [StringLength(100)]
         public string City { get; set; }
 
+        [Display(Name = "User Image")]
+        public byte[] UserPic { get; set; }
+
 
 
 

@@ -129,6 +129,7 @@ namespace Fingerprint_Voting.Controllers
                 var Email = paramExpandedUserDTO.Email.Trim();
                 var UserName = paramExpandedUserDTO.Email.Trim();
                 var Password = paramExpandedUserDTO.Password.Trim();
+                
 
                 if (Email == "")
                 {

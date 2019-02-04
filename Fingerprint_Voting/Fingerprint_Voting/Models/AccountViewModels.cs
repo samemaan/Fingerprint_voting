@@ -83,6 +83,9 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "City"), Required]
         public string City { get; set; }
 
+        [Display(Name = "User Image")]
+        public byte[] UserPic { get; set; }
+
 
         [Required]
         [EmailAddress]

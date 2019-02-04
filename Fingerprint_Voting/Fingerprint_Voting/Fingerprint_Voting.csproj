@@ -218,6 +218,22 @@
     <Compile Include="Migrations\201902010624463_addCity1.Designer.cs">
       <DependentUpon>201902010624463_addCity1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902042054189_addImage.cs" />
+    <Compile Include="Migrations\201902042054189_addImage.Designer.cs">
+      <DependentUpon>201902042054189_addImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902042130214_addImage1.cs" />
+    <Compile Include="Migrations\201902042130214_addImage1.Designer.cs">
+      <DependentUpon>201902042130214_addImage1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902042133517_addImage11.cs" />
+    <Compile Include="Migrations\201902042133517_addImage11.Designer.cs">
+      <DependentUpon>201902042133517_addImage11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902042154235_addImage2.cs" />
+    <Compile Include="Migrations\201902042154235_addImage2.Designer.cs">
+      <DependentUpon>201902042154235_addImage2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\UserRolesDTO.cs" />
@@ -236,6 +252,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\noImg.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -330,6 +347,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902010624463_addCity1.resx">
       <DependentUpon>201902010624463_addCity1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902042054189_addImage.resx">
+      <DependentUpon>201902042054189_addImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902042130214_addImage1.resx">
+      <DependentUpon>201902042130214_addImage1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902042133517_addImage11.resx">
+      <DependentUpon>201902042133517_addImage11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902042154235_addImage2.resx">
+      <DependentUpon>201902042154235_addImage2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

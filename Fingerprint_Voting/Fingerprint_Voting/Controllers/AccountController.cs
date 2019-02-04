@@ -12,6 +12,7 @@ using Fingerprint_Voting.Models;
 
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Configuration;
+using System.IO;
 
 namespace Fingerprint_Voting.Controllers
 {
@@ -157,6 +158,18 @@ namespace Fingerprint_Voting.Controllers
         {
             if (ModelState.IsValid)
             {
+                // To convert the user uploaded Photo as Byte Array before save to DB
+                byte[] imageData = null;
+                if (Request.Files.Count > 0)
+                {
+                    HttpPostedFileBase poImgFile = Request.Files["UserPhoto"];
+
+                    using (var binary = new BinaryReader(poImgFile.InputStream))
+                    {
+                        imageData = binary.ReadBytes(poImgFile.ContentLength);
+                    }
+                }
+
                 var user = new ApplicationUser
                 {
                     FirstName = model.FirstName,
@@ -167,9 +180,11 @@ namespace Fingerprint_Voting.Controllers
                     Email = model.Email,
                     Gender = model.Gender,
                     Country = model.Country,
-                    City = model.City
+                    City = model.City,
+                    UserPic = model.UserPic
 
                 };
+                user.UserPic = imageData;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
