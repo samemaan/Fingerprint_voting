@@ -8,6 +8,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
+
+
 namespace Fingerprint_Voting.Controllers
 {
     public class HomeController : Controller

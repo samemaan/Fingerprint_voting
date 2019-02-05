@@ -252,7 +252,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\chrome.jpg" />
+    <Content Include="Images\MSEdge.jpg" />
     <Content Include="Images\noImg.png" />
+    <Content Include="Images\PlaceFinger.bmp" />
+    <Content Include="Images\PlaceFinger2.bmp" />
+    <Content Include="Images\wait.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
