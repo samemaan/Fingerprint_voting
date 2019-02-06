@@ -19,7 +19,7 @@ namespace Fingerprint_Voting.Models
         [StringLength(100)]
         public string Surname { get; set; }
 
-        [Display(Name = "DOB"), Required]
+        [Display(Name = "Date Of Birth"), Required]
         [StringLength(50)]
         public string DOB { get; set; }
 
@@ -37,6 +37,10 @@ namespace Fingerprint_Voting.Models
 
         [Display(Name = "User Image")]
         public byte[] UserPic { get; set; }
+
+
+        [Display(Name = "Fingerprint"), Required]
+        public string UserFingerprint { get; set; }
 
 
 

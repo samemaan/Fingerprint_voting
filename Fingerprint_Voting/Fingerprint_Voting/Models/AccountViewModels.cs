@@ -71,7 +71,7 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Surname"), Required]
         public string Surname { get; set; }
 
-        [Display(Name = "DOB"), Required]
+        [Display(Name = "Date Of Birth"), Required]
         public string DOB { get; set; }
 
         [Display(Name = "Gender"), Required]
@@ -102,6 +102,11 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
+        [Display(Name = "Fingerprint"), Required]
+        public string UserFingerprint { get; set; }
+
     }
 
     public class ResetPasswordViewModel

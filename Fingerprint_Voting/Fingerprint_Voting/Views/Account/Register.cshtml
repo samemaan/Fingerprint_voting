@@ -27,9 +27,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.DOB, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DOB, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.DOB, new { @type = "date", @class = "form-control datepicker"})
+            @Html.ValidationMessageFor(m => m.DOB, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -88,6 +89,17 @@
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.HiddenFor(m => m.UserFingerprint, new { @class = "form-control" })
+            <img border="2" id="FPImage1" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger.bmp">
+            <div>
+                <input type="button" value="Click to Scan" onclick="CallSGIFPGetData(SuccessFunc1, ErrorFunc)">
+            </div>
+        </div>
+
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -148,6 +160,11 @@
                 document.getElementById('FPImage1').src = "data:image/bmp;base64," + result.BMPBase64;
             }
             template_1 = result.TemplateBase64;
+
+            console.log("This is the finger you scanned" + template_1);
+            // this is how you pass the value to the MVC
+            document.getElementById('UserFingerprint').value = template_1;
+
         }
         else {
             alert("Fingerprint Capture Error Code:  " + result.ErrorCode + ".\nDescription:  " + ErrorCodeToString(result.ErrorCode) + ".");
@@ -163,6 +180,7 @@
                 document.getElementById('FPImage2').src = "data:image/bmp;base64," + result.BMPBase64;
             }
             template_2 = result.TemplateBase64;
+            console.log("This is the second finger print " + template_2)
         }
         else {
             alert("Fingerprint Capture Error Code:  " + result.ErrorCode + ".\nDescription:  " + ErrorCodeToString(result.ErrorCode) + ".");
@@ -226,7 +244,7 @@
         params += "&template2=" + encodeURIComponent(template_2);
         params += "&licstr=" + encodeURIComponent(secugen_lic);
         params += "&templateFormat=" + "ISO";
-        xmlhttp.open("POST", uri, false);
+        xmlhttp.open("POST", uri, true);
         xmlhttp.send(params);
     }
 
@@ -244,7 +262,7 @@
     }
 
     function failureFunc(error) {
-        alert ("On Match Process, failure has been called");
+        alert("On Match Process, failure has been called");
     }
 
 </script>

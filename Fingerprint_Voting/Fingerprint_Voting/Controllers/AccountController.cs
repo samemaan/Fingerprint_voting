@@ -181,7 +181,8 @@ namespace Fingerprint_Voting.Controllers
                     Gender = model.Gender,
                     Country = model.Country,
                     City = model.City,
-                    UserPic = model.UserPic
+                    UserPic = model.UserPic,
+                    UserFingerprint = model.UserFingerprint
 
                 };
                 user.UserPic = imageData;
