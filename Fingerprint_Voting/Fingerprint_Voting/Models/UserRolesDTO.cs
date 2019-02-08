@@ -49,4 +49,17 @@ namespace Fingerprint_Voting.Models
         public string UserName { get; set; }
         public List<UserRoleDTO> colUserRoleDTO { get; set; }
     }
+    public class TestDTO
+    {
+        [Key]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Display(Name = "Surname")]
+        public string Surname { get; set; }
+       
+    }
+
+
+
 }
