@@ -94,7 +94,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             @Html.HiddenFor(m => m.UserFingerprint, new { @class = "form-control" })
-            <img border="2" id="FPImage1" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger.bmp">
+            <img id="FPImage1" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger.bmp">
             <div>
                 <input type="button" value="Click to Scan" onclick="CallSGIFPGetData(SuccessFunc1, ErrorFunc)">
             </div>
@@ -113,7 +113,7 @@
 }
 
 
-<div class="row">
+@*<div class="row">
     <h3><b>Demonstration of Fingerprint Matching</b></h3>
     <div class="col-md-10">
         <p>
@@ -145,7 +145,7 @@
             </tr>
         </table>
     </div>
-</div>
+</div>*@
 
 <script type="text/javascript">
     var template_1 = "";

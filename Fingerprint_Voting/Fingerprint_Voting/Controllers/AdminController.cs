@@ -71,11 +71,13 @@ namespace Fingerprint_Voting.Controllers
 
                 foreach (var item in result)
                 {
-                    ExpandedUserDTO objUserDTO = new ExpandedUserDTO();
+                    ExpandedUserDTO objUserDTO = new ExpandedUserDTO
+                    {
+                        UserName = item.UserName,
+                        Email = item.Email,
 
-                    objUserDTO.UserName = item.UserName;
-                    objUserDTO.Email = item.Email;
-                    objUserDTO.LockoutEndDateUtc = item.LockoutEndDateUtc;
+                        LockoutEndDateUtc = item.LockoutEndDateUtc
+                    };
 
                     col_UserDTO.Add(objUserDTO);
                 }
@@ -107,6 +109,8 @@ namespace Fingerprint_Voting.Controllers
         public ActionResult Create()
         {
             ExpandedUserDTO objExpandedUserDTO = new ExpandedUserDTO();
+
+            
 
             ViewBag.Roles = GetAllRolesAsSelectList();
 
@@ -375,7 +379,7 @@ namespace Fingerprint_Voting.Controllers
 
                 ViewBag.AddRole = new SelectList(RolesUserIsNotIn(UserName));
 
-                return RedirectToAction("EditRoles", new { UserName = UserName });
+                return RedirectToAction("EditRoles", new { UserName });
             }
             catch (Exception ex)
             {
@@ -721,9 +725,11 @@ namespace Fingerprint_Voting.Controllers
 
             // Create UserRolesAndPermissionsDTO
             UserAndRolesDTO objUserAndRolesDTO =
-                new UserAndRolesDTO();
-            objUserAndRolesDTO.UserName = UserName;
-            objUserAndRolesDTO.colUserRoleDTO = colUserRoleDTO;
+                new UserAndRolesDTO
+                {
+                    UserName = UserName,
+                    ColUserRoleDTO = colUserRoleDTO
+                };
             return objUserAndRolesDTO;
         }
         #endregion
@@ -757,78 +763,5 @@ namespace Fingerprint_Voting.Controllers
         }
         #endregion
 
-
-
-        // GET: /Admin/AddRole
-        [Authorize(Roles = "Administrator")]
-        #region public ActionResult AddTest()
-        public ActionResult AddTest()
-        {
-            TestDTO objRoleDTO = new TestDTO();
-
-            return View(objRoleDTO);
-
-            
-        }
-        #endregion
-
-        // PUT: /Admin/AddRole
-        [Authorize(Roles = "Administrator")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        #region public ActionResult AddTest(RoleDTO paramRoleDTO)
-
-
-        public ActionResult AddTest(TestDTO paramRoleDTO)
-        {
-
-            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString); 
-
-            try
-            {
-                if (paramRoleDTO == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                var UserName = paramRoleDTO.UserName.Trim();
-                var Surname = paramRoleDTO.Surname.Trim();
-
-                if (UserName == "" && Surname == "")
-                {
-                    throw new Exception("No RoleName");
-                }
-
-                // Create test
-                //var roleManager =
-                //    new RoleManager<IdentityRole>(
-                //        new RoleStore<IdentityRole>(new ApplicationDbContext())
-                //        );
-                
-                SqlCommand cmd = new SqlCommand("InsertIntoTest", sqlconn);
-                
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@name", UserName);
-                cmd.Parameters.AddWithValue("@surname", Surname);
-
-                sqlconn.Open();
-                cmd.ExecuteNonQuery();
-
-                sqlconn.Close();
-
-                //roleManager.Create(new IdentityRole(UserName));
-                
-
-                return Redirect("~/Admin/AddTest");
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, "Error: " + ex);
-                return View("AddTest");
-            }
-        }
-        #endregion
     }
 }

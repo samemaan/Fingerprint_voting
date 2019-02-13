@@ -66,8 +66,7 @@ namespace Fingerprint_Voting.Models
             return new ApplicationDbContext();
         }
 
-        
-        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.TestDTO> TestDTO { get; set; }
+
 
         public System.Data.Entity.DbSet<Fingerprint_Voting.Models.CandidateDTO> CandidateDTO { get; set; }
     }

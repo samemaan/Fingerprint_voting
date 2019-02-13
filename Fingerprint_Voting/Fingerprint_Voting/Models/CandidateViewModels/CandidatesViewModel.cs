@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace Fingerprint_Voting.Models.ViewModels
+{
+    public class CandidatesViewModel
+    {
+        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+
+        public List<CandidateDTO> GetAllCandidates()
+        {
+            List<CandidateDTO> list = new List<CandidateDTO>();
+
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("SelectAllCandidatesDetails", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            CandidateDTO objCandidateDTO = new CandidateDTO
+                            {
+                                CandidateId = rdr["CandidateID"].ToString(),
+                                FirstName = rdr["Name"].ToString(),
+                                Surname = rdr["Surname"].ToString(),
+                                Gender = rdr["Gender"].ToString(),
+                                Country = rdr["City"].ToString(),
+                                City = rdr["Country"].ToString(),
+                                DOB = rdr["DOB"].ToString()
+                            };
+
+                            list.Add(objCandidateDTO);
+                        }
+
+                    }
+                }
+            }
+            return list;
+        }
+
+        public CandidateDTO GetCandidateDetailsById(string id)
+        {
+            // get candidate id from the model
+            CandidateDTO paramCandidateDTO = new CandidateDTO();
+
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("SelecOneCandidate", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+                    cmd.Parameters.AddWithValue("@CandidateId", id);
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        rdr.Read();
+
+                        paramCandidateDTO.CandidateId = rdr["CandidateID"].ToString();
+                        paramCandidateDTO.FirstName = rdr["Name"].ToString();
+                        paramCandidateDTO.Surname = rdr["Surname"].ToString();
+                        paramCandidateDTO.Gender = rdr["Gender"].ToString();
+                        paramCandidateDTO.Country = rdr["City"].ToString();
+                        paramCandidateDTO.City = rdr["Country"].ToString();
+                        paramCandidateDTO.DOB = rdr["DOB"].ToString();
+
+
+                    }
+                }
+            }
+            return paramCandidateDTO;
+        }
+        public void DeleteCandidateDetailsById(string id)
+        {
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("DeleteCandidate", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+                    cmd.Parameters.AddWithValue("@CandidateID", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+        }
+    }
+}

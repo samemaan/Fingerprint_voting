@@ -7,13 +7,13 @@ namespace Fingerprint_Voting.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class candidateForm : IMigrationMetadata
+    public sealed partial class First : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(candidateForm));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(First));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902080648452_candidateForm"; }
+            get { return "201902120329507_First"; }
         }
         
         string IMigrationMetadata.Source

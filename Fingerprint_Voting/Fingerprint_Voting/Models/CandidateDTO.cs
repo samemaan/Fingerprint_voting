@@ -11,6 +11,8 @@ namespace Fingerprint_Voting.Models
     public class CandidateDTO
     {
         [Key]
+        public string CandidateId { get; set; }
+
         [Display(Name = "First Name"), Required]
         public string FirstName { get; set; }
 
@@ -32,5 +34,6 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "User Image")]
         public byte[] CandidatePic { get; set; }
 
+        //public IEnumerable<CandidateDTO> Candidates { get; set; }
     }
 }
