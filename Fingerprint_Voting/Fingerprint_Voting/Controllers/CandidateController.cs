@@ -146,16 +146,16 @@ namespace Fingerprint_Voting.Controllers
         //[Authorize(Roles = "Administrator")]
         //#region public ActionResult Edit()
         //[HttpPost]
-        //public ActionResult Edit(CandidateDTO objeCandidate, HttpPostedFileBase CandidateImage)
+        //public ActionResult Edit(CandidateDTO objeCandidate, HttpPostedFileBase Candidatepic)
         //{
         //    if (ModelState.IsValid)
         //    {
         //        //byte CandidatePic = paramCandidateDTO.CandidatePic;
-        //        if (CandidateImage != null)
+        //        if (Candidatepic != null)
         //        {
         //            // To convert the user uploaded Photo as Byte Array before save to DB
-        //            objeCandidate.CandidatePic = new byte[CandidateImage.ContentLength];
-        //            CandidateImage.InputStream.Read(objeCandidate.CandidatePic, 0, CandidateImage.ContentLength);
+        //            objeCandidate.CandidatePic = new byte[Candidatepic.ContentLength];
+        //            Candidatepic.InputStream.Read(objeCandidate.CandidatePic, 0, Candidatepic.ContentLength);
 
         //        }
 
@@ -166,6 +166,8 @@ namespace Fingerprint_Voting.Controllers
         //                cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
         //                sqlconn.Open();
+        //                 = Candidatepic;
+        //                byte[] image = objeCandidate.CandidatePic; 
 
         //                cmd.Parameters.AddWithValue("@CandidateID", objeCandidate.CandidateId);
         //                cmd.Parameters.AddWithValue("@Name", objeCandidate.FirstName);
@@ -174,7 +176,7 @@ namespace Fingerprint_Voting.Controllers
         //                cmd.Parameters.AddWithValue("@Country", objeCandidate.Country);
         //                cmd.Parameters.AddWithValue("@City", objeCandidate.City);
         //                cmd.Parameters.AddWithValue("@DOB", objeCandidate.DOB);
-        //                cmd.Parameters.AddWithValue("@CandidatePic", objeCandidate.CandidatePic);
+        //                cmd.Parameters.AddWithValue("@Picture ", objeCandidate.CandidatePic);
 
 
         //                cmd.ExecuteNonQuery();
@@ -183,12 +185,12 @@ namespace Fingerprint_Voting.Controllers
         //            }
         //        }
         //    }
-        //    return View(); 
+        //    return View();
         //}
         //#endregion
 
-        // GET: /Candidate/Delete
-        [Authorize(Roles = "Administrator")]
+       //GET: /Candidate/Delete
+       [Authorize(Roles = "Administrator")]
         #region public ActionResult Delete()
         public ActionResult Delete(string id)
         {

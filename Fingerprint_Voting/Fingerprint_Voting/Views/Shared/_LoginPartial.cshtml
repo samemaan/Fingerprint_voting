@@ -9,8 +9,12 @@
     <li>
         @if (User.Identity.IsAuthenticated)
         {
-
-            <img src="@Url.Action("UserPhotos", "Home" )" height="48" width="48" />
+            <img src="@Url.Action("UserPhotos", "Home" )" style="width:48px;height:48px; background: #222222;
+            margin: auto;
+            -moz-border-radius: 10px;
+            border-radius: 200px;
+            padding: 6px;
+            box-shadow: 0px 0px 10px #888;" />
 
 
         }

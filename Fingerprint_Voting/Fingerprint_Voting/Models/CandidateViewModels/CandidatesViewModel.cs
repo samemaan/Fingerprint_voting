@@ -34,7 +34,8 @@ namespace Fingerprint_Voting.Models.ViewModels
                                 Gender = rdr["Gender"].ToString(),
                                 Country = rdr["City"].ToString(),
                                 City = rdr["Country"].ToString(),
-                                DOB = rdr["DOB"].ToString()
+                                DOB = rdr["DOB"].ToString(),
+                                CandidatePic = (byte[])(rdr["Picture"])
                             };
 
                             list.Add(objCandidateDTO);
@@ -70,6 +71,7 @@ namespace Fingerprint_Voting.Models.ViewModels
                         paramCandidateDTO.Country = rdr["City"].ToString();
                         paramCandidateDTO.City = rdr["Country"].ToString();
                         paramCandidateDTO.DOB = rdr["DOB"].ToString();
+                        paramCandidateDTO.CandidatePic = (byte[])(rdr["Picture"]); 
 
 
                     }
