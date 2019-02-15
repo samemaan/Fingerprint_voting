@@ -1,4 +1,5 @@
 ﻿using Fingerprint_Voting.Models;
+using Fingerprint_Voting.Models.AdminModelsDTO;
 using Fingerprint_Voting.Models.UserStatusModels;
 using System;
 using System.Collections.Generic;
@@ -11,75 +12,77 @@ using System.Web.Mvc;
 
 namespace Fingerprint_Voting.Controllers
 {
-    public class UserStatusController : Controller
+    public class CampaignController : Controller
     {
         SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
-        // GET: UserStatus/Index
+        // GET: Campaign/Index
         [Authorize(Roles = "Administrator")]
         #region public ActionResult Index()
         public ActionResult Index()
         {
-            // get all the list of candidates from the UserStatusViewModels and return the model to cshtml page
+            // get all the list of Campaign from the UserStatusViewModels and return the model to cshtml page
 
-            UserStatusViewModel userStatusVM = new UserStatusViewModel();
-            List<UserStatusDTO> status = userStatusVM.GetAllUserStatus();
+            CampaignViewModel campVM = new CampaignViewModel();
+            List<CampaignDTO> campaigns = campVM.GetAllCampaigns();
 
-            return View(status);
+            return View(campaigns);
 
         }
         #endregion
-        // GET: /UserStatus/Create
+        // GET: /Campaign/Create
         [Authorize(Roles = "Administrator")]
         #region public ActionResult Create()
         public ActionResult Create()
         {
-            UserStatusDTO userStatusDTO = new UserStatusDTO();
-            return View(userStatusDTO);
+            CampaignDTO campaignDTO = new CampaignDTO();
+            return View(campaignDTO);
 
 
         }
         #endregion
 
-        // POST: /UserStatus/Create
+        // POST: /Campaign/Create
         [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        #region public ActionResult Create(CampaignDTO CampaignDTO)
 
-        #region public ActionResult Create(UserStatusDTO paramUserStatusDTO)
 
-
-        public ActionResult Create(UserStatusDTO paramUserStatusDTO)
+        public ActionResult Create(CampaignDTO CampaignDTO)
         {
 
 
             try
             {
-                if (paramUserStatusDTO == null)
+                if (CampaignDTO == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                //var Name = paramCandidateDTO.UserPic; 
-                var Description = paramUserStatusDTO.Description.Trim();
+                var StartDate = CampaignDTO.StartDate;
+                var EndDate = CampaignDTO.EndDate; 
+                var Description = CampaignDTO.Description.Trim();
 
                 using (sqlconn)
                 {
-                    using (SqlCommand cmd = new SqlCommand("InsertIntoUserStatusTable", sqlconn))
+                    using (SqlCommand cmd = new SqlCommand("InsertIntoCampaignTable", sqlconn))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
 
+                        cmd.Parameters.AddWithValue("@StartDate", StartDate);
+                        cmd.Parameters.AddWithValue("@EndDate", EndDate);
                         cmd.Parameters.AddWithValue("@Description", Description);
-                       
+
                         sqlconn.Open();
                         cmd.ExecuteNonQuery();
                         sqlconn.Close();
 
                     }
                 }
-              
-                return Redirect("~/UserStatus/Create");
+
+                return Redirect("~/Campaign/Create");
             }
             catch (Exception ex)
             {
@@ -88,55 +91,57 @@ namespace Fingerprint_Voting.Controllers
             }
         }
         #endregion
-        // GET: /UserStatus/Details
+        // GET: /Campaign/Details
         [Authorize(Roles = "Administrator")]
-        #region public ActionResult Details()
+        #region public ActionResult Details(string id)
         public ActionResult Details(string id)
         {
-            UserStatusViewModel candidateVM = new UserStatusViewModel();
-            UserStatusDTO userStatus = candidateVM.GetUserStatusDetailsById(id);
-            return View(userStatus);
+            CampaignViewModel campaignVM = new CampaignViewModel();
+            CampaignDTO campaign = campaignVM.GetCampaignById(id);
+            return View(campaign);
         }
         #endregion
-        //GET: /UserStatus/Delete
+        //GET: /Campaign/Delete
         [Authorize(Roles = "Administrator")]
-        #region public ActionResult Delete()
+        #region public ActionResult Delete(string id)
         public ActionResult Delete(string id)
         {
-            UserStatusViewModel userStatusVM = new UserStatusViewModel();
-            userStatusVM.DeleteUserStatusDetailsById(id);
-            return Redirect("~/UserStatus/Index");
+            CampaignViewModel campaignVM = new CampaignViewModel();
+            campaignVM.DeleteCampaignById(id);
+            return Redirect("~/Campaign/Index");
         }
         #endregion
 
-        // GET: /UserStatus/Edit
+        // GET: /Campaign/Edit
         [Authorize(Roles = "Administrator")]
-        #region public ActionResult Edit()
+        #region public ActionResult Edit(string id)
         public ActionResult Edit(string id)
         {
-            UserStatusViewModel userStatus = new UserStatusViewModel();
-            UserStatusDTO status = userStatus.GetUserStatusDetailsById(id);
+            CampaignViewModel campaignVM = new CampaignViewModel();
+            CampaignDTO status = campaignVM.GetCampaignById(id);
             return View(status);
         }
         #endregion
         // POST: /UserStatus/Edit
         [Authorize(Roles = "Administrator")]
-        #region public ActionResult Edit()
+        #region public ActionResult Edit(CampaignDTO objeCampaign)
         [HttpPost]
-        public ActionResult Edit(UserStatusDTO objeUserStatus)
+        public ActionResult Edit(CampaignDTO objeCampaign)
         {
             if (ModelState.IsValid)
             {
-               
+
                 using (sqlconn)
                 {
-                    using (SqlCommand cmd = new SqlCommand("UpdateUserStatusDetails", sqlconn))
+                    using (SqlCommand cmd = new SqlCommand("UpdateCampaignDescription", sqlconn))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
 
-                        cmd.Parameters.AddWithValue("@UserStatusID", objeUserStatus.UserStatusID);
-                        cmd.Parameters.AddWithValue("@Description", objeUserStatus.Description);
+                        cmd.Parameters.AddWithValue("@CampaignID", objeCampaign.CampaignID);
+                        cmd.Parameters.AddWithValue("@StartDate", objeCampaign.StartDate);
+                        cmd.Parameters.AddWithValue("@EndDate", objeCampaign.EndDate);
+                        cmd.Parameters.AddWithValue("@Description", objeCampaign.Description);
 
                         sqlconn.Open();
                         cmd.ExecuteNonQuery();

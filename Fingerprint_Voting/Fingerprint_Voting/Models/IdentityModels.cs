@@ -71,5 +71,7 @@ namespace Fingerprint_Voting.Models
         public System.Data.Entity.DbSet<Fingerprint_Voting.Models.CandidateDTO> CandidateDTO { get; set; }
 
         public System.Data.Entity.DbSet<Fingerprint_Voting.Models.UserStatusDTO> UserStatusDTO { get; set; }
+
+        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.AdminModelsDTO.CampaignDTO> CampaignDTO { get; set; }
     }
 }

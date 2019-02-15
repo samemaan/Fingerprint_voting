@@ -183,6 +183,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminControllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminControllers\CampaignController.cs" />
     <Compile Include="Controllers\AdminControllers\CandidateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -210,15 +211,25 @@
     <Compile Include="Migrations\201902142227016_userStatus.Designer.cs">
       <DependentUpon>201902142227016_userStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902150138050_campaign.cs" />
+    <Compile Include="Migrations\201902150138050_campaign.Designer.cs">
+      <DependentUpon>201902150138050_campaign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902150141167_campaign1.cs" />
+    <Compile Include="Migrations\201902150141167_campaign1.Designer.cs">
+      <DependentUpon>201902150141167_campaign1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CandidateDTO.cs" />
-    <Compile Include="Models\UserRolesDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\CampaignDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\CampaignViewModels\CampaignViewModel.cs" />
+    <Compile Include="Models\AdminModelsDTO\CandidateDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\UserRolesDTO.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\CandidateViewModels\CandidatesViewModel.cs" />
-    <Compile Include="Models\UserStatusDTO.cs" />
-    <Compile Include="Models\UserStatusModels\UserStatusViewModel.cs" />
+    <Compile Include="Models\AdminModelsDTO\CandidateViewModels\CandidatesViewModel.cs" />
+    <Compile Include="Models\AdminModelsDTO\UserStatusDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\UserStatusModels\UserStatusViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -300,6 +311,11 @@
     <Content Include="Views\UserStatus\Details.cshtml" />
     <Content Include="Views\UserStatus\Delete.cshtml" />
     <Content Include="Views\UserStatus\Edit.cshtml" />
+    <Content Include="Views\Campaign\Index.cshtml" />
+    <Content Include="Views\Campaign\Create.cshtml" />
+    <Content Include="Views\Campaign\Delete.cshtml" />
+    <Content Include="Views\Campaign\Edit.cshtml" />
+    <Content Include="Views\Campaign\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -332,6 +348,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902142227016_userStatus.resx">
       <DependentUpon>201902142227016_userStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902150138050_campaign.resx">
+      <DependentUpon>201902150138050_campaign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902150141167_campaign1.resx">
+      <DependentUpon>201902150141167_campaign1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
