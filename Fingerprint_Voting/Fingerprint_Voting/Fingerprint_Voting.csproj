@@ -182,10 +182,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\CandidateController.cs" />
+    <Compile Include="Controllers\AdminControllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminControllers\CandidateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\AdminControllers\UserStatusController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -205,6 +206,10 @@
     <Compile Include="Migrations\201902130019060_testTableDataremoved.Designer.cs">
       <DependentUpon>201902130019060_testTableDataremoved.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902142227016_userStatus.cs" />
+    <Compile Include="Migrations\201902142227016_userStatus.Designer.cs">
+      <DependentUpon>201902142227016_userStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CandidateDTO.cs" />
@@ -212,6 +217,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\CandidateViewModels\CandidatesViewModel.cs" />
+    <Compile Include="Models\UserStatusDTO.cs" />
+    <Compile Include="Models\UserStatusModels\UserStatusViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -288,6 +295,11 @@
     <Content Include="Views\Candidate\Index.cshtml" />
     <Content Include="Views\Candidate\Edit.cshtml" />
     <Content Include="Views\Candidate\Details.cshtml" />
+    <Content Include="Views\UserStatus\Create.cshtml" />
+    <Content Include="Views\UserStatus\Index.cshtml" />
+    <Content Include="Views\UserStatus\Details.cshtml" />
+    <Content Include="Views\UserStatus\Delete.cshtml" />
+    <Content Include="Views\UserStatus\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -317,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902130019060_testTableDataremoved.resx">
       <DependentUpon>201902130019060_testTableDataremoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902142227016_userStatus.resx">
+      <DependentUpon>201902142227016_userStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
