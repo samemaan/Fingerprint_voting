@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprint_Voting.Models.AdminModelsDTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -34,6 +35,9 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "User Image")]
         public byte[] CandidatePic { get; set; }
 
-        //public IEnumerable<CandidateDTO> Candidates { get; set; }
+        public string CampaignID { get; set; }
+
+         [Display(Name = "Campaing")]
+        public List<CampaignNames> Campaigns { get; set; }
     }
 }

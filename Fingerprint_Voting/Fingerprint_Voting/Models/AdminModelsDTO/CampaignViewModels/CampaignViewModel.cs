@@ -84,5 +84,35 @@ namespace Fingerprint_Voting.Models.UserStatusModels
 
             }
         }
+        // the following method returns the name and id of the campaign 
+        public List<CampaignNames> GetAllCampaignNamesAndID()
+        {
+            List<CampaignNames> list = new List<CampaignNames>();
+
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("SelectAllCampaigns", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            CampaignNames campaignDTO = new CampaignNames
+                            {
+                                CampaignID = reader["CampaignID"].ToString(),
+                                Description = reader["Description"].ToString()
+                            };
+
+                            list.Add(campaignDTO);
+                        }
+
+                    }
+                }
+            }
+            return list;
+        }
     }
 }

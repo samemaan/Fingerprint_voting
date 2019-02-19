@@ -9,7 +9,6 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO
     public class CampaignDTO
     {
         [Key]
-
         public string CampaignID { get; set; }
 
         [Display(Name = "Start Date"), Required]
@@ -17,6 +16,15 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO
 
         [Display(Name = "End Date"), Required]
         public DateTime EndDate { get; set; }
+
+        [Display(Name = "Description"), Required]
+        public string Description { get; set; }
+    }
+
+    public class CampaignNames
+    {
+        [Key]
+        public string CampaignID { get; set; }
 
         [Display(Name = "Description"), Required]
         public string Description { get; set; }

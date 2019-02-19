@@ -6,84 +6,106 @@
 
 <h2>AddCandidate</h2>
 
-@using (Html.BeginForm("Create", "Candidate", FormMethod.Post, new { enctype="multipart/form-data"}))
+@using (Html.BeginForm("Create", "Candidate", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Create a New Candidate</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <h4>Create a New Candidate</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.RadioButtonFor(model => model.Gender, "Male", new { @class = "col-md-2 control-label" }) Male
+            </div>
+
+            <div class="col-md-offset-2 col-md-10">
+                @Html.RadioButtonFor(model => model.Gender, "Female", new { @class = "col-md-2 control-label" }) Female
+            </div>
+
+            <div class="col-md-offset-2 col-md-10">
+                @Html.RadioButtonFor(model => model.Gender, "Other", new { @class = "col-md-2 control-label" }) Other
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @* getting the campaign Id from view to controller here *@
+        <div class="form-group">
+            @Html.LabelFor(model => model.Campaigns, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" id="CampaignIDFromView" name="CampaignIDFromView">
+                    <option disabled="disabled" selected="selected">--Select Campaign--</option>
+
+                    @foreach (var Data in Model.Campaigns)
+                    {
+                        // check if the Data is null then show the message that there are no campaigns 
+                        @*@if (Data == null)
+                        {
+                            html.alert('There are no campaigns');
+                        }*@
+                        <option value=@Data.CampaignID>@Data.Description.Trim()</option>
+
+
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.Campaigns, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DOB, new { @type = "date", @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CandidatePic, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="CandidateImage" name="CandidateImage" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" onclick="return alert('Candidate Created?');"
+                       class="btn btn-outline-success" />
+
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @Html.RadioButtonFor(model => model.Gender, "Male", new { @class = "col-md-2 control-label" }) Male
-        </div>
-
-        <div class="col-md-offset-2 col-md-10">
-            @Html.RadioButtonFor(model => model.Gender, "Female", new { @class = "col-md-2 control-label" }) Female
-        </div>
-
-        <div class="col-md-offset-2 col-md-10">
-            @Html.RadioButtonFor(model => model.Gender, "Other", new { @class = "col-md-2 control-label" }) Other
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.DOB, new { @type = "date", @class = "form-control datepicker" })
-            @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.CandidatePic, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" id="CandidateImage" name="CandidateImage" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Submit" onclick =
-                   "return alert('Candidate Created?');"
-                   class="btn btn-default"/>
-
-        </div>
-    </div>
-</div>
 }
 
 <div>

@@ -1,4 +1,5 @@
 ﻿using Fingerprint_Voting.Models;
+using Fingerprint_Voting.Models.UserStatusModels;
 using Fingerprint_Voting.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -41,7 +42,12 @@ namespace Fingerprint_Voting.Controllers
         #region public ActionResult Create()
         public ActionResult Create()
         {
+
             CandidateDTO candidateDTO = new CandidateDTO();
+
+            CampaignViewModel camVM = new CampaignViewModel(); 
+
+            candidateDTO.Campaigns = camVM.GetAllCampaignNamesAndID(); 
 
             return View(candidateDTO);
 
@@ -57,9 +63,9 @@ namespace Fingerprint_Voting.Controllers
         #region public ActionResult Create(RoleDTO paramRoleDTO)
 
 
-        public ActionResult Create(CandidateDTO paramCandidateDTO, HttpPostedFileBase CandidateImage)
+        public ActionResult Create(CandidateDTO paramCandidateDTO, HttpPostedFileBase CandidateImage, string CampaignIDFromView)
         {
-
+            
 
             try
             {
@@ -75,6 +81,8 @@ namespace Fingerprint_Voting.Controllers
                 var Country = paramCandidateDTO.Country.Trim();
                 var City = paramCandidateDTO.City.Trim();
                 var DOB = paramCandidateDTO.DOB.Trim();
+                var CampaignID = CampaignIDFromView; 
+
 
                 //byte CandidatePic = paramCandidateDTO.CandidatePic;
                 if (CandidateImage != null)
@@ -99,6 +107,7 @@ namespace Fingerprint_Voting.Controllers
                         cmd.Parameters.AddWithValue("@City", City);
                         cmd.Parameters.AddWithValue("@DOB", DOB);
                         cmd.Parameters.AddWithValue("@CandidatePic", paramCandidateDTO.CandidatePic);
+                        cmd.Parameters.AddWithValue("@CampaignID", CampaignID);
 
                         sqlconn.Open();
                         cmd.ExecuteNonQuery();

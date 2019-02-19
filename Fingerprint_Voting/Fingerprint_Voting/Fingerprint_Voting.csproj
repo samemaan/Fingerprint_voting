@@ -219,6 +219,18 @@
     <Compile Include="Migrations\201902150141167_campaign1.Designer.cs">
       <DependentUpon>201902150141167_campaign1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902162212318_refreshDB.cs" />
+    <Compile Include="Migrations\201902162212318_refreshDB.Designer.cs">
+      <DependentUpon>201902162212318_refreshDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902182255376_addDropdown.cs" />
+    <Compile Include="Migrations\201902182255376_addDropdown.Designer.cs">
+      <DependentUpon>201902182255376_addDropdown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902190107316_CampaignIDinCandidateTable.cs" />
+    <Compile Include="Migrations\201902190107316_CampaignIDinCandidateTable.Designer.cs">
+      <DependentUpon>201902190107316_CampaignIDinCandidateTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminModelsDTO\CampaignDTO.cs" />
@@ -302,7 +314,6 @@
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\EditRoles.cshtml" />
-    <Content Include="Views\Candidate\Create.cshtml" />
     <Content Include="Views\Candidate\Index.cshtml" />
     <Content Include="Views\Candidate\Edit.cshtml" />
     <Content Include="Views\Candidate\Details.cshtml" />
@@ -316,6 +327,7 @@
     <Content Include="Views\Campaign\Delete.cshtml" />
     <Content Include="Views\Campaign\Edit.cshtml" />
     <Content Include="Views\Campaign\Details.cshtml" />
+    <Content Include="Views\Candidate\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -354,6 +366,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902150141167_campaign1.resx">
       <DependentUpon>201902150141167_campaign1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902162212318_refreshDB.resx">
+      <DependentUpon>201902162212318_refreshDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902182255376_addDropdown.resx">
+      <DependentUpon>201902182255376_addDropdown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902190107316_CampaignIDinCandidateTable.resx">
+      <DependentUpon>201902190107316_CampaignIDinCandidateTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
