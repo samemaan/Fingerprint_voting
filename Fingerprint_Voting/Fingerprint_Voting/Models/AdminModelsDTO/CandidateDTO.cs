@@ -37,7 +37,8 @@ namespace Fingerprint_Voting.Models
 
         public string CampaignID { get; set; }
 
-         [Display(Name = "Campaing")]
+        [Display(Name = "Campaing"), Required]
+
         public List<CampaignNames> Campaigns { get; set; }
     }
 }

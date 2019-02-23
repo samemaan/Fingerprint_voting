@@ -64,18 +64,21 @@
             @Html.LabelFor(model => model.Campaigns, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <select class="form-control" id="CampaignIDFromView" name="CampaignIDFromView">
-                    <option disabled="disabled" selected="selected">--Select Campaign--</option>
+                    @*<option disabled="disabled" selected="selected">--Select Campaign--</option>*@
 
+                    @{var first = true;}
                     @foreach (var Data in Model.Campaigns)
                     {
-                        // check if the Data is null then show the message that there are no campaigns 
-                        @*@if (Data == null)
+                        if (first == true)
                         {
-                            html.alert('There are no campaigns');
-                        }*@
-                        <option value=@Data.CampaignID>@Data.Description.Trim()</option>
-
-
+                            <option value=@Data.CampaignID selected="selected">@Data.Description.Trim()</option>
+                            first = false;
+                        }
+                        else
+                        {
+                            // check if the Data is null then show the message that there are no campaigns 
+                            <option value=@Data.CampaignID>@Data.Description.Trim()</option>
+                        }
                     }
                 </select>
                 @Html.ValidationMessageFor(model => model.Campaigns, "", new { @class = "text-danger" })
@@ -94,13 +97,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CandidatePic, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" id="CandidateImage" name="CandidateImage" />
+                <input type="file" id="CandidateImage" name="CandidateImage"  required aria-required="true"/>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" onclick="return alert('Candidate Created?');"
+                <input type="submit" value="Submit"
                        class="btn btn-outline-success" />
 
             </div>
