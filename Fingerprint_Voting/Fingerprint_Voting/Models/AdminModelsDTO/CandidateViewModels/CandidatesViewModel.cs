@@ -71,6 +71,7 @@ namespace Fingerprint_Voting.Models.ViewModels
                         paramCandidateDTO.Country = rdr["City"].ToString();
                         paramCandidateDTO.City = rdr["Country"].ToString();
                         paramCandidateDTO.DOB = rdr["DOB"].ToString();
+                        paramCandidateDTO.CampaignID = rdr["CampaignID"].ToString();
                         paramCandidateDTO.CandidatePic = (byte[])(rdr["Picture"]); 
 
 

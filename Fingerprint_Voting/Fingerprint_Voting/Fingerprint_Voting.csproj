@@ -231,17 +231,23 @@
     <Compile Include="Migrations\201902190107316_CampaignIDinCandidateTable.Designer.cs">
       <DependentUpon>201902190107316_CampaignIDinCandidateTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902240202253_create_user_by_admin.cs" />
+    <Compile Include="Migrations\201902240202253_create_user_by_admin.Designer.cs">
+      <DependentUpon>201902240202253_create_user_by_admin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminModelsDTO\CampaignDTO.cs" />
     <Compile Include="Models\AdminModelsDTO\CampaignViewModels\CampaignViewModel.cs" />
     <Compile Include="Models\AdminModelsDTO\CandidateDTO.cs" />
     <Compile Include="Models\AdminModelsDTO\UserRolesDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\VoteViewModels\VoteViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AdminModelsDTO\CandidateViewModels\CandidatesViewModel.cs" />
     <Compile Include="Models\AdminModelsDTO\UserStatusDTO.cs" />
     <Compile Include="Models\AdminModelsDTO\UserStatusModels\UserStatusViewModel.cs" />
+    <Compile Include="Models\VotesDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -375,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902190107316_CampaignIDinCandidateTable.resx">
       <DependentUpon>201902190107316_CampaignIDinCandidateTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902240202253_create_user_by_admin.resx">
+      <DependentUpon>201902240202253_create_user_by_admin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

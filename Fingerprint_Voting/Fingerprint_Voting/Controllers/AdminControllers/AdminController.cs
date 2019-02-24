@@ -12,6 +12,8 @@ using Fingerprint_Voting.Models;
 using PagedList;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.IO;
+using System.Threading.Tasks;
 
 #endregion Includes
 
@@ -123,7 +125,7 @@ namespace Fingerprint_Voting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         #region public ActionResult Create(ExpandedUserDTO paramExpandedUserDTO)
-        public ActionResult Create(ExpandedUserDTO paramExpandedUserDTO)
+        public async Task<ActionResult> Create(ExpandedUserDTO paramExpandedUserDTO)
         {
             try
             {
@@ -132,9 +134,32 @@ namespace Fingerprint_Voting.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                var Email = paramExpandedUserDTO.Email.Trim();
+                // To convert the user uploaded Photo as Byte Array before save to DB
+                byte[] imageData = null;
+                if (Request.Files.Count > 0)
+                {
+                    HttpPostedFileBase poImgFile = Request.Files["UserPhoto"];
+
+                    using (var binary = new BinaryReader(poImgFile.InputStream))
+                    {
+                        imageData = binary.ReadBytes(poImgFile.ContentLength);
+                    }
+                }
+
+
+                
+                
+                var FirstName = paramExpandedUserDTO.FirstName.Trim();
+
+                var Surname = paramExpandedUserDTO.Surname.Trim();
+                var DOB = paramExpandedUserDTO.DOB.Trim();
                 var UserName = paramExpandedUserDTO.Email.Trim();
-                var Password = paramExpandedUserDTO.Password.Trim();
+                var Email = paramExpandedUserDTO.Email.Trim();
+                var Gender = paramExpandedUserDTO.Gender.Trim();
+                var Country = paramExpandedUserDTO.Country.Trim();
+                var City = paramExpandedUserDTO.City.Trim();
+                var UserFingerprint = paramExpandedUserDTO.UserFingerprint.Trim();
+                //var UserPic = paramExpandedUserDTO.UserPic.Trim();
                 
 
                 if (Email == "")
@@ -142,7 +167,7 @@ namespace Fingerprint_Voting.Controllers
                     throw new Exception("No Email");
                 }
 
-                if (Password == "")
+                if (paramExpandedUserDTO.Password == "")
                 {
                     throw new Exception("No Password");
                 }
@@ -151,11 +176,26 @@ namespace Fingerprint_Voting.Controllers
                 UserName = Email.ToLower();
 
                 // Create user
+                var objNewAdminUser = new ApplicationUser
+                {
+                    FirstName = paramExpandedUserDTO.FirstName,
+                    Surname = paramExpandedUserDTO.Surname,
+                    DOB = paramExpandedUserDTO.DOB,
+                    UserName = paramExpandedUserDTO.Email,
 
-                var objNewAdminUser = new ApplicationUser { UserName = UserName, Email = Email };
-                var AdminUserCreateResult = UserManager.Create(objNewAdminUser, Password);
+                    Email = paramExpandedUserDTO.Email,
+                    Gender = paramExpandedUserDTO.Gender,
+                    Country = paramExpandedUserDTO.Country,
+                    City = paramExpandedUserDTO.City,
+                    UserPic = paramExpandedUserDTO.UserPic,
+                    UserFingerprint = paramExpandedUserDTO.UserFingerprint
 
-                if (AdminUserCreateResult.Succeeded == true)
+                };
+                objNewAdminUser.UserPic = imageData;
+                //var AdminUserCreateResult = UserManager.Create(objNewAdminUser, paramExpandedUserDTO.Password);
+                var result = await UserManager.CreateAsync(objNewAdminUser, paramExpandedUserDTO.Password);
+
+                if (result.Succeeded)
                 {
                     string strNewRole = Convert.ToString(Request.Form["Roles"]);
 
@@ -556,9 +596,7 @@ namespace Fingerprint_Voting.Controllers
         {
             get
             {
-                return _userManager ??
-                    HttpContext.GetOwinContext()
-                    .GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
             private set
             {

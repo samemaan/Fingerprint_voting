@@ -1,56 +1,335 @@
 ﻿@model Fingerprint_Voting.Models.ExpandedUserDTO
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Register";
 }
 
-@using (Html.BeginForm())
+<h2>@ViewBag.Title.</h2>
+
+
+@using (Html.BeginForm("Create", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Create User</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email,
-           htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email,
-               new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "",
-               new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password,
-           htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(model => model.Password,
-               new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password,
-               "",
-               new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Roles,
-           htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Roles")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-                @Html.ActionLink("Back to List",
-               "Index",
-               null,
-               new { @class = "btn btn-default" })
-            </div>
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.DOB, new { @type = "date", @class = "form-control datepicker" })
+            @Html.ValidationMessageFor(m => m.DOB, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "col-md-2 control-label" }) Male
+        </div>
+
+        <div class="col-md-offset-2 col-md-10">
+            @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "col-md-2 control-label" }) Female
+        </div>
+
+        <div class="col-md-offset-2 col-md-10">
+            @Html.RadioButtonFor(m => m.Gender, "Other", new { @class = "col-md-2 control-label" }) Other
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Country, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserPic, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+
+            <input type="file" name="UserPhoto" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" required aria-required="true" />
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.HiddenFor(m => m.UserFingerprint, new { @class = "form-control" })
+            <img id="FPImage1" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger.bmp">
+            <div>
+                <input type="button" value="Click to Scan" onclick="CallSGIFPGetData(SuccessFunc1, ErrorFunc)">
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Roles,
+       htmlAttributes: new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("Roles")
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Create" />
+        </div>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index", "Admin")
+    </p>
 }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+@*<div class="row">
+        <h3><b>Demonstration of Fingerprint Matching</b></h3>
+        <div class="col-md-10">
+            <p>
+                <b>This demo scans 2 fingerprints for matching, compares them with each other, and returns a matching score.</b>
+            </p>
+            <table width="1012" border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="auto-style2" align="right" valign="top">
+                        <b>Input parameters</b>
+                        <br><br>
+                        Match Score<input type='text' id=quality size=10 value="100"> <br><br>
+                    </td>
+                    <td class="style3" align="left">
+                        <span class="download_href">
+                            <center>
+                                <img border="2" id="FPImage1" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger.bmp">
+                                <img border="2" id="FPImage2" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger2.bmp"> <br>
+                                <input type="button" value="Click to Scan" onclick="CallSGIFPGetData(SuccessFunc1, ErrorFunc)">
+                                <input type="button" value="Click to Scan" onclick="CallSGIFPGetData(SuccessFunc2, ErrorFunc)"> <br><br>
+                                <input type="button" value="Click to Match" onclick="matchScore(succMatch, failureFunc)"> <br><br>
+                                <div style=" color:black; padding:20px;">
+                                    <p id="result1"> </p>
+                                    <p id="result2"> </p>
+                                </div>
+                            </center>
+                        </span>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+    </div>*@
+
+<script type="text/javascript">
+    var template_1 = "";
+    var template_2 = "";
+
+    function SuccessFunc1(result) {
+        if (result.ErrorCode == 0) {
+            /* 	Display BMP data in image tag
+                BMP data is in base 64 format
+            */
+            if (result != null && result.BMPBase64.length > 0) {
+                document.getElementById('FPImage1').src = "data:image/bmp;base64," + result.BMPBase64;
+            }
+            template_1 = result.TemplateBase64;
+
+            console.log("This is the finger you scanned" + template_1);
+            // this is how you pass the value to the MVC
+            document.getElementById('UserFingerprint').value = template_1;
+
+        }
+        else {
+            alert("Fingerprint Capture Error Code:  " + result.ErrorCode + ".\nDescription:  " + ErrorCodeToString(result.ErrorCode) + ".");
+        }
+    }
+
+    function SuccessFunc2(result) {
+        if (result.ErrorCode == 0) {
+            /* 	Display BMP data in image tag
+                BMP data is in base 64 format
+            */
+            if (result != null && result.BMPBase64.length > 0) {
+                document.getElementById('FPImage2').src = "data:image/bmp;base64," + result.BMPBase64;
+            }
+            template_2 = result.TemplateBase64;
+            console.log("This is the second finger print " + template_2)
+        }
+        else {
+            alert("Fingerprint Capture Error Code:  " + result.ErrorCode + ".\nDescription:  " + ErrorCodeToString(result.ErrorCode) + ".");
+        }
+    }
+
+    function ErrorFunc(status) {
+        /*
+            If you reach here, user is probabaly not running the
+            service. Redirect the user to a page where he can download the
+            executable and install it.
+        */
+        alert("Check if SGIBIOSRV is running; status = " + status + ":");
+    }
+
+    function CallSGIFPGetData(successCall, failCall) {
+        var uri = "https://localhost:8443/SGIFPCapture";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                fpobject = JSON.parse(xmlhttp.responseText);
+                successCall(fpobject);
+            }
+            else if (xmlhttp.status == 404) {
+                failCall(xmlhttp.status)
+            }
+        }
+        xmlhttp.onerror = function () {
+            failCall(xmlhttp.status);
+        }
+        var params = "Timeout=" + "10000";
+        params += "&Quality=" + "50";
+        params += "&licstr=" + encodeURIComponent(secugen_lic);
+        params += "&templateFormat=" + "ISO";
+        xmlhttp.open("POST", uri, true);
+        xmlhttp.send(params);
+    }
+
+    function matchScore(succFunction, failFunction) {
+        if (template_1 == "" || template_2 == "") {
+            alert("Please scan two fingers to verify!!");
+            return;
+        }
+        var uri = "https://localhost:8443/SGIMatchScore";
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                fpobject = JSON.parse(xmlhttp.responseText);
+                succFunction(fpobject);
+            }
+            else if (xmlhttp.status == 404) {
+                failFunction(xmlhttp.status)
+            }
+        }
+
+        xmlhttp.onerror = function () {
+            failFunction(xmlhttp.status);
+        }
+        var params = "template1=" + encodeURIComponent(template_1);
+        params += "&template2=" + encodeURIComponent(template_2);
+        params += "&licstr=" + encodeURIComponent(secugen_lic);
+        params += "&templateFormat=" + "ISO";
+        xmlhttp.open("POST", uri, true);
+        xmlhttp.send(params);
+    }
+
+    function succMatch(result) {
+        var idQuality = document.getElementById("quality").value;
+        if (result.ErrorCode == 0) {
+            if (result.MatchingScore >= idQuality)
+                alert("MATCHED ! (" + result.MatchingScore + ")");
+            else
+                alert("NOT MATCHED ! (" + result.MatchingScore + ")");
+        }
+        else {
+            alert("Error Scanning Fingerprint ErrorCode = " + result.ErrorCode);
+        }
+    }
+
+    function failureFunc(error) {
+        alert("On Match Process, failure has been called");
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    // nice global area, so that only 1 location, contains this information
+    //    var secugen_lic = "hE/78I5oOUJnm5fa5zDDRrEJb5tdqU71AVe+/Jc2RK0=";   // webapi.secugen.com
+    var secugen_lic = "";
+
+    function ErrorCodeToString(ErrorCode) {
+        var Description;
+        switch (ErrorCode) {
+            // 0 - 999 - Comes from SgFplib.h
+            // 1,000 - 9,999 - SGIBioSrv errors
+            // 10,000 - 99,999 license errors
+            case 51:
+                Description = "System file load failure";
+                break;
+            case 52:
+                Description = "Sensor chip initialization failed";
+                break;
+            case 53:
+                Description = "Device not found";
+                break;
+            case 54:
+                Description = "Fingerprint image capture timeout";
+                break;
+            case 55:
+                Description = "No device available";
+                break;
+            case 56:
+                Description = "Driver load failed";
+                break;
+            case 57:
+                Description = "Wrong Image";
+                break;
+            case 58:
+                Description = "Lack of bandwidth";
+                break;
+            case 59:
+                Description = "Device Busy";
+                break;
+            case 60:
+                Description = "Cannot get serial number of the device";
+                break;
+            case 61:
+                Description = "Unsupported device";
+                break;
+            case 63:
+                Description = "SgiBioSrv didn't start; Try image capture again";
+                break;
+            default:
+                Description = "Unknown error code or Update code to reflect latest result";
+                break;
+        }
+        return Description;
+    }
+
+</script>

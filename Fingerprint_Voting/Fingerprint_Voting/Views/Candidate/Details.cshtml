@@ -57,6 +57,25 @@
         <dd>
             @Html.DisplayFor(model => model.DOB)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CampaignID)
+            @*@{var found = true;}
+                @foreach (var Data in Model.Campaigns)
+                {
+                    if (Data.Description.Trim() == Model.CampaignID && found)
+                    {
+                        <dd>
+                            @Html.Display(Data.Description.Trim())
+                        </dd>
+                        found = false;
+                    }
+                }
+
+            }*@
+        </dd>
 
     </dl>
 </div>
