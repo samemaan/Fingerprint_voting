@@ -12,9 +12,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.3/dist/interact.min.js"></script>
 
-    @*@Scripts.Render("~/MyScripts/voteScripts.js")*@
+    <script type="text/javascript" src="@Url.Content("~/MyScripts/ScannerScripts.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/MyScripts/voteScripts.js")"></script>
     @RenderSection("voteScripts", false)
+    @RenderSection("ScannerScripts", false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

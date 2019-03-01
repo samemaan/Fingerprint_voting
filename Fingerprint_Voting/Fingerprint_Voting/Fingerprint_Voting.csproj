@@ -236,6 +236,14 @@
     <Compile Include="Migrations\201902240202253_create_user_by_admin.Designer.cs">
       <DependentUpon>201902240202253_create_user_by_admin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902271411249_VotingData.cs" />
+    <Compile Include="Migrations\201902271411249_VotingData.Designer.cs">
+      <DependentUpon>201902271411249_VotingData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902271434012_VotingData1.cs" />
+    <Compile Include="Migrations\201902271434012_VotingData1.Designer.cs">
+      <DependentUpon>201902271434012_VotingData1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminModelsDTO\CampaignDTO.cs" />
@@ -277,6 +285,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="MyScripts\ScannerScripts.js" />
     <Content Include="MyScripts\voteScripts.js" />
     <Content Include="MyStyles\voteStyles.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -346,6 +355,8 @@
     <Content Include="Views\Campaign\Details.cshtml" />
     <Content Include="Views\Candidate\Create.cshtml" />
     <Content Include="Views\Vote\Index.cshtml" />
+    <Content Include="Views\Vote\Scan_FingerForeVote.cshtml" />
+    <Content Include="Views\Vote\ThanksYou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -388,6 +399,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902240202253_create_user_by_admin.resx">
       <DependentUpon>201902240202253_create_user_by_admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902271411249_VotingData.resx">
+      <DependentUpon>201902271411249_VotingData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902271434012_VotingData1.resx">
+      <DependentUpon>201902271434012_VotingData1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

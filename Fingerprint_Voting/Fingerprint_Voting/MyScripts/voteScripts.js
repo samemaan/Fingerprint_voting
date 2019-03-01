@@ -46,7 +46,7 @@ interact('.dropzone').dropzone({
         event.relatedTarget.classList.remove('can-drop');
         event.relatedTarget.textContent = 'Dragged out';
         // reload the page when the user draged out the candidate card from the droped zone
-        location.reload();
+        //location.reload();
     },
     ondrop: function (event) {
         //console.log(event)
@@ -60,7 +60,10 @@ interact('.dropzone').dropzone({
             var confirmation = confirm("Would you like to vote for the selected candidate?");
             if (confirmation) {
                 console.log("When user pressed ok than redirect the user to take his/her fingerprint to validate if he is the user giving vote ");
-                window.location.replace('https://flaviocopes.com/how-to-redirect-using-javascript/')
+                //window.location.replace('https://flaviocopes.com/how-to-redirect-using-javascript/')
+                //window.location.replace('@Html.ActionLink("Vote", "Index", "Vote")')
+                // call the funciton to get the candidateId and userId, than passs
+                values();
             } else {
                 location.reload();
             }
@@ -98,3 +101,26 @@ interact('.drag-drop')
         onmove: dragMoveListener,
     });
 
+var UserFingerprint = ""; 
+
+function values() {
+    var CandidateId = document.getElementById('CandidateId').value;
+    var UserId = document.getElementById('UserId').value;
+    UserFingerprint = document.getElementById('UserFingerprint').value;
+    //var b = document.getElementById('b').value;
+    // printing the user details with candidate for testing
+     
+    console.log(CandidateId);
+    console.log(UserId);
+    console.log(UserFingerprint);
+    $("#leForm").submit();
+    //window.stop();
+}
+
+
+function fingerprint() {
+
+
+    UserFingerprint = document.getElementById('UserFingerprint').value;
+
+}
