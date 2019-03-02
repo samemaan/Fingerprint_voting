@@ -65,6 +65,10 @@ namespace Fingerprint_Voting.Models
 
 
         public IEnumerable<UserRolesDTO> Roles { get; set; }
+
+
+        public string UserStatusId { get; set; }
+
     }
 
     public class UserRolesDTO

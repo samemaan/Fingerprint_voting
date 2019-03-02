@@ -42,8 +42,7 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Fingerprint"), Required]
         public string UserFingerprint { get; set; }
 
-
-
+        public string UserStatusId { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -76,6 +75,6 @@ namespace Fingerprint_Voting.Models
 
         public System.Data.Entity.DbSet<Fingerprint_Voting.Models.ExpandedUserDTO> ExpandedUserDTO { get; set; }
 
-        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.VotesDTO> votesDTO { get; set; }
+        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.VotesDTO> VotesDTO { get; set; }
     }
 }

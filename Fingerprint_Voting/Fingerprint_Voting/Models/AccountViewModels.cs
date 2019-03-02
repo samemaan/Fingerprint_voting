@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Fingerprint_Voting.Models
@@ -107,6 +108,8 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Fingerprint"), Required]
         public string UserFingerprint { get; set; }
 
+        public string UserStatusId { get; set; }
+
     }
 
     public class ResetPasswordViewModel
@@ -137,4 +140,23 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+
+    public class GetAgeCalculated
+    {
+        public int GetAge(string userDOB)
+        {
+            DateTime bday = Convert.ToDateTime(userDOB);
+            DateTime today = DateTime.Today;
+            int age = today.Year - bday.Year;
+
+            if (bday > today.AddYears(-age))
+                age--;
+
+            return age; 
+             
+        }
+    }
+
+
 }

@@ -14,6 +14,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
+using Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels;
 
 #endregion Includes
 
@@ -172,6 +173,33 @@ namespace Fingerprint_Voting.Controllers
                     throw new Exception("No Password");
                 }
 
+                // set default status Id by the following description 
+                var statusDescription = "";
+                var statusId = "";
+
+                VoteViewModel vvM = new VoteViewModel();
+                GetAgeCalculated gAge = new GetAgeCalculated();
+                int userAge = gAge.GetAge(paramExpandedUserDTO.DOB);
+                if (userAge >= 17)
+                {
+                    statusDescription = "Not Vote";
+                }
+                else
+                {
+                    statusDescription = "Age-rule";
+                }
+                statusId = vvM.GetUserStatusIdByDescriptio(statusDescription);
+                // check if the statusId is empty than add the values to the table 
+                if (statusId == null)
+                {
+                    // set the default vote to the vote status table
+                    VoteViewModel vM = new VoteViewModel();
+                    vM.InsertDescriptionToUserStatus("Vote");
+                    vM.InsertDescriptionToUserStatus("Not Vote");
+                    vM.InsertDescriptionToUserStatus("Age-rule");
+
+                    statusId = vM.GetUserStatusIdByDescriptio(statusDescription);
+                }
                 // UserName is LowerCase of the Email
                 UserName = Email.ToLower();
 
@@ -188,10 +216,12 @@ namespace Fingerprint_Voting.Controllers
                     Country = paramExpandedUserDTO.Country,
                     City = paramExpandedUserDTO.City,
                     UserPic = paramExpandedUserDTO.UserPic,
-                    UserFingerprint = paramExpandedUserDTO.UserFingerprint
+                    UserFingerprint = paramExpandedUserDTO.UserFingerprint,
+                    UserStatusId = paramExpandedUserDTO.UserStatusId
 
                 };
                 objNewAdminUser.UserPic = imageData;
+                objNewAdminUser.UserStatusId = statusId;
                 //var AdminUserCreateResult = UserManager.Create(objNewAdminUser, paramExpandedUserDTO.Password);
                 var result = await UserManager.CreateAsync(objNewAdminUser, paramExpandedUserDTO.Password);
 

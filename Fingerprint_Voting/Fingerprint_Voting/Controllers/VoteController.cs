@@ -26,7 +26,7 @@ namespace Fingerprint_Voting.Controllers
             String userId = User.Identity.GetUserId();
             // get user fingerprint 
             VoteViewModel voteVM = new VoteViewModel();
-            ViewBag.fingerPrint = voteVM.getUserFingerprint(userId);
+            ViewBag.fingerPrint = voteVM.GetUserFingerprint(userId);
             // passing user id and finger print to the frontend
             ViewBag.userId = userId; 
 
@@ -71,36 +71,6 @@ namespace Fingerprint_Voting.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-
-
-                //var Description = paramVotesDTO.Description.Trim();
-
-                //using (sqlconn)
-                //{
-                //    using (SqlCommand cmd = new SqlCommand("InsertIntoUserStatusTable", sqlconn))
-                //    {
-                //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-
-                //        cmd.Parameters.AddWithValue("@Description", Description);
-
-                //        sqlconn.Open();
-                //        cmd.ExecuteNonQuery();
-                //        sqlconn.Close();
-
-                //    }
-                //}
-
-                /**
-                 * Create HTTP request
-                 * render content of page
-                 * make sure POST data present
-                 * return status 200 OK
-                 * 
-                 */
-
-
-                //return new HttpStatusCodeResult(HttpStatusCode.OK); //Redirect("~/Vote/Create");
                 return View();
             }
             catch (Exception ex)
@@ -110,12 +80,11 @@ namespace Fingerprint_Voting.Controllers
             }
         }
         #endregion
-
-
-        // GET: /Vote/ThanksYou
+        
+        // GET: /Vote/ThankYou
         [Authorize]
         #region public ActionResult Create()
-        public ActionResult ThanksYou()
+        public ActionResult ThankYou()
         {
             ViewBag.Message = "Thanks For the Vote";
 
@@ -127,7 +96,31 @@ namespace Fingerprint_Voting.Controllers
             ViewBag.userID = uId;
             ViewBag.fingerprint = finprint;
 
+            var userStatusId = "";
+            var userStatusDescription = ""; 
+            VoteViewModel voteVM = new VoteViewModel();
+            userStatusId = voteVM.GetUserStatusId(uId);
+            userStatusId = userStatusId.ToString();
 
+
+            VoteViewModel voteV = new VoteViewModel();
+            userStatusDescription = voteV.GetUserStatusDescription(userStatusId);
+            if (userStatusDescription == "Not Vote")
+            {
+                ViewBag.userStatusDescription = "NOt Vote";
+
+            }
+            else if(userStatusDescription == "Age-rule")
+            {
+                ViewBag.userStatusDescription = "You are Too Young For Voting";
+            }
+            else
+            {
+                //ViewBag.userStatusId = userStatusId;
+                //ViewBag.userStatusDescription = userStatusDescription;
+                ViewBag.userStatusDescription = "you have already Voted";
+            }
+            
             return View();
         }
         #endregion

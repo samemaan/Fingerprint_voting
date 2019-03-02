@@ -13,6 +13,7 @@ using Fingerprint_Voting.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Configuration;
 using System.IO;
+using Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels;
 
 namespace Fingerprint_Voting.Controllers
 {
@@ -169,6 +170,36 @@ namespace Fingerprint_Voting.Controllers
                         imageData = binary.ReadBytes(poImgFile.ContentLength);
                     }
                 }
+                // set default status Id by the following description 
+                var statusDescription = "";
+                var statusId = ""; 
+
+                VoteViewModel vvM = new VoteViewModel();
+                GetAgeCalculated gAge = new GetAgeCalculated();
+                int userAge = gAge.GetAge(model.DOB);
+                if (userAge >= 17)
+                {
+                    statusDescription = "Not Vote";
+                }
+                else
+                {
+                    statusDescription = "Age-rule"; 
+                }
+                statusId = vvM.GetUserStatusIdByDescriptio(statusDescription);
+                // check if the statusId is empty than add the values to the table 
+                if(statusId == null)
+                {
+                    // set the default vote to the vote status table
+                    VoteViewModel vM = new VoteViewModel();
+                    vM.InsertDescriptionToUserStatus("Vote");
+                    vM.InsertDescriptionToUserStatus("Not Vote");
+                    vM.InsertDescriptionToUserStatus("Age-rule");
+
+                    statusId = vM.GetUserStatusIdByDescriptio(statusDescription);
+                }
+
+               
+
 
                 var user = new ApplicationUser
                 {
@@ -182,10 +213,12 @@ namespace Fingerprint_Voting.Controllers
                     Country = model.Country,
                     City = model.City,
                     UserPic = model.UserPic,
-                    UserFingerprint = model.UserFingerprint
+                    UserFingerprint = model.UserFingerprint,
+                    UserStatusId = model.UserStatusId
 
                 };
                 user.UserPic = imageData;
+                user.UserStatusId = statusId;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
