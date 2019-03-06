@@ -252,6 +252,14 @@
     <Compile Include="Migrations\201903022257452_userStatusId1.Designer.cs">
       <DependentUpon>201903022257452_userStatusId1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903022311372_Country_to_campaigen.cs" />
+    <Compile Include="Migrations\201903022311372_Country_to_campaigen.Designer.cs">
+      <DependentUpon>201903022311372_Country_to_campaigen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903042204366_VoteDTO.cs" />
+    <Compile Include="Migrations\201903042204366_VoteDTO.Designer.cs">
+      <DependentUpon>201903042204366_VoteDTO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminModelsDTO\CampaignDTO.cs" />
@@ -362,9 +370,11 @@
     <Content Include="Views\Campaign\Edit.cshtml" />
     <Content Include="Views\Campaign\Details.cshtml" />
     <Content Include="Views\Candidate\Create.cshtml" />
-    <Content Include="Views\Vote\Index.cshtml" />
     <Content Include="Views\Vote\Scan_FingerForeVote.cshtml" />
     <Content Include="Views\Vote\ThankYou.cshtml" />
+    <Content Include="Views\Candidate\Error.cshtml" />
+    <Content Include="Views\Vote\Error.cshtml" />
+    <Content Include="Views\Vote\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -419,6 +429,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903022257452_userStatusId1.resx">
       <DependentUpon>201903022257452_userStatusId1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903022311372_Country_to_campaigen.resx">
+      <DependentUpon>201903022311372_Country_to_campaigen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903042204366_VoteDTO.resx">
+      <DependentUpon>201903042204366_VoteDTO.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

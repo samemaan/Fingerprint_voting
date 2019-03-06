@@ -19,10 +19,8 @@
 interact('.dropzone').dropzone({
     // only accept elements matching this CSS selector
     accept: '#yes-drop',
-    // Require a 75% element overlap for a drop to be possible
-    overlap: 0.75,
-
-    // listen for drop related events:
+    // Require a 0% element overlap for a drop to be possible
+    overlap: 0,
 
     ondropactivate: function (event) {
         // add active dropzone feedback
@@ -31,54 +29,56 @@ interact('.dropzone').dropzone({
     ondragenter: function (event) {
         var draggableElement = event.relatedTarget,
             dropzoneElement = event.target;
-
         // feedback the possibility of a drop
         dropzoneElement.classList.add('drop-target');
         draggableElement.classList.add('can-drop');
-        draggableElement.textContent = 'Dragged in';
-
-
-
+        //draggableElement.textContent = 'Dragged in';
+        // following line gets the card as it's just changing the colour to active/green shown that users droped the card in the box
+        draggableElement.style = '';
+        
     },
     ondragleave: function (event) {
         // remove the drop feedback style
         event.target.classList.remove('drop-target');
         event.relatedTarget.classList.remove('can-drop');
         event.relatedTarget.textContent = 'Dragged out';
-        // reload the page when the user draged out the candidate card from the droped zone
-        //location.reload();
     },
     ondrop: function (event) {
         //console.log(event)
+        var CandidateId = $('#CandidateId').val();
+        alert('CandidateId: ' + CandidateId);
 
-        var result = event.relatedTarget.textContent = "Vote"; 
-      
+        var theElement = event.relatedTarget,
+            theElement = event.target;
 
+        
+
+        // result is just to set to get the endusers confirmation on selected card to redirect them into another page fingerprint varification
+        var result = theElement.textContent = 'Vote'
+        theElement.style = ""; 
 
         if (result == 'Vote') {
-            
             var confirmation = confirm("Would you like to vote for the selected candidate?");
             if (confirmation) {
                 console.log("When user pressed ok than redirect the user to take his/her fingerprint to validate if he is the user giving vote ");
-                //window.location.replace('https://flaviocopes.com/how-to-redirect-using-javascript/')
-                //window.location.replace('@Html.ActionLink("Vote", "Index", "Vote")')
-                // call the funciton to get the candidateId and userId, than passs
+                // the call for redirecting the user to another page if the user pressed okay.
                 values();
             } else {
+                // if the user select cancel from the dialog box the current page will be refreshed
                 location.reload();
             }
-            
-        } 
-        // Add event handler
-       
-            //$("yes-drop").prop('disabled', true);
-            //$("dropzone").prop("disabled", true);
-            //$("drag-drop").prop("disabled", true);
-            //$("dropzone").prop("disabled", true);
 
-            console.log("you are voting right now")
-        
-        
+        }
+        // Add event handler
+
+        //$("yes-drop").prop('disabled', true);
+        //$("dropzone").prop("disabled", true);
+        //$("drag-drop").prop("disabled", true);
+        //$("dropzone").prop("disabled", true);
+
+        console.log("you are voting right now")
+
+
     },
     ondropdeactivate: function (event) {
         // remove active dropzone feedback
@@ -101,18 +101,21 @@ interact('.drag-drop')
         onmove: dragMoveListener,
     });
 
-var UserFingerprint = ""; 
+var UserFingerprint = "";
 
 function values() {
-    var CandidateId = document.getElementById('CandidateId').value;
-    var UserId = document.getElementById('UserId').value;
-    UserFingerprint = document.getElementById('UserFingerprint').value;
+    var CandidateId = $("#CandidateId").val();
+    //var UserId = $('UserId').val(); 
+    //var UserFingerprint = $('UserFingerprint').val();
+
+
+    //alert('values(): ' + CandidateId);
     //var b = document.getElementById('b').value;
     // printing the user details with candidate for testing
-     
-    console.log(CandidateId);
-    console.log(UserId);
-    console.log(UserFingerprint);
+
+    //console.log(CandidateId);
+    //console.log(UserId);
+    //console.log(UserFingerprint);
     $("#leForm").submit();
     //window.stop();
 }
@@ -124,3 +127,14 @@ function fingerprint() {
     UserFingerprint = document.getElementById('UserFingerprint').value;
 
 }
+
+// :  
+function getImageId(e) {
+    $('#CandidateId').val(e.id);
+}
+//function getFingerprint(e) {
+//    $('#UserFingerprint').val(e.id);
+//}
+//function getUserId(e) {
+//    $('#UserId').val(e.id);
+//}

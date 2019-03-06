@@ -1,4 +1,5 @@
 ﻿using Fingerprint_Voting.Models;
+using Fingerprint_Voting.Models.AdminModelsDTO;
 using Fingerprint_Voting.Models.UserStatusModels;
 using Fingerprint_Voting.Models.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -22,14 +23,14 @@ namespace Fingerprint_Voting.Controllers
     {
 
         SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-       
+
         // GET: /Candidate/Index
         [Authorize(Roles = "Administrator")]
         #region public ActionResult Index()
         public ActionResult Index()
         {
             // get all the list of candidates from the candidatesViewModel and return the model to cshtml page
-            
+
             CandidatesViewModel candidateVM = new CandidatesViewModel();
             List<CandidateDTO> candidates = candidateVM.GetAllCandidates();
 
@@ -45,9 +46,9 @@ namespace Fingerprint_Voting.Controllers
 
             CandidateDTO candidateDTO = new CandidateDTO();
 
-            CampaignViewModel camVM = new CampaignViewModel(); 
+            CampaignViewModel camVM = new CampaignViewModel();
 
-            candidateDTO.Campaigns = camVM.GetAllCampaignNamesAndID(); 
+            candidateDTO.Campaigns = camVM.GetAllCampaignNamesAndID();
 
             return View(candidateDTO);
 
@@ -65,66 +66,83 @@ namespace Fingerprint_Voting.Controllers
 
         public ActionResult Create(CandidateDTO paramCandidateDTO, HttpPostedFileBase CandidateImage, string CampaignIDFromView)
         {
-            
 
-            try
+
+
+            if (paramCandidateDTO == null)
             {
-                if (paramCandidateDTO == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                //var Name = paramCandidateDTO.UserPic; 
-                var UserName = paramCandidateDTO.FirstName.Trim();
-                var Surname = paramCandidateDTO.Surname.Trim();
-                var Gender = paramCandidateDTO.Gender;
-                var Country = paramCandidateDTO.Country.Trim();
-                var City = paramCandidateDTO.City.Trim();
-                var DOB = paramCandidateDTO.DOB.Trim();
-                var CampaignID = CampaignIDFromView; 
-
-
-                //byte CandidatePic = paramCandidateDTO.CandidatePic;
-                if (CandidateImage != null)
-                {
-                    // To convert the user uploaded Photo as Byte Array before save to DB
-                    paramCandidateDTO.CandidatePic = new byte[CandidateImage.ContentLength];
-                    CandidateImage.InputStream.Read(paramCandidateDTO.CandidatePic, 0, CandidateImage.ContentLength);
-
-                }
-
-                using (sqlconn)
-                {
-                    using (SqlCommand cmd = new SqlCommand("InsertIntoCandidatesTable", sqlconn))
-                    {
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-
-                        cmd.Parameters.AddWithValue("@UserName", UserName);
-                        cmd.Parameters.AddWithValue("@Surname", Surname);
-                        cmd.Parameters.AddWithValue("@Gender", Gender);
-                        cmd.Parameters.AddWithValue("@Country", Country);
-                        cmd.Parameters.AddWithValue("@City", City);
-                        cmd.Parameters.AddWithValue("@DOB", DOB);
-                        cmd.Parameters.AddWithValue("@CandidatePic", paramCandidateDTO.CandidatePic);
-                        cmd.Parameters.AddWithValue("@CampaignID", CampaignID);
-
-                        sqlconn.Open();
-                        cmd.ExecuteNonQuery();
-                        sqlconn.Close();
-                        
-                    }
-                }
-                //roleManager.Create(new IdentityRole(UserName));
-                //return Redirect("~/Candidate/AddCandidate");
-
-
-                return Redirect("~/Candidate/Create");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            catch (Exception ex)
+
+            //var Name = paramCandidateDTO.UserPic; 
+            var UserName = paramCandidateDTO.FirstName.Trim();
+            var Surname = paramCandidateDTO.Surname.Trim();
+            var Gender = paramCandidateDTO.Gender;
+            var Country = paramCandidateDTO.Country.Trim();
+            var City = paramCandidateDTO.City.Trim();
+            var DOB = paramCandidateDTO.DOB.Trim();
+            var CampaignID = CampaignIDFromView;
+
+            // get the country of the from Campaign table,  check the country matches the candidate country
+            // enter the details to the database else redirect the user to an message Page. 
+            var CampCountry = "";
+            CampaignViewModel cmVM = new CampaignViewModel();
+            CampaignDTO cmDTO = new CampaignDTO();
+            cmDTO = cmVM.GetCampaignById(CampaignID);
+            CampCountry = cmDTO.Country;
+            CampCountry = CampCountry.Trim();
+
+            if (Country != CampCountry)
             {
-                ModelState.AddModelError(string.Empty, "Error: " + ex);
-                return View("Create");
+                return View("Error");
+            }
+            else
+            {
+                try
+                {
+                    //byte CandidatePic = paramCandidateDTO.CandidatePic;
+                    if (CandidateImage != null)
+                    {
+                        // To convert the user uploaded Photo as Byte Array before save to DB
+                        paramCandidateDTO.CandidatePic = new byte[CandidateImage.ContentLength];
+                        CandidateImage.InputStream.Read(paramCandidateDTO.CandidatePic, 0, CandidateImage.ContentLength);
+
+                    }
+
+                    using (sqlconn)
+                    {
+                        using (SqlCommand cmd = new SqlCommand("InsertIntoCandidatesTable", sqlconn))
+                        {
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+                            cmd.Parameters.AddWithValue("@UserName", UserName);
+                            cmd.Parameters.AddWithValue("@Surname", Surname);
+                            cmd.Parameters.AddWithValue("@Gender", Gender);
+                            cmd.Parameters.AddWithValue("@Country", Country);
+                            cmd.Parameters.AddWithValue("@City", City);
+                            cmd.Parameters.AddWithValue("@DOB", DOB);
+                            cmd.Parameters.AddWithValue("@CandidatePic", paramCandidateDTO.CandidatePic);
+                            cmd.Parameters.AddWithValue("@CampaignID", CampaignID);
+
+                            sqlconn.Open();
+                            cmd.ExecuteNonQuery();
+                            sqlconn.Close();
+
+                        }
+                    }
+                    //roleManager.Create(new IdentityRole(UserName));
+                    //return Redirect("~/Candidate/AddCandidate");
+
+
+                    return Redirect("~/Candidate/Create");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Error: " + ex);
+                    return View("Create");
+                }
+
             }
 
         }
@@ -136,8 +154,8 @@ namespace Fingerprint_Voting.Controllers
         public ActionResult Details(string id)
         {
             CandidatesViewModel candidateVM = new CandidatesViewModel();
-            CandidateDTO candidate = candidateVM.GetCandidateDetailsById(id); 
-            return View(candidate); 
+            CandidateDTO candidate = candidateVM.GetCandidateDetailsById(id);
+            return View(candidate);
         }
         #endregion
 
@@ -147,8 +165,8 @@ namespace Fingerprint_Voting.Controllers
         public ActionResult Edit(string id)
         {
             CandidatesViewModel candidateVM = new CandidatesViewModel();
-            CandidateDTO candidate = candidateVM.GetCandidateDetailsById(id); 
-            return View(candidate); 
+            CandidateDTO candidate = candidateVM.GetCandidateDetailsById(id);
+            return View(candidate);
         }
         #endregion
         //// GET: /Candidate/Edit
@@ -198,8 +216,8 @@ namespace Fingerprint_Voting.Controllers
         //}
         //#endregion
 
-       //GET: /Candidate/Delete
-       [Authorize(Roles = "Administrator")]
+        //GET: /Candidate/Delete
+        [Authorize(Roles = "Administrator")]
         #region public ActionResult Delete()
         public ActionResult Delete(string id)
         {

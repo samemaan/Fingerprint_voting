@@ -63,6 +63,8 @@ namespace Fingerprint_Voting.Controllers
                 var StartDate = CampaignDTO.StartDate;
                 var EndDate = CampaignDTO.EndDate; 
                 var Description = CampaignDTO.Description.Trim();
+                var Country = CampaignDTO.Country.Trim();
+
 
                 using (sqlconn)
                 {
@@ -74,6 +76,7 @@ namespace Fingerprint_Voting.Controllers
                         cmd.Parameters.AddWithValue("@StartDate", StartDate);
                         cmd.Parameters.AddWithValue("@EndDate", EndDate);
                         cmd.Parameters.AddWithValue("@Description", Description);
+                        cmd.Parameters.AddWithValue("@Country", Country);
 
                         sqlconn.Open();
                         cmd.ExecuteNonQuery();
@@ -142,6 +145,7 @@ namespace Fingerprint_Voting.Controllers
                         cmd.Parameters.AddWithValue("@StartDate", objeCampaign.StartDate);
                         cmd.Parameters.AddWithValue("@EndDate", objeCampaign.EndDate);
                         cmd.Parameters.AddWithValue("@Description", objeCampaign.Description);
+                        cmd.Parameters.AddWithValue("@Country", objeCampaign.Country);
 
                         sqlconn.Open();
                         cmd.ExecuteNonQuery();

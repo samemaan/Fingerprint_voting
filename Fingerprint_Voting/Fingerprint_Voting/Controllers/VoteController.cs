@@ -22,29 +22,11 @@ namespace Fingerprint_Voting.Controllers
             
             CandidatesViewModel candidateVM = new CandidatesViewModel();
             List<CandidateDTO> candidates = candidateVM.GetAllCandidates();
-            // get logged in user id
-            String userId = User.Identity.GetUserId();
-            // get user fingerprint 
-            VoteViewModel voteVM = new VoteViewModel();
-            ViewBag.fingerPrint = voteVM.GetUserFingerprint(userId);
-            // passing user id and finger print to the frontend
-            ViewBag.userId = userId; 
+            
 
             return View(candidates);
         }
 
-
-        // GET: /Vote/Scan_FingerForeVote
-        [Authorize]
-        #region public ActionResult Scan_FingerForeVote()
-        public ActionResult Scan_FingerForeVote()
-        {
-            VotesDTO votesDTO = new VotesDTO();
-            return View(votesDTO);
-
-
-        }
-        #endregion
 
         // POST: /Vote/Scan_FingerForeVote
         [Authorize]
@@ -56,13 +38,21 @@ namespace Fingerprint_Voting.Controllers
 
         public ActionResult Scan_FingerForeVote(VotesDTO paramVotesDTO)
         {
+            // get logged in user id
+            String userId = User.Identity.GetUserId();
+            // get user fingerprint 
+            VoteViewModel voteVM = new VoteViewModel();
+            ViewBag.fingerprint = voteVM.GetUserFingerprint(userId);
+            // passing user id and finger print to the frontend
+            ViewBag.userId = userId;
+
             var canId = paramVotesDTO.CandidateId;
-            var uId = paramVotesDTO.UserId;
-            var finprint = Request["UserFingerprint"]; 
+            //var uId = paramVotesDTO.UserId;
+            //var finprint = Request["UserFingerprint"]; 
 
             ViewBag.candidateID = canId;
-            ViewBag.userID = uId;
-            ViewBag.fingerprint = finprint; 
+            //ViewBag.userID = uId;
+            //ViewBag.fingerprint = finprint; 
 
 
             try
@@ -83,13 +73,16 @@ namespace Fingerprint_Voting.Controllers
         
         // GET: /Vote/ThankYou
         [Authorize]
-        #region public ActionResult Create()
+        #region public ActionResult ThankYou()
         public ActionResult ThankYou()
         {
             ViewBag.Message = "Thanks For the Vote";
-
+            
             var canId = Request["CandidateId"];
-            var uId = Request["UserId"];
+            //var uId = Request["UserId"];
+            // get logged in user id
+            String uId = User.Identity.GetUserId();
+
             var finprint = Request["UserFingerprint"];
 
             ViewBag.candidateID = canId;
@@ -101,27 +94,53 @@ namespace Fingerprint_Voting.Controllers
             VoteViewModel voteVM = new VoteViewModel();
             userStatusId = voteVM.GetUserStatusId(uId);
             userStatusId = userStatusId.ToString();
+            // check if the candidate country is same as the voters country 
+            var CandidateCountry = "";
+            var UserCountry = ""; 
 
+            CandidatesViewModel candidatesViewModel = new CandidatesViewModel();
+            CandidateDTO canDTO = new CandidateDTO();
+            canDTO = candidatesViewModel.GetCandidateDetailsById(canId);
+            // candidates Country
+            CandidateCountry = canDTO.Country;
+            // users Country
+            VoteViewModel V = new VoteViewModel();
+            UserCountry = V.GetLoggedUserCountry(uId); 
 
             VoteViewModel voteV = new VoteViewModel();
             userStatusDescription = voteV.GetUserStatusDescription(userStatusId);
-            if (userStatusDescription == "Not Vote")
-            {
-                ViewBag.userStatusDescription = "NOt Vote";
 
-            }
-            else if(userStatusDescription == "Age-rule")
+            ViewBag.UserCountry = UserCountry; 
+            ViewBag.CandidateCountry = CandidateCountry; 
+
+            if (UserCountry == CandidateCountry)
             {
-                ViewBag.userStatusDescription = "You are Too Young For Voting";
+                if (userStatusDescription == "Not Vote")
+                {
+                    ViewBag.userStatusDescription = "NOt Vote";
+
+
+                }
+                else if (userStatusDescription == "Age-rule")
+                {
+                    ViewBag.userStatusDescription = "You are Too Young For Voting";
+                }
+                else
+                {
+                    //ViewBag.userStatusId = userStatusId;
+                    //ViewBag.userStatusDescription = userStatusDescription;
+                    ViewBag.userStatusDescription = "you have already Voted";
+                }
+
+                return View();
+
             }
             else
             {
-                //ViewBag.userStatusId = userStatusId;
-                //ViewBag.userStatusDescription = userStatusDescription;
-                ViewBag.userStatusDescription = "you have already Voted";
+                return View("Error");
+                
             }
-            
-            return View();
+           
         }
         #endregion
     }

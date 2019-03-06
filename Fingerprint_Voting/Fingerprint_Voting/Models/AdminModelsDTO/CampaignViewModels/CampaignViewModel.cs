@@ -32,7 +32,8 @@ namespace Fingerprint_Voting.Models.UserStatusModels
                                 CampaignID = reader["CampaignID"].ToString(),
                                 StartDate = (DateTime)reader["StartDate"],
                                 EndDate = (DateTime)reader["EndDate"],
-                                Description = reader["Description"].ToString()
+                                Description = reader["Description"].ToString(),
+                                Country = reader["Country"].ToString()
                             };
 
                             list.Add(campaignDTO);
@@ -62,7 +63,8 @@ namespace Fingerprint_Voting.Models.UserStatusModels
 
                         campaignDTO.StartDate = (DateTime)reader["StartDate"];
                         campaignDTO.EndDate = (DateTime)reader["EndDate"];
-                        campaignDTO.Description = reader["Description"].ToString(); 
+                        campaignDTO.Description = reader["Description"].ToString();
+                        campaignDTO.Country = reader["Country"].ToString(); 
 
                     }
                 }

@@ -51,9 +51,12 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
 
                     using (SqlDataReader rdr = cmd.ExecuteReader())
                     {
-                        rdr.Read();
+                        if (rdr.Read())
+                        {
+                            userStatus = rdr["UserStatusId"].ToString();
+                        }
 
-                        userStatus = rdr["UserStatusId"].ToString();
+                        
 
                     }
                 }
@@ -140,6 +143,31 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
                     sqlconn.Close();
                 }
             }
+        }
+
+        // If the user Status Table is Empty than insert into table the description
+        public string GetLoggedUserCountry(string id)
+        {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            var userCountry = ""; 
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("getUserCountry", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        rdr.Read();
+
+                        userCountry = rdr["Country"].ToString();
+
+                    }
+                }
+            }
+            return userCountry; 
         }
     }
 }

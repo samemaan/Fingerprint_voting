@@ -19,6 +19,9 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO
 
         [Display(Name = "Description"), Required]
         public string Description { get; set; }
+
+        [Display(Name = "Country"), Required]
+        public string Country { get; set; }
     }
 
     public class CampaignNames

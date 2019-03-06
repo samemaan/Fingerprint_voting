@@ -1,63 +1,53 @@
 ﻿@model IEnumerable<Fingerprint_Voting.Models.CandidateDTO>
-
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>List Of Candidates</h2>
 @section voteStyles {
     <link href="@Url.Content("~/MyStyles/voteStyles.css")" rel="stylesheet" type="text/css" />
 }
-
 @section voteScripts {
-
     @*<link href="@Url.Content("~/MyScripts/voteScripts.js")" type="text/javascript" />*@
     <script type="text/javascript" src="@Url.Content("~/MyScripts/voteScripts.js")"></script>
 }
+<hr>
+@foreach (var item in Model)
+{
+    <div class="row drag-drop" id="yes-drop">
+        <div class="card col-md-4">
+            @{
+                var base64 = Convert.ToBase64String(item.CandidatePic);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
+            <img id="@item.CandidateId" src="@imgSrc" style="width:160px;height:160px; background: #FFFFFF;
+                    margin: auto;
+                    -moz-border-radius: 60px;
+                    border-radius: 100px;
+                    padding: 6px;
+                    box-shadow: 0px 0px 20px #888;" onmousedown="getImageId(this)" />
+            <!-- :  set the Id of the image to the CandidateId -->
+            <!-- :  add onmousedown event to the image to capture the id of the selected image -->
 
-    <hr>
-    @foreach (var item in Model)
-    {
-        <div class="row drag-drop" id="yes-drop">
-            <div class="card col-md-4">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.FirstName)</h5>
+                
+                @*<h5 id="@ViewBag.fingerPrint" onmousedown="getFingerprint(this)"></h5>
+                <h5 id="@ViewBag.userId" onmousedown="getUserId(this)">@ViewBag.userId</h5>*@
 
-                @{
-                    var base64 = Convert.ToBase64String(item.CandidatePic);
-                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                }
-                <img src="@imgSrc" style="width:160px;height:160px; background: #FFFFFF;
-            margin: auto;
-            -moz-border-radius: 60px;
-            border-radius: 100px;
-            padding: 6px;
-            box-shadow: 0px 0px 20px #888;" />
-                <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.FirstName)</h5>
-                    @*<p class="card-text">
-            @Html.DisplayFor(modelItem => item.Surname) <br />
-            @Html.DisplayFor(modelItem => item.City) <br />
-            @Html.DisplayFor(modelItem => item.CandidateId) <br />
-        </p>
-        @* this is users id and you need this for vote table *@
-                    @*<p>
-            @ViewBag.userId
-        </p>**@
-                    @using (Html.BeginForm("Scan_FingerForeVote", "Vote", FormMethod.Post, new { enctype = "multipart/form-data", id = "leForm" }))
-                    {
-                        @Html.AntiForgeryToken()
 
-                        <input type="hidden" name="CandidateId" id="CandidateId" value="@Html.DisplayFor(modelItem => item.CandidateId)" />
-                        <input type="hidden" name="UserId" id="UserId" value="@ViewBag.userId" />
-                        <input type="hidden" name="UserFingerprint" id="UserFingerprint" value="@ViewBag.fingerPrint" />
-                    }
-                    </div>
+                
             </div>
         </div>
-    }
-
-
-
-
+    </div>
+}
+@using (Html.BeginForm("Scan_FingerForeVote", "Vote", FormMethod.Post, new { enctype = "multipart/form-data", id = "leForm" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- :  Move the hidden fields outside the loop, otherwise they all have the same Id which won't work -->
+    <input type="hidden" name="CandidateId" id="CandidateId" value="" />
+    <input type="hidden" name="UserId" id="UserId" value="" />
+    <input type="hidden" name="UserFingerprint" id="UserFingerprint" value="" />
+}
 
     <div id="outer-dropzone" class="dropzone" onclick="values()">
         The is drop zone, drop a candidated here and vote
@@ -65,7 +55,5 @@
     <div>
         <button class="btn btn-success" value="Refresh Page" onClick="window.location.reload()">Reload page</button>
     </div>
-
-
 
 
