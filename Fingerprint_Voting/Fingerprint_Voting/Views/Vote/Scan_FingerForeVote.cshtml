@@ -7,6 +7,9 @@
     }*@
 
 <h3><b>Please Verify your fingerprint to Vote for the Selected Candidate</b></h3>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
 @section voteScripts {
 
@@ -33,18 +36,17 @@
         </div>
     </div>
 
-    <p>
-            @ViewBag.candidateID<br />
-            @ViewBag.userID<br />
-            @ViewBag.fingerprint<br />
-        </p>
-    <div class="col-lg-6">
-        <hr />
+    @*<p>
+        @ViewBag.candidateID<br />
+        @ViewBag.userID<br />
+        @ViewBag.fingerprint<br />
+    </p>*@
+    <div class="col-lg-4">
         <dl class="dl-horizontal">
             <dd>
                 @*<b>Input parameters</b>
-                <br><br>
-                Match Score<input type='text' id=quality size=10 value="150"> <br><br>*@
+                    <br><br>
+                    Match Score<input type='text' id=quality size=10 value="150"> <br><br>*@
 
 
                 <img border="2" id="FPImage2" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger.bmp"> <br>
@@ -54,11 +56,39 @@
         </dl>
     </div>
 
-    <div class="col-lg-6">
-        <hr />
+    <div class="col-lg-4">
         <dl class="dl-horizontal">
             <dd>
                 <input class="pressVoteBtn" type="button" value="Vote" onclick="matchScore(succMatch, failureFunc)"> <br><br>
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-lg-4">
+        <dl class="dl-horizontal">
+            <dd>
+                <div class="row drag-drop">
+                    <div class="card col-md-4">
+                        @{
+                            var base64 = Convert.ToBase64String(ViewBag.Picture);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        }
+                        <img src="@imgSrc" style="width:160px;height:160px; background: #FFFFFF;
+                    margin: auto;
+                    -moz-border-radius: 60px;
+                    border-radius: 100px;
+                    padding: 6px;
+                    box-shadow: 0px 0px 20px #888;" />
+                        <!-- :  set the Id of the image to the CandidateId -->
+                        <!-- :  add onmousedown event to the image to capture the id of the selected image -->
+
+                        <div class="card-body">
+                            <h5 class="card-title">@ViewBag.Name</h5>
+                            <h5 class="card-body">@ViewBag.Surname</h5>
+                            <h5 class="card-body">@ViewBag.Gender</h5>
+                        </div>
+                    </div>
+                </div>
             </dd>
         </dl>
     </div>
@@ -68,12 +98,14 @@
 
 }
 
-
-
+<hr />
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    you can change the selected candidted if you wish just select back button and chose another one if you wish
 </div>
+
+
+<hr />
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

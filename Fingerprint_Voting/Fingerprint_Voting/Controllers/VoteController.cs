@@ -38,28 +38,43 @@ namespace Fingerprint_Voting.Controllers
 
         public ActionResult Scan_FingerForeVote(VotesDTO paramVotesDTO)
         {
-            // get logged in user id
-            String userId = User.Identity.GetUserId();
-            // get user fingerprint 
-            VoteViewModel voteVM = new VoteViewModel();
-            ViewBag.fingerprint = voteVM.GetUserFingerprint(userId);
-            // passing user id and finger print to the frontend
-            ViewBag.userId = userId;
-
-            var canId = paramVotesDTO.CandidateId;
-            //var uId = paramVotesDTO.UserId;
-            //var finprint = Request["UserFingerprint"]; 
-
-            ViewBag.candidateID = canId;
-            //ViewBag.userID = uId;
-            //ViewBag.fingerprint = finprint; 
-
+            Candidate candidate = null; 
 
             try
             {
                 if (paramVotesDTO == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    // get logged in user id
+                    String userId = User.Identity.GetUserId();
+                    // get user fingerprint 
+                    VoteViewModel voteVM = new VoteViewModel();
+                    ViewBag.fingerprint = voteVM.GetUserFingerprint(userId);
+                    // passing user id and finger print to the frontend
+                    ViewBag.userId = userId;
+
+                    var canId = paramVotesDTO.CandidateId;
+                    //var uId = paramVotesDTO.UserId;
+                    //var finprint = Request["UserFingerprint"]; 
+
+                    ViewBag.candidateID = canId;
+                    //ViewBag.userID = uId;
+                    //ViewBag.fingerprint = finprint; 
+
+                    VoteViewModel vvM = new VoteViewModel();
+
+                    candidate = vvM.GetCandidateDetailsById(canId);
+
+                    //Get the candidate details
+                    ViewBag.Name = candidate.Name; 
+                    ViewBag.Surname = candidate.Surname;
+                    ViewBag.Gender = candidate.Gender;
+                    ViewBag.Picture = candidate.CandidatePic; 
+
+                    
                 }
                 return View();
             }
@@ -68,6 +83,9 @@ namespace Fingerprint_Voting.Controllers
                 ModelState.AddModelError(string.Empty, "Error: " + ex);
                 return View();
             }
+
+
+
         }
         #endregion
         

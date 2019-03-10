@@ -169,5 +169,36 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
             }
             return userCountry; 
         }
+
+        public Candidate GetCandidateDetailsById(string id)
+        {
+            //SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+
+            // get candidate id from the model
+            Candidate paramCandidate = new Candidate();
+
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("getCandidateDetail", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+                    cmd.Parameters.AddWithValue("@CanId", id);
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        rdr.Read(); 
+                        
+                        paramCandidate.Name = rdr["Name"].ToString();
+                        paramCandidate.Surname = rdr["Surname"].ToString();
+                        paramCandidate.Gender = rdr["Gender"].ToString();
+                        paramCandidate.CandidatePic = (byte[])(rdr["Picture"]);
+                        
+                        
+                    }
+                }
+            }
+            return paramCandidate;
+        }
     }
 }
