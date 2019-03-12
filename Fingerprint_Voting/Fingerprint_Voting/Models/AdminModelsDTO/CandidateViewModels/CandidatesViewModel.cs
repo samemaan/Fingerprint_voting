@@ -32,10 +32,11 @@ namespace Fingerprint_Voting.Models.ViewModels
                                 FirstName = rdr["Name"].ToString(),
                                 Surname = rdr["Surname"].ToString(),
                                 Gender = rdr["Gender"].ToString(),
-                                City = rdr["Country"].ToString(),
-                                Country = rdr["City"].ToString(),
+                                Country = rdr["Country"].ToString(),
+                                City = rdr["City"].ToString(),
                                 DOB = rdr["DOB"].ToString(),
-                                CandidatePic = (byte[])(rdr["Picture"])
+                            CandidatePic = (byte[])(rdr["Picture"]),
+                                CampaignID = rdr["CampaignID"].ToString()
                             };
 
                             list.Add(objCandidateDTO);
@@ -68,11 +69,11 @@ namespace Fingerprint_Voting.Models.ViewModels
                         paramCandidateDTO.FirstName = rdr["Name"].ToString();
                         paramCandidateDTO.Surname = rdr["Surname"].ToString();
                         paramCandidateDTO.Gender = rdr["Gender"].ToString();
-                        paramCandidateDTO.City = rdr["Country"].ToString();
-                        paramCandidateDTO.Country = rdr["City"].ToString();
+                        paramCandidateDTO.Country = rdr["Country"].ToString();
+                        paramCandidateDTO.City = rdr["City"].ToString();
                         paramCandidateDTO.DOB = rdr["DOB"].ToString();
+                        paramCandidateDTO.CandidatePic = (byte[])(rdr["Picture"]);
                         paramCandidateDTO.CampaignID = rdr["CampaignID"].ToString();
-                        paramCandidateDTO.CandidatePic = (byte[])(rdr["Picture"]); 
 
 
                     }

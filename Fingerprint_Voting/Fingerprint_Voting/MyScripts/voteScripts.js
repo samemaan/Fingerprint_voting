@@ -45,8 +45,27 @@ interact('.dropzone').dropzone({
     },
     ondrop: function (event) {
         //console.log(event)
-        var CandidateId = $('#CandidateId').val();
-        alert('CandidateId: ' + CandidateId);
+        var candidate = $('#CandidateId').val();
+        //console.log(CandidateId)
+        // split the details into an array 
+        var canDetails = candidate.split(','); 
+
+        var candidateID = canDetails[0]; 
+        var campaignID = canDetails[1];
+        // replace any space thats in the id.
+        campaignID = campaignID.replace(/\s/g, '');
+
+        console.log(candidateID)
+        console.log(campaignID)
+
+
+        alert('candidateID: ' + candidateID);
+
+        document.getElementById('CandidateId').value = candidateID; 
+        document.getElementById('CampaignID').value = campaignID; 
+
+        //var CampaignId = $('#CampaignID').val();
+        //alert('CampaignID' +CampaignId); 
 
         var theElement = event.relatedTarget,
             theElement = event.target;
@@ -104,37 +123,13 @@ interact('.drag-drop')
 var UserFingerprint = "";
 
 function values() {
-    var CandidateId = $("#CandidateId").val();
-    //var UserId = $('UserId').val(); 
-    //var UserFingerprint = $('UserFingerprint').val();
-
-
-    //alert('values(): ' + CandidateId);
-    //var b = document.getElementById('b').value;
-    // printing the user details with candidate for testing
-
-    //console.log(CandidateId);
-    //console.log(UserId);
-    //console.log(UserFingerprint);
     $("#leForm").submit();
-    //window.stop();
 }
 
 
-function fingerprint() {
-
-
-    UserFingerprint = document.getElementById('UserFingerprint').value;
-
-}
 
 // :  
 function getImageId(e) {
-    $('#CandidateId').val(e.id);
+    var cand = $('#CandidateId').val(e.id);
+    //console.log(cand); 
 }
-//function getFingerprint(e) {
-//    $('#UserFingerprint').val(e.id);
-//}
-//function getUserId(e) {
-//    $('#UserId').val(e.id);
-//}

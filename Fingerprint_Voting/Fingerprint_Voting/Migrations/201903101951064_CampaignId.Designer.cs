@@ -7,13 +7,13 @@ namespace Fingerprint_Voting.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class VoteDTO : IMigrationMetadata
+    public sealed partial class CampaignId : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(VoteDTO));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CampaignId));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903042204366_VoteDTO"; }
+            get { return "201903101951064_CampaignId"; }
         }
         
         string IMigrationMetadata.Source

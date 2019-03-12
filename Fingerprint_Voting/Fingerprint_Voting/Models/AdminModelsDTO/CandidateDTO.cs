@@ -23,11 +23,12 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Gender"), Required]
         public string Gender { get; set; }
 
+        [Display(Name = "Country"), Required]
+        public string Country { get; set; }
+
         [Display(Name = "City"), Required]
         public string City { get; set; }
 
-        [Display(Name = "Country"), Required]
-        public string Country { get; set; }
 
         [Display(Name = "Date Of Birth"), Required]
         public string DOB { get; set; }

@@ -256,9 +256,13 @@
     <Compile Include="Migrations\201903022311372_Country_to_campaigen.Designer.cs">
       <DependentUpon>201903022311372_Country_to_campaigen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903042204366_VoteDTO.cs" />
-    <Compile Include="Migrations\201903042204366_VoteDTO.Designer.cs">
-      <DependentUpon>201903042204366_VoteDTO.cs</DependentUpon>
+    <Compile Include="Migrations\201903101951064_CampaignId.cs" />
+    <Compile Include="Migrations\201903101951064_CampaignId.Designer.cs">
+      <DependentUpon>201903101951064_CampaignId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903112212060_CampaignId1.cs" />
+    <Compile Include="Migrations\201903112212060_CampaignId1.Designer.cs">
+      <DependentUpon>201903112212060_CampaignId1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -373,8 +377,9 @@
     <Content Include="Views\Vote\Scan_FingerForeVote.cshtml" />
     <Content Include="Views\Vote\ThankYou.cshtml" />
     <Content Include="Views\Candidate\Error.cshtml" />
-    <Content Include="Views\Vote\Error.cshtml" />
+    <Content Include="Views\Vote\Rejected.cshtml" />
     <Content Include="Views\Vote\Index.cshtml" />
+    <Content Include="Views\Vote\AlreadyVoted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -433,8 +438,11 @@
     <EmbeddedResource Include="Migrations\201903022311372_Country_to_campaigen.resx">
       <DependentUpon>201903022311372_Country_to_campaigen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903042204366_VoteDTO.resx">
-      <DependentUpon>201903042204366_VoteDTO.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903101951064_CampaignId.resx">
+      <DependentUpon>201903101951064_CampaignId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903112212060_CampaignId1.resx">
+      <DependentUpon>201903112212060_CampaignId1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

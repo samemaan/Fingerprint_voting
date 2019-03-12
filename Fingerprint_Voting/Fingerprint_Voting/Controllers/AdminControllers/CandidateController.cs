@@ -98,6 +98,7 @@ namespace Fingerprint_Voting.Controllers
             }
             else
             {
+                // no check if the same candidate is already registerd in the same campaing twice 
                 try
                 {
                     //byte CandidatePic = paramCandidateDTO.CandidatePic;

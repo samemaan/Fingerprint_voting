@@ -11,10 +11,10 @@ namespace Fingerprint_Voting.Models
     {
        [Key]
         public string UserId { get; set; }
-
         public string CandidateId { get; set; }
+        public string CampaignID { get; set; }
 
-        
+
     }
     public class Candidate
     {
@@ -23,7 +23,20 @@ namespace Fingerprint_Voting.Models
         public string Surname { get; set;  }
         public string Gender { get; set;  }
         public byte[] CandidatePic { get; set; }
+        public string CampaignID { get; set; }
 
 
+    }
+    public class UserCampaign
+    {
+        [Key]
+        public string UserId { get; set; }
+        public string CampaignID { get; set; }
+    }
+    public class UserDetails
+    {
+        [Key]
+        public string DOB { set; get; }
+        public string UserStatusId { set; get; }
     }
 }

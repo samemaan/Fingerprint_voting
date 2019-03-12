@@ -9,10 +9,9 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
 {
     public class VoteViewModel
     {
-        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-
         public string GetUserFingerprint(string id)
         {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             // get userStatus id from the model
             string userFingerprint = ""; 
 
@@ -36,14 +35,17 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
             return userFingerprint;
         }
         // The following method returns the user StatusId
-        public string GetUserStatusId(string id)
+        public UserDetails GetUserDetails(string id)
         {
-            // get userStatus id from the model
-            string userStatus = "";
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            // get user detials
+
+            UserDetails userDetails = new UserDetails(); 
+
 
             using (sqlconn)
             {
-                using (SqlCommand cmd = new SqlCommand("getUserStatusId", sqlconn))
+                using (SqlCommand cmd = new SqlCommand("getUserDetails", sqlconn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlconn.Open();
@@ -53,22 +55,23 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
                     {
                         if (rdr.Read())
                         {
-                            userStatus = rdr["UserStatusId"].ToString();
+                            userDetails.DOB = rdr["DOB"].ToString();
+                            userDetails.UserStatusId = rdr["UserStatusId"].ToString();
                         }
-
+                        else
+                        {
+                            userDetails = null; 
+                        }
                         
-
                     }
                 }
             }
-            //sqlconn.Close(); 
-
-            return userStatus;
+            return userDetails;
         }
         // The following method returns the userStatus Description
         public string GetUserStatusDescription(string id)
         {
-            // get userStatus id from the model
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             string userStatusDescription = "";
 
             using (sqlconn)
@@ -93,7 +96,7 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
         // The following method returns the userStatus id by passing the status description
         public string GetUserStatusIdByDescriptio(string desc)
         {
-            // get userStatus id by the status description 
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             string statusId = "";
 
             using (sqlconn)
@@ -172,7 +175,7 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
 
         public Candidate GetCandidateDetailsById(string id)
         {
-            //SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
             // get candidate id from the model
             Candidate paramCandidate = new Candidate();
@@ -192,13 +195,49 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
                         paramCandidate.Name = rdr["Name"].ToString();
                         paramCandidate.Surname = rdr["Surname"].ToString();
                         paramCandidate.Gender = rdr["Gender"].ToString();
+                        paramCandidate.CampaignID = rdr["CampaignID"].ToString();
                         paramCandidate.CandidatePic = (byte[])(rdr["Picture"]);
-                        
-                        
+
+
                     }
                 }
             }
             return paramCandidate;
+        }
+
+
+        public UserCampaign GetUserCampaign(string UserId, string CampaignID)
+        {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+
+            // get users with the campaign they vote 
+            UserCampaign userCampaign = new UserCampaign();
+
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("getUserCampaign", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    cmd.Parameters.AddWithValue("@CampaignID", CampaignID);
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        if (rdr.Read())
+                        {
+                            userCampaign.UserId = rdr["UserId"].ToString();
+                            userCampaign.CampaignID = rdr["CampaignID"].ToString();
+                        }
+                        else
+                        {
+                            userCampaign = null; 
+                        }
+                        
+                    }
+                }
+            }
+            return userCampaign;
         }
     }
 }

@@ -1,20 +1,13 @@
 ﻿#outer-dropzone {
-    height: 540px;
-    touch-action: none;
+
 }
 
 #inner-dropzone {
-    height: 540px;
+   
 }
 
 .dropzone {
-    background-color: #ccc;
-    border: dashed 4px transparent;
-    border-radius: 4px;
-    margin: 10px auto 30px;
-    padding: 10px;
-    width: 100%;
-    transition: background-color 0.3s;
+   
 }
 
 .drop-active {
@@ -34,6 +27,18 @@
     padding: 2em 0.5em;
     color: #fff;
     background-color: #222223;
+    border: solid 2px #fff;
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+    transition: background-color 0.3s;
+    border-radius: 30px;
+}
+.selectedCandidate {
+    display: inline-block;
+    min-width: 40px;
+    padding: 2em 0.5em;
+    color: #000;
+    background-color: #4e4;
     border: solid 2px #fff;
     -webkit-transform: translate(0px, 0px);
     transform: translate(0px, 0px);

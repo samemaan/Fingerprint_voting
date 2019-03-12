@@ -10,10 +10,11 @@ namespace Fingerprint_Voting.Models.UserStatusModels
 {
     public class CampaignViewModel
     {
-        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+        
 
         public List<CampaignDTO> GetAllCampaigns()
         {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             List<CampaignDTO> list = new List<CampaignDTO>();
 
             using (sqlconn)
@@ -46,6 +47,7 @@ namespace Fingerprint_Voting.Models.UserStatusModels
         }
         public CampaignDTO GetCampaignById(string id)
         {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             // get campaign id from the model
             CampaignDTO campaignDTO = new CampaignDTO();
 
@@ -73,6 +75,7 @@ namespace Fingerprint_Voting.Models.UserStatusModels
         }
         public void DeleteCampaignById(string id)
         {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             using (sqlconn)
             {
                 using (SqlCommand cmd = new SqlCommand("DeleteCampaign", sqlconn))
@@ -89,6 +92,7 @@ namespace Fingerprint_Voting.Models.UserStatusModels
         // the following method returns the name and id of the campaign 
         public List<CampaignNames> GetAllCampaignNamesAndID()
         {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             List<CampaignNames> list = new List<CampaignNames>();
 
             using (sqlconn)
