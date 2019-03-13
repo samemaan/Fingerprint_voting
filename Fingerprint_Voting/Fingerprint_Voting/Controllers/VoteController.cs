@@ -5,6 +5,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -14,15 +16,16 @@ namespace Fingerprint_Voting.Controllers
 {
     public class VoteController : Controller
     {
-      
+        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+
         [Authorize]
         // GET: Vote
         public ActionResult Index()
         {
-            
+
             CandidatesViewModel candidateVM = new CandidatesViewModel();
             List<CandidateDTO> candidates = candidateVM.GetAllCandidates();
-            
+
 
             return View(candidates);
         }
@@ -38,7 +41,7 @@ namespace Fingerprint_Voting.Controllers
 
         public ActionResult Scan_FingerForeVote(VotesDTO paramVotesDTO)
         {
-            Candidate candidate = null; 
+            Candidate candidate = null;
 
             try
             {
@@ -64,13 +67,13 @@ namespace Fingerprint_Voting.Controllers
                     candidate = vvM.GetCandidateDetailsById(canId);
 
                     //Get the candidate details
-                    ViewBag.Name = candidate.Name; 
+                    ViewBag.Name = candidate.Name;
                     ViewBag.Surname = candidate.Surname;
                     ViewBag.Gender = candidate.Gender;
-                    ViewBag.Picture = candidate.CandidatePic; 
-                    ViewBag.CampaignID = candidate.CampaignID; 
+                    ViewBag.Picture = candidate.CandidatePic;
+                    ViewBag.CampaignID = candidate.CampaignID;
 
-                    
+
                 }
                 return View();
             }
@@ -84,7 +87,7 @@ namespace Fingerprint_Voting.Controllers
 
         }
         #endregion
-        
+
         // GET: /Vote/ThankYou
         [Authorize]
         #region public ActionResult ThankYou()
@@ -100,19 +103,19 @@ namespace Fingerprint_Voting.Controllers
             //ViewBag.fingerprint = finprint;
             // get user status for Voting 
             var userStatusId = "";
-            var userDOB = ""; 
-            var userStatusDescription = ""; 
+            var userDOB = "";
+            var userStatusDescription = "";
             // get user DOB and Status in this array
             VoteViewModel voteVM = new VoteViewModel();
             UserDetails userDetails = voteVM.GetUserDetails(uId);
-            userStatusId = userDetails.UserStatusId; 
+            userStatusId = userDetails.UserStatusId;
             userStatusId = userStatusId.ToString();
             // use DOB 
-            userDOB = userDetails.DOB; 
+            userDOB = userDetails.DOB;
 
             // check if the candidate country is same as the voters country 
             var CandidateCountry = "";
-            var UserCountry = ""; 
+            var UserCountry = "";
 
             CandidatesViewModel candidatesViewModel = new CandidatesViewModel();
             CandidateDTO canDTO = new CandidateDTO();
@@ -120,83 +123,78 @@ namespace Fingerprint_Voting.Controllers
             // candidates Country
             CandidateCountry = canDTO.Country;
             var candidateCampaign = canDTO.CampaignID;
-            ViewBag.candidateCampaign = candidateCampaign; 
+            ViewBag.candidateCampaign = candidateCampaign;
 
             // users Country
-            UserCountry = voteVM.GetLoggedUserCountry(uId); 
-            
+            UserCountry = voteVM.GetLoggedUserCountry(uId);
+
             userStatusDescription = voteVM.GetUserStatusDescription(userStatusId);
 
-            ViewBag.UserCountry = UserCountry; 
+            ViewBag.UserCountry = UserCountry;
             ViewBag.CandidateCountry = CandidateCountry;
 
             // get user and campaign 
-            UserCampaign userCampaign = new UserCampaign();
-            userCampaign = voteVM.GetUserCampaign(uId, candidateCampaign); 
+            //UserCampaign userCampaign = new UserCampaign();
+
+            //userCampaign = voteVM.GetUserCampaign(uId, candidateCampaign);
+
+            List<UserCampaign> userCampaign = voteVM.GetUserCampaign();// get all the list of the user id and campaing that voted before
+            
 
 
-            if(userCampaign == null)// check if the user campaing table is not empty 
+
+            if (UserCountry == CandidateCountry) //  the user should be the citizen in the country to vote for the candidate
             {
-                ViewBag.result = "The campaing and user is not in the table"; 
-                return View();
+                // check users age at the current time, the user may have grown up and have the age rule 
 
-            }
-            else // if the table has data 
-            {
-                if (UserCountry == CandidateCountry) //  the user should be the citizen in the country to vote for the candidate
+                GetAgeCalculated gAge = new GetAgeCalculated();
+                int userAge = gAge.GetAge(userDOB);
+                if (userAge >= 18)
                 {
-                    //  than you can vote, check if the user and campaign are not the same 
-                    if (uId == userCampaign.UserId && candidateCampaign == userCampaign.CampaignID) // user can vote for multiple campaings but can vote for the second time in the same campaign
+                    ViewBag.result = userAge;
+
+                    if (userCampaign != null)// check if the user campaing table is not empty 
                     {
-                        //ViewBag.result = "The user already Voted in this campaign";
-                        return View("AlreadyVoted");
+                        bool userVotedfound = false;
+                        foreach(var item in userCampaign)
+                        {
+                            if (uId == item.UserId && candidateCampaign == item.CampaignID)
+                            {
+                                userVotedfound = true;
+                            }
+                            else
+                            {
+                                userVotedfound = false;
+                            }
+                        }
+                        //  than you can vote, check if the user and campaign are not the same 
+                        if (userVotedfound) // user can vote for multiple campaings but can vote for the second time in the same campaign
+                        {
+                            //ViewBag.result = "The user already Voted in this campaign";
+                            return View("AlreadyVoted");
+                        }
+                        else // if the user did not vote than let the user vote 
+                        {
+                            voteVM.InsertDataIntoVoteTable(uId, candidateCampaign, canId); // add the data to Vote table 
+                            return View();// return thank you to the user
+                        }
                     }
-                    else // if the user did not vote than let him vote 
+                    else// if the table has no data user did not vote on any campaign than let the user vote 
                     {
-                        // check users age at the current time, the user may have grown up and have the age rule 
-
-                        GetAgeCalculated gAge = new GetAgeCalculated();
-                        int userAge = gAge.GetAge(userDOB);
-                        if(userAge >= 18 )
-                        {
-                            ViewBag.result = userAge; 
-                            return View();
-                        }
-                        else
-                        {
-                            return View("Rejected");
-                        }
-                        
+                        voteVM.InsertDataIntoVoteTable(uId, candidateCampaign, canId); // add the data to Vote table
+                        return View();// return thank you to the user
                     }
-
-                    //if (userStatusDescription == "Not Vote")
-                    //{
-                    //    ViewBag.userStatusDescription = "NOt Vote";
-                    //}
-                    //else if (userStatusDescription == "Age-rule")
-                    //{
-                    //    ViewBag.userStatusDescription = "You are Too Young For Voting";
-                    //}
-                    //else
-                    //{
-                    //    //ViewBag.userStatusId = userStatusId;
-                    //    //ViewBag.userStatusDescription = userStatusDescription;
-                    //    ViewBag.userStatusDescription = "you have already Voted";
-                    //}
-
-                    //return View();
-
                 }
                 else
                 {
                     return View("Rejected");
-
                 }
-
-                
+            }
+            else
+            {
+                return View("Rejected");
 
             }
-
         }
         #endregion
     }

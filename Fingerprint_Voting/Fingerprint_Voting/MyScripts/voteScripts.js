@@ -59,7 +59,7 @@ interact('.dropzone').dropzone({
         console.log(campaignID)
 
 
-        alert('candidateID: ' + candidateID);
+        //alert('candidateID: ' + candidateID);
 
         document.getElementById('CandidateId').value = candidateID; 
         document.getElementById('CampaignID').value = campaignID; 

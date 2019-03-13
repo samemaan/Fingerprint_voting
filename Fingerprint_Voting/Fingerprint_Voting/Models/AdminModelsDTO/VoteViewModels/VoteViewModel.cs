@@ -205,13 +205,10 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
             return paramCandidate;
         }
 
-
-        public UserCampaign GetUserCampaign(string UserId, string CampaignID)
+        public List<UserCampaign> GetUserCampaign()
         {
             SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-
-            // get users with the campaign they vote 
-            UserCampaign userCampaign = new UserCampaign();
+            List<UserCampaign> list = new List<UserCampaign>();
 
             using (sqlconn)
             {
@@ -219,25 +216,43 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlconn.Open();
-                    cmd.Parameters.AddWithValue("@UserId", UserId);
-                    cmd.Parameters.AddWithValue("@CampaignID", CampaignID);
 
                     using (SqlDataReader rdr = cmd.ExecuteReader())
                     {
-                        if (rdr.Read())
+                        while (rdr.Read())
                         {
-                            userCampaign.UserId = rdr["UserId"].ToString();
-                            userCampaign.CampaignID = rdr["CampaignID"].ToString();
+                            UserCampaign userCampaign = new UserCampaign
+                            {
+                                UserId = rdr["UserId"].ToString(),
+                                CampaignID = rdr["CampaignID"].ToString()
+                              
+                            };
+                            list.Add(userCampaign);
                         }
-                        else
-                        {
-                            userCampaign = null; 
-                        }
-                        
                     }
                 }
             }
-            return userCampaign;
+            return list;
+        }
+
+        public void InsertDataIntoVoteTable(string uId, string CampId, string CandId)
+        {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("getUsersVote", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@UserId", uId);
+                    cmd.Parameters.AddWithValue("@CampaignID", CampId);
+                    cmd.Parameters.AddWithValue("@CandidateID", CandId);
+                    sqlconn.Open();
+                    cmd.ExecuteNonQuery();
+                    sqlconn.Close();
+
+                }
+            }
         }
     }
 }
