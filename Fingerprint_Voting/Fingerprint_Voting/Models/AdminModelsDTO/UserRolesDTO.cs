@@ -69,6 +69,7 @@ namespace Fingerprint_Voting.Models
 
         public string UserStatusId { get; set; }
 
+        public List<string> CountriesList { get; set; }
     }
 
     public class UserRolesDTO

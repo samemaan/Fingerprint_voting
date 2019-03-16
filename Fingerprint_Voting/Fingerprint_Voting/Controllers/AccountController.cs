@@ -147,7 +147,13 @@ namespace Fingerprint_Voting.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+
+            RegisterViewModel rVM = new RegisterViewModel();
+            GetCountriesList getCountriesList = new GetCountriesList();
+
+            rVM.CountriesList = getCountriesList.CountriesList(); 
+
+            return View(rVM);
         }
 
         //
@@ -198,10 +204,9 @@ namespace Fingerprint_Voting.Controllers
                     statusId = vM.GetUserStatusIdByDescriptio(statusDescription);
                 }
 
-               
 
 
-                var user = new ApplicationUser
+                 var user = new ApplicationUser
                 {
                     FirstName = model.FirstName,
                     Surname = model.Surname,

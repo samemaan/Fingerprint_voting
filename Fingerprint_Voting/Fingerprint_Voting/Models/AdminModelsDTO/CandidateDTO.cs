@@ -41,5 +41,9 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Campaing"), Required]
 
         public List<CampaignNames> Campaigns { get; set; }
+
+        public List<string> CampaignsList { get; set; }
+
+        public List<string> Countries { get; set; }
     }
 }

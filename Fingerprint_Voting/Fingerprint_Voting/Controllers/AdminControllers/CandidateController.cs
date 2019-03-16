@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -43,16 +44,22 @@ namespace Fingerprint_Voting.Controllers
         #region public ActionResult Create()
         public ActionResult Create()
         {
-
             CandidateDTO candidateDTO = new CandidateDTO();
-
             CampaignViewModel camVM = new CampaignViewModel();
-
-            candidateDTO.Campaigns = camVM.GetAllCampaignNamesAndID();
-
+            // get all the campaigns in the list with thier ids 
+            var camp = candidateDTO.Campaigns; 
+            camp = camVM.GetAllCampaignNamesAndID(); 
+            // get countries list to View from account
+            GetCountriesList getCountriesList = new GetCountriesList();
+            candidateDTO.Countries = getCountriesList.CountriesList(); // set the countries list to, where list is string and it's in the model
+            List<string> campainglist = new List<string>();  // get the campaigns name from the list campaings model and add them to string list
+            foreach(var item in camp)
+            {
+                campainglist.Add(item.Description); 
+            }
+            candidateDTO.CampaignsList = campainglist; // string list of campaigns names, store them in the Campaigns list where declared in the model
+            
             return View(candidateDTO);
-
-
         }
         #endregion
 
@@ -64,7 +71,7 @@ namespace Fingerprint_Voting.Controllers
         #region public ActionResult Create(RoleDTO paramRoleDTO)
 
 
-        public ActionResult Create(CandidateDTO paramCandidateDTO, HttpPostedFileBase CandidateImage, string CampaignIDFromView)
+        public ActionResult Create(CandidateDTO paramCandidateDTO, HttpPostedFileBase CandidateImage)
         {
 
 
@@ -73,7 +80,21 @@ namespace Fingerprint_Voting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            // get the campaign ID by camparing the name from the list which was selected
+            var CampId = ""; 
+            CandidateDTO candidateDTO = new CandidateDTO();
+            CampaignViewModel camVM = new CampaignViewModel();
+            // get all the campaigns in the list with thier ids 
+            var camp = candidateDTO.Campaigns;
+            camp = camVM.GetAllCampaignNamesAndID();
 
+            foreach(var item in camp)
+            {
+                if(item.Description == paramCandidateDTO.CampaignID)
+                {
+                    CampId = item.CampaignID; 
+                }
+            }
             //var Name = paramCandidateDTO.UserPic; 
             var UserName = paramCandidateDTO.FirstName.Trim();
             var Surname = paramCandidateDTO.Surname.Trim();
@@ -81,7 +102,7 @@ namespace Fingerprint_Voting.Controllers
             var Country = paramCandidateDTO.Country.Trim();
             var City = paramCandidateDTO.City.Trim();
             var DOB = paramCandidateDTO.DOB.Trim();
-            var CampaignID = CampaignIDFromView;
+            var CampaignID = CampId;
 
             // get the country of the from Campaign table,  check the country matches the candidate country
             // enter the details to the database else redirect the user to an message Page. 

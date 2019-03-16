@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace Fingerprint_Voting.Models
 {
@@ -81,6 +82,8 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Country"), Required]
         public string Country { get; set; }
 
+        public List<string> CountriesList { get; set; }
+
         [Display(Name = "City"), Required]
         public string City { get; set; }
 
@@ -155,6 +158,27 @@ namespace Fingerprint_Voting.Models
 
             return age; 
              
+        }
+    }
+
+    public class GetCountriesList
+    {
+        public List<string> CountriesList()
+        {
+            List<string> CountryList = new List<string>();
+            CultureInfo[] CInfoList = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+            foreach (CultureInfo CInfo in CInfoList)
+            {
+                RegionInfo R = new RegionInfo(CInfo.LCID);
+                if (!(CountryList.Contains(R.EnglishName)))
+                {
+                    CountryList.Add(R.EnglishName);
+                }
+            }
+
+            CountryList.Sort();
+
+            return CountryList;
         }
     }
 

@@ -113,9 +113,11 @@ namespace Fingerprint_Voting.Controllers
         {
             ExpandedUserDTO objExpandedUserDTO = new ExpandedUserDTO();
 
-            
+            GetCountriesList getCountriesList = new GetCountriesList(); 
 
-            ViewBag.Roles = GetAllRolesAsSelectList();
+            ViewBag.Roles = GetAllRolesAsSelectList(); // users roles in the list , dropdown
+
+            objExpandedUserDTO.CountriesList = getCountriesList.CountriesList();  // countries in list dropdown
 
             return View(objExpandedUserDTO);
         }

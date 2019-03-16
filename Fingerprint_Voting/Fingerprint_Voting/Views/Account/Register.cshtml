@@ -16,21 +16,21 @@
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @required = "true" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control", @required = "true" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DOB, new { @type = "date", @class = "form-control datepicker"})
+            @Html.TextBoxFor(m => m.DOB, new { @type = "date", @class = "form-control datepicker" })
             @Html.ValidationMessageFor(m => m.DOB, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -50,9 +50,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Country, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(model => model.CountriesList, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+            @*@Html.DropDownList("CountryList", new SelectList(Model.Countries), new { @class = "form-control" })*@
+            @Html.DropDownListFor(model => model.Country, new SelectList(Model.CountriesList, "Text"), new { @class = "form-control" })
         </div>
     </div>
 
@@ -60,7 +61,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.City, new { @class = "form-control", @required = "true" })
         </div>
     </div>
 
@@ -76,19 +77,19 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "true" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = "true" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" , @required = "true"})
         </div>
     </div>
 
