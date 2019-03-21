@@ -9,7 +9,7 @@ namespace Fingerprint_Voting.Models.ViewModels
 {
     public class CandidatesViewModel
     {
-        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+        private SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
         public List<CandidateDTO> GetAllCandidates()
         {

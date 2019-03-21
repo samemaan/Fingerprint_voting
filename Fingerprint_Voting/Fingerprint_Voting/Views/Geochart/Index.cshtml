@@ -1,0 +1,63 @@
+﻿
+@using Fingerprint_Voting.Models
+@model CountryModel
+
+
+<script  type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMFWoq3d1bXAy_DngaLXGnALio75c8kjc&callback=initMap"
+        type="text/javascript"></script>
+
+
+@*@ViewBag.Test <br />
+@ViewBag.Test1<br />
+@ViewBag.Test2*@
+
+<h1>System Data Analysis Around The World</h1>
+<hr />
+
+<script type="text/javascript">
+
+    // Note: you will need to get a mapsApiKey for your project.
+    // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+    //var myMapsApiKey = 'AIzaSyDMFWoq3d1bXAy_DngaLXGnALio75c8kjc';
+    google.load("visualization", "1", {packages: ["geochart"]});
+    google.setOnLoadCallback(drawRegionsMap);
+   
+    
+
+      function drawRegionsMap() {
+
+          // Create and populate the data table.
+          var country = '@Model.CountrytData.CountryName';
+          //Pereparing string into array
+          var countryarray = country.split(',');
+          var population = [@Model.CountrytData.Registerd];
+          var votes = [@Model.CountrytData.Vote];
+
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', '@Model.CountryTitle');
+          data.addColumn('number', '@Model.RegisterdTitle');
+          data.addColumn('number', '@Model.VoteTitle');
+
+          for (i = 0; i < countryarray.length; i++)
+          {
+              
+              data.addRow([countryarray[i].toString(), population[i], votes[i]]);
+          }
+          var options = {
+              sizeAxis: { minValue: 0, maxValue: 100 },
+              displayMode: 'map',
+              colorAxis: { colors: ['#0066ff', '#40ff00', '#990099', '#ffff00', '#000080', '#ffff00'] },
+              backgroundColor: '#ffffff',
+              datalessRegionColor: '#433d3d',
+              defaultColor: '#f5d6d6',};
+
+          var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+          
+          chart.draw(data, options);
+      }
+</script>
+<div id="regions_div" style="width: 1200px; height: 800px;">
+</div>

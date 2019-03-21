@@ -14,7 +14,7 @@ namespace Fingerprint_Voting.Controllers
 {
     public class CampaignController : Controller
     {
-        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+        private SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
         // GET: Campaign/Index
         [Authorize(Roles = "Administrator")]

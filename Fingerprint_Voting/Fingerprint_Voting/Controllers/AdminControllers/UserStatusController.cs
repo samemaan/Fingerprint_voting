@@ -13,7 +13,7 @@ namespace Fingerprint_Voting.Controllers
 {
     public class UserStatusController : Controller
     {
-        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+        private SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
         // GET: UserStatus/Index
         [Authorize(Roles = "Administrator")]

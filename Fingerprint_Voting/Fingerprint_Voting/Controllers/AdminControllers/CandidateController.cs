@@ -22,8 +22,7 @@ namespace Fingerprint_Voting.Controllers
 {
     public class CandidateController : Controller
     {
-
-        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+        private SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
         // GET: /Candidate/Index
         [Authorize(Roles = "Administrator")]

@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<h2>Data Analysis</h2>
+<hr />
+
+
+
+<p>@ViewBag.totalUsers</p>
+<p>@ViewBag.totalVots</p>
+
+            @*ViewBag.totalUsers = totalUusers;
+            ViewBag.totalVots = totalVots;
+            ViewBag.totalMale = totalMale;
+            ViewBag.totalFemale = totalFemale;
+            ViewBag.totalOters = totalOthers;*@
+
+<table class="columns">
+    <tr>
+        <td> <div id="piechart"style="border: 1px solid #ccc"></div></td>
+        <td> <div id="bar-chart"style="border: 1px solid #ccc"></div></td>
+        
+    </tr>
+    @*<tr>
+        
+        <td> <div id="area-chart" style="border: 1px solid #ccc"></div></td>
+        
+    </tr>*@
+    
+</table>
+
+
+   
+   
+
+   
+
+
+
+<script type="text/javascript">
+    // Load google charts
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(PieChart); // pie chart 
+
+    
+    google.charts.setOnLoadCallback(BarChart);// bar chart 
+
+    //google.charts.setOnLoadCallback(AreaChart);// area chart 
+
+    // Draw the chart and set the chart values
+    function PieChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Sources', 'System Voters'],
+            ['Males', @ViewBag.totalMale],
+            ['Females', @ViewBag.totalFemale],
+            ['Others', @ViewBag.totalOters]
+        ]);
+
+        // Optional; add a title and set the width and height of the chart
+        var options = {
+            'title': 'Voters Gender Analysis Of the System', 'animation': {
+                'duration': 1000,
+                'easing': 'out',
+                'startup': true
+            },
+            'width': 550, 'height': 400, backgroundColor: '#E4E4E4'
+
+        };
+
+        //var percent = 0;
+        //// start the animation loop
+        //var handler = setInterval(function () {
+        //    // values increment
+        //    percent += 1;
+        //    // apply new values
+        //    data.setValue(0, 1, percent);
+        //    data.setValue(1, 1, 100 - percent);
+        //    // update the pie
+        //    chart.draw(data, options);
+        //    // check if we have reached the desired value
+        //    if (percent > 99)
+        //        // stop the loop
+        //        clearInterval(handler);
+        //}, 30);
+
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        //var chart = new google.visualization.BarChart(document.getElementById('BarChart'));
+        chart.draw(data, options);
+
+       
+    }
+    function BarChart() {
+        //ViewBag.maleVotes = maleVotes;
+        //ViewBag.femaleVotes = femaleVotes;
+        //ViewBag.othersVotes = othersVotes; 
+        // actual bar chart data
+        var barData = google.visualization.arrayToDataTable([
+            ['System', 'Users', 'Votes'],
+            ['Total', @ViewBag.totalUsers, @ViewBag.totalVots],
+            ['Males', @ViewBag.totalMale, @ViewBag.maleVotes ],
+            ['Females', @ViewBag.totalFemale, @ViewBag.femaleVotes],
+            ['Others', @ViewBag.totalOters, @ViewBag.othersVotes],
+        ]);
+        // set bar chart options
+        var barOptions = {
+            title: 'Votes Analysis Of System',
+            focusTarget: 'category',
+            'width': 550, 'height': 400, backgroundColor: '#E4E4E4',
+            colors: ['cornflowerblue', 'tomato'],
+            fontName: 'Open Sans',
+            chartArea: {
+                left: 70,
+                top: 30,
+                width: '100%',
+                height: '70%'
+            },
+            bar: {
+                groupWidth: '80%'
+            },
+            hAxis: {
+                textStyle: {
+                    fontSize: 11
+                }
+            },
+            vAxis: {
+                minValue: 0,
+                maxValue: 20,
+                baselineColor: '#DDD',
+                gridlines: {
+                    color: '#DDD',
+                    count: 4
+                },
+                textStyle: {
+                    fontSize: 11
+                }
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
+            animation: {
+                duration: 1200,
+                easing: 'out',
+                startup: true
+            }
+        };
+        // draw bar chart twice so it animates
+        var barChart = new google.visualization.ColumnChart(document.getElementById('bar-chart'));
+        //barChart.draw(barZeroData, barOptions);
+        barChart.draw(barData, barOptions);
+    }
+    //function AreaChart() {
+    //    var data = google.visualization.arrayToDataTable([
+    //        ['Year', 'Sales', 'Expenses'],
+    //        ['2013', 1000, 400],
+    //        ['2014', 1170, 460],
+    //        ['2015', 660, 1120],
+    //        ['2016', 1030, 540]
+    //    ]);
+
+    //    var options = {
+    //        title: 'Company Performance',
+    //        hAxis: { title: 'Year', titleTextStyle: { color: '#333' } },
+    //        vAxis: { minValue: 0 }
+    //    };
+
+    //    var chart = new google.visualization.AreaChart(document.getElementById('area-chart'));
+    //    chart.draw(data, options);
+    //}
+</script>

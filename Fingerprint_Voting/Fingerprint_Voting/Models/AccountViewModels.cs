@@ -67,6 +67,8 @@ namespace Fingerprint_Voting.Models
     public class RegisterViewModel
     {
 
+        public string UserId { get; set; }
+
         [Display(Name = "First Name"), Required]
         public string FirstName { get; set; }
 
