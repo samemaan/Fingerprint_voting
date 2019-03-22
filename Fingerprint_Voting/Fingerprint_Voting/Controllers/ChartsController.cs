@@ -12,7 +12,7 @@ namespace Fingerprint_Voting.Controllers
 {
     public class ChartsController : Controller
     {
-        [Authorize]
+        [Authorize(Roles = "Administrator, Admin, Staff, Super Admin")]
         // GET: Charts
         public ActionResult Index()
         {

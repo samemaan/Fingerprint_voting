@@ -11,7 +11,7 @@ namespace Fingerprint_Voting.Controllers
 {
     public class GeochartController : Controller
     {
-        //[Authorize]
+        [Authorize(Roles = "Administrator, Admin, Staff, Super Admin")]
         // GET: Geochart  
         public ActionResult Index()
         {
@@ -135,9 +135,9 @@ namespace Fingerprint_Voting.Controllers
 
 
             // the following are just the value that will show system features on demo day!!
-            //objproduct.CountryName = "India,America,SriLanka,Rushia,Japan,Pakistan";
-            //objproduct.Registerd = "12225000,30022222200,4522222222200,802222000,16000,9002200";
-            //objproduct.Vote = "15000,3200,4222200,80000,16000,900";
+            objproduct.CountryName = "AFghanistan,,Ireland,Pakistan,Netherlands,India";
+            objproduct.Registerd = "11000000,1500000,1900000,2000000,1200000,1200000";
+            objproduct.Vote = "1800000,1000000,1500000,1700000,1700000,1000000";
 
             return objproduct;
         }

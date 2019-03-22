@@ -50,6 +50,19 @@
                                     <li>@Html.ActionLink("Campaign", "Index", "Campaign")</li>
                                     <li>@Html.ActionLink("Create User", "Create", "Admin")</li>
                                     <li>@Html.ActionLink("Edit Roles", "ViewAllRoles", "Admin")</li>
+                                </ul>
+                            </a>
+                        </li>
+
+                    }
+                    
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Admin")|| User.IsInRole("Super Admin") || User.IsInRole("Staff"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Charts
+                                <span class="caret"></span>
+                                <ul class="dropdown-menu" role="menu">
                                     <li class="dropdown-header">Charts</li>
                                     <li>@Html.ActionLink("Charts", "Index", "Charts")</li>
                                     <li>@Html.ActionLink("Geo", "Index", "Geochart")</li>
@@ -57,11 +70,13 @@
                             </a>
                         </li>
 
-                    }@if (Request.IsAuthenticated)
+                    }
+
+                    @if (Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Vote", "Index", "Vote")</li>
                     }
-
+                    
 
                 </ul>
                 @Html.Partial("_LoginPartial")
