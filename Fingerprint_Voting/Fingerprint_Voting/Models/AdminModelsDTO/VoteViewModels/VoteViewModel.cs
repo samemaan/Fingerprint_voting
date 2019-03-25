@@ -254,5 +254,38 @@ namespace Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels
                 }
             }
         }
+
+        public List<VotesDTO> GetAllTheVotes()
+        {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+
+            List<VotesDTO> list = new List<VotesDTO>();
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("getAllTheVotes", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            VotesDTO userCampaign = new VotesDTO
+                            {
+                                UserId = rdr["UserId"].ToString(),
+                                CandidateId = rdr["CandidateID"].ToString(),
+                                CampaignID = rdr["CampaignID"].ToString()
+
+
+                            };
+                            list.Add(userCampaign);
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
     }
 }

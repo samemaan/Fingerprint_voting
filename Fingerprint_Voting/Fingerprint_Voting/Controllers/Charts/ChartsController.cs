@@ -24,11 +24,7 @@ namespace Fingerprint_Voting.Controllers
             List<CampaignDTO> campaigns = cVM.GetCampaigns();   // get all the campaigns
             List<CandidateDTO> candidates = cVM.GetCandidates(); // get all the cadidates data
 
-
-
-
-
-
+            
             int totalUusers = 0;
             int totalVots = 0;
             double totalMale = 0; 

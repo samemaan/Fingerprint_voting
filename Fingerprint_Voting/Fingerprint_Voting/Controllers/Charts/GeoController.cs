@@ -135,7 +135,7 @@ namespace Fingerprint_Voting.Controllers
 
 
             // the following are just the value that will show system features on demo day!!
-            objproduct.CountryName = "AFghanistan,,Ireland,Pakistan,Netherlands,India";
+            objproduct.CountryName = "Afghanistan,Ireland,Pakistan,Netherlands,India";
             objproduct.Registerd = "11000000,1500000,1900000,2000000,1200000,1200000";
             objproduct.Vote = "1800000,1000000,1500000,1700000,1700000,1000000";
 

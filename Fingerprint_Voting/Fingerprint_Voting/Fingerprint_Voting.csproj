@@ -188,8 +188,9 @@
     <Compile Include="Controllers\AdminControllers\AdminController.cs" />
     <Compile Include="Controllers\AdminControllers\CampaignController.cs" />
     <Compile Include="Controllers\AdminControllers\CandidateController.cs" />
-    <Compile Include="Controllers\ChartsController.cs" />
-    <Compile Include="Controllers\GeoController.cs" />
+    <Compile Include="Controllers\Charts\ChartsController.cs" />
+    <Compile Include="Controllers\Charts\DynamicallyUpdateChartController.cs" />
+    <Compile Include="Controllers\Charts\GeoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\AdminControllers\UserStatusController.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Models\AdminModelsDTO\VoteViewModels\VoteViewModel.cs" />
     <Compile Include="Models\ChartsViewModels\ChartsViewModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
+    <Compile Include="Models\DynamicChartsModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AdminModelsDTO\CandidateViewModels\CandidatesViewModel.cs" />
@@ -389,6 +391,7 @@
     <Content Include="Views\Vote\AlreadyVoted.cshtml" />
     <Content Include="Views\Charts\Index.cshtml" />
     <Content Include="Views\Geochart\Index.cshtml" />
+    <Content Include="Views\DynamicallyUpdateChart\CountryChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
