@@ -122,6 +122,7 @@ namespace Fingerprint_Voting.Controllers
         {
             CampaignViewModel campaignVM = new CampaignViewModel();
             CampaignDTO status = campaignVM.GetCampaignById(id);
+            status.CampaignID = id; 
             return View(status);
         }
         #endregion
@@ -131,6 +132,7 @@ namespace Fingerprint_Voting.Controllers
         [HttpPost]
         public ActionResult Edit(CampaignDTO objeCampaign)
         {
+            
             if (ModelState.IsValid)
             {
 

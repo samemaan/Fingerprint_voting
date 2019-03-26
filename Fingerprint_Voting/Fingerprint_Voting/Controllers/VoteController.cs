@@ -1,5 +1,7 @@
 ﻿using Fingerprint_Voting.Models;
+using Fingerprint_Voting.Models.AdminModelsDTO;
 using Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels;
+using Fingerprint_Voting.Models.UserStatusModels;
 using Fingerprint_Voting.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -16,18 +18,106 @@ namespace Fingerprint_Voting.Controllers
 {
     public class VoteController : Controller
     {
-        SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-
         [Authorize]
         // GET: Vote
         public ActionResult Index()
         {
 
             CandidatesViewModel candidateVM = new CandidatesViewModel();
-            List<CandidateDTO> candidates = candidateVM.GetAllCandidates();
+            List<CandidateDTO> candidates = candidateVM.GetAllCandidates(); // all the candidate list that in the system 
+
+            List<CandidateDTO> getCandidateListToView = new List<CandidateDTO>();
+
+            CampaignViewModel cVM = new CampaignViewModel();
+            List<CampaignDTO> campaign = cVM.GetAllCampaigns();
+            bool empty = !campaign.Any(); // check if the campaign list is not empty 
+
+            string currentData = "";
+
+            string date = DateTime.Now.ToString("dd/MM/yyyy ");
+            string time = DateTime.Now.ToString("hh:mm:ss");
+
+            currentData = Convert.ToDateTime(date + time).ToString("dd/MM/yyyy HH:mm:ss");
+
+            List<string> uniqueCampID = new List<string>(); // get the unique ID fro each campaign
+            string getID = "";
 
 
-            return View(candidates);
+            bool found = false;
+            bool timeOK = false;
+            if (empty != true)
+            {
+                foreach (var camp in campaign)
+                {
+                    if (DateTime.Parse(currentData) <= camp.EndDate)
+                    {
+                        timeOK = true;
+                    }
+                    else
+                    {
+                        timeOK = false;
+                    }
+                    if (timeOK == true)
+                    {
+                        foreach (var can in candidates)
+                        {
+                            if (can.CampaignID == camp.CampaignID)
+                            {
+                                found = true;
+                            }
+                            if (found == true)
+                            {
+                                if (!getID.Contains(can.CandidateId))
+                                    getID += can.CandidateId + ",";
+                            }
+                            found = false;
+                        }
+                    }
+
+                }
+                getID = getID.TrimEnd(',', ' '); 
+                var canIdsArray = getID.Split(','); // unique candidate Ids are extracted from the campaigns that are runing currently 
+                
+                bool isInList = false;
+                for (int i = 0; i < canIdsArray.Length; i++)
+                {
+                    foreach (var can in candidates)
+                    {
+                        if (canIdsArray[i] == can.CandidateId)
+                        {
+                            CandidateDTO candidate = new CandidateDTO
+                            {
+                                CandidateId = can.CandidateId,
+                                FirstName = can.FirstName,
+                                Surname = can.Surname,
+                                Gender = can.Gender,
+                                Country = can.Country,
+                                City = can.City,
+                                DOB = can.DOB,
+                                CandidatePic = can.CandidatePic,
+                                CampaignID = can.CampaignID
+                            };
+                            getCandidateListToView.Add(candidate);
+                            isInList = true; 
+                        }
+                    }
+                }
+                if (isInList == true) // if even one campaign found in the system return list/a candidate to the view 
+                {
+                    return View(getCandidateListToView);
+                }
+                else // if no campaigns are found in the system means there are no campaigns in the system yet
+                {
+                    return View("NoCampaigns"); 
+                }
+            }
+            else
+            {
+                return View("NoCandidatesInSystem"); // if there are no campaigns in the system redirect the user to this page 
+            }
+
+            // this is just for the DEMO day 
+            //return View(candidates);
         }
 
 
@@ -82,9 +172,7 @@ namespace Fingerprint_Voting.Controllers
                 ModelState.AddModelError(string.Empty, "Error: " + ex);
                 return View();
             }
-
-
-
+            
         }
         #endregion
 
@@ -139,7 +227,7 @@ namespace Fingerprint_Voting.Controllers
             //userCampaign = voteVM.GetUserCampaign(uId, candidateCampaign);
 
             List<UserCampaign> userCampaign = voteVM.GetUserCampaign();// get all the list of the user id and campaing that voted before
-            
+
 
 
 
@@ -156,7 +244,7 @@ namespace Fingerprint_Voting.Controllers
                     if (userCampaign != null)// check if the user campaing table is not empty 
                     {
                         bool userVotedfound = false;
-                        foreach(var item in userCampaign)
+                        foreach (var item in userCampaign)
                         {
                             if (uId == item.UserId && candidateCampaign == item.CampaignID)
                             {

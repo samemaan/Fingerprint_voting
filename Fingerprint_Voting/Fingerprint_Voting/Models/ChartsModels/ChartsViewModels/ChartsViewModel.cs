@@ -99,7 +99,6 @@ namespace Fingerprint_Voting.Models.ChartsViewModels
             ChartsViewModel cVM = new ChartsViewModel();
             List<RegisterViewModel> users = cVM.GetAllUsres(); // get the users 
 
-
             // get all the Campaign to count the number of Campaigns in each country 
             CampaignViewModel campVM = new CampaignViewModel();
             List<CampaignDTO> campaigns = campVM.GetAllCampaigns();
@@ -113,7 +112,6 @@ namespace Fingerprint_Voting.Models.ChartsViewModels
             List<VotesDTO> votes = vVM.GetAllTheVotes();
 
             string cand = "";
-
             selectedCountry = selectedCountry.Trim();
             selectedCampaign = selectedCampaign.Trim(); 
 
@@ -124,14 +122,10 @@ namespace Fingerprint_Voting.Models.ChartsViewModels
                 {
                     countryCampainglist.Add(item.Country);
                 }
-
             }
             int total_votes = 0;
             int total_users = 0; 
             bool canFound = false; 
-            bool votFound = false;
-            bool userFound = false; 
-            bool camFound = false; 
             var votesForEachCandidate = "";
             var totalUsresForEachCampaignVoted = ""; 
             foreach (var country in countryCampainglist) // get the candidates related to the selected country and campaigns 
@@ -205,9 +199,7 @@ namespace Fingerprint_Voting.Models.ChartsViewModels
                 totalUsresForEachCampaignVoted,
                 totalVoters
             };
-          
-
-            return data; 
+            return data;  // return the data to the view 
         }
     }
 }

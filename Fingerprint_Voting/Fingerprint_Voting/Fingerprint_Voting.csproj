@@ -277,9 +277,9 @@
     <Compile Include="Models\AdminModelsDTO\CandidateDTO.cs" />
     <Compile Include="Models\AdminModelsDTO\UserRolesDTO.cs" />
     <Compile Include="Models\AdminModelsDTO\VoteViewModels\VoteViewModel.cs" />
-    <Compile Include="Models\ChartsViewModels\ChartsViewModel.cs" />
-    <Compile Include="Models\CountryModel.cs" />
-    <Compile Include="Models\DynamicChartsModel.cs" />
+    <Compile Include="Models\ChartsModels\ChartsViewModels\ChartsViewModel.cs" />
+    <Compile Include="Models\ChartsModels\CountryModel.cs" />
+    <Compile Include="Models\ChartsModels\DynamicChartsModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AdminModelsDTO\CandidateViewModels\CandidatesViewModel.cs" />
@@ -392,11 +392,11 @@
     <Content Include="Views\Charts\Index.cshtml" />
     <Content Include="Views\Geochart\Index.cshtml" />
     <Content Include="Views\DynamicallyUpdateChart\CountryChart.cshtml" />
+    <Content Include="Views\Vote\NoCandidatesInSystem.cshtml" />
+    <Content Include="Views\Vote\NoCampaigns.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CountriesList\" />
-    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
