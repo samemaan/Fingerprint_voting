@@ -214,13 +214,14 @@ namespace Fingerprint_Voting.Models.ChartsViewModels
             dM.Votes = votesForEachCandidate;
 
 
-            // this is just for the testing//////////////////////////////////////////////////////////////////////////////////
+            // this is just for the testing////////////////////////////DEMO/////////////////DEMO////////////////////////DEMO/////////////
+            cand = "Imran,Angaar,Armaan";
+            votesForEachCandidate = "260000000,110000000,130000000";
+            totalUsresForEachCampaignVoted = "150000000";
+            totalVoters = "650000000";
+            //////////////////////////////////////////////DEMO/////////////////////DEMO////////////////////DEMO/////////////////////////
 
-            //cand = "Imran" + ',' + "Angaar" + ',' + "Armaan";
-            //votesForEachCandidate = "50" + ',' + "120" + ',' + "1200";
-            ////totalUsresForEachCampaignVoted = "1400" + ',' + "1400" + ',' + "1400";
-            //totalUsresForEachCampaignVoted = "370";
-            //totalVoters = "1400";
+
             List<string> data = new List<string>// return this list to the view and extract the values in the script to chart. 
             {
                 selectedCountry,

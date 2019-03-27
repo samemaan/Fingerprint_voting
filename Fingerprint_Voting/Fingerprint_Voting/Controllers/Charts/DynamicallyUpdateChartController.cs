@@ -61,7 +61,6 @@ namespace Fingerprint_Voting.Controllers.Charts
                 dM.Campaigns = allCampaignsOfCountry;
                 dM.Campagin = allCampaignsOfCountry.First();
                 
-
                 CampaignDashBoardList(dM.Country, dM.Campagin); // default draw of the data 
                 return View("~/Views/DynamicallyUpdateChart/CountryChart.cshtml", dM);
             }

@@ -134,11 +134,12 @@ namespace Fingerprint_Voting.Controllers
 
 
 
-            // the following are just the value that will show system features on demo day!!
-            objproduct.CountryName = "Afghanistan,Ireland,Pakistan,Netherlands,India";
-            objproduct.Registerd = "11000000,1500000,1900000,2000000,1200000,1200000";
-            objproduct.Vote = "1800000,1000000,1500000,1700000,1700000,1000000";
+            //// the following are just the value that will show system features on demo day///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
 
+            objproduct.CountryName = "Ireland,Afghanistan,Australia,USA,United Kingdom,colombia,India,South Africa,Brazil,Russia";
+            objproduct.Registerd = "4500000,10000000,15000000,135000000,46000000,40000000,650000000,26000000,120000000,60000000";
+            objproduct.Vote = "4000000,7000000,12000000,120000000,44000000,35000000,500000000,25000000,100000000,58000000";
+            ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO///////////////////////////////////DEMO/////////////////////////DEMO////////////
             return objproduct;
         }
     }

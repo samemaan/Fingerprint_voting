@@ -31,14 +31,14 @@ namespace Fingerprint_Voting.Controllers
             double totalFemale = 0; 
             double totalOthers = 0;
 
-            //to following is just for demo day 
-            totalUusers = 35000000 + 1000000;
-            totalVots = 35000000;
+            //to following is just for demo day ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
+            totalUusers = 1106500000;
+            totalVots = 905000000;
 
-            totalMale = 18000000;
-            totalFemale = 15000000;
-            totalOthers = 1000000;
-            /// ///////// // /// ////// ////////// 
+            totalMale = 531120000; 
+            totalFemale = 442600000;
+            totalOthers = 132780000;
+            ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
 
 
 
@@ -65,11 +65,11 @@ namespace Fingerprint_Voting.Controllers
             double femaleVotes = 0; 
             double othersVotes = 0;
 
-            // the following values just for the demo 
-            maleVotes = 350000;
-            femaleVotes = 350000;
-            othersVotes = 350000;
-            //////////////////////////////////////////////////
+            // the following values just for the demo ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
+            maleVotes = 470600000;
+            femaleVotes = 362000000;
+            othersVotes = 72400000;
+            ////////////////////////////////////DEMO////////////DEMO/////////////DEMO//////////////DEMO////////////////DEMO//////////////DEMO//////////////
 
             //foreach (var vote in vots) // count total number of votes
             //{
@@ -119,7 +119,7 @@ namespace Fingerprint_Voting.Controllers
             // you can get the country now and within that you need to get how many campaigns are in the country and how many candidates are in each campaign
 
 
-            
+
             ViewBag.totalUsers = totalUusers;
             ViewBag.totalVots = totalVots;
             ViewBag.totalMale = totalMale;
