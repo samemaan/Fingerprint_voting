@@ -87,7 +87,14 @@
                 {
                     color: '#f5f5f5'
                 },
-            }
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 20,
+                    color: 'white'
+                }
+            },
 
         };
 
@@ -186,7 +193,14 @@
                 duration: 1200,
                 easing: 'out',
                 startup: true
-            }
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 20,
+                    color: 'white'
+                }
+            },
         };
         // draw bar chart twice so it animates
         var barChart = new google.visualization.ColumnChart(document.getElementById('bar-chart'));

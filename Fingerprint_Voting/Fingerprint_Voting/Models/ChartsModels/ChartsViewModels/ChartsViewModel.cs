@@ -215,10 +215,10 @@ namespace Fingerprint_Voting.Models.ChartsViewModels
 
 
             // this is just for the testing////////////////////////////DEMO/////////////////DEMO////////////////////////DEMO/////////////
-            cand = "Imran,Angaar,Armaan";
-            votesForEachCandidate = "260000000,110000000,130000000";
-            totalUsresForEachCampaignVoted = "150000000";
-            totalVoters = "650000000";
+            cand = "Hamid Karzai,Abdullah Abdullah,Ashraf Ghani,Abdul Rashid Dostum,Mohammad Hanif Atmar";
+            votesForEachCandidate = "350000,2100000,2800000,840000,910000";
+            totalUsresForEachCampaignVoted = "3000000";
+            totalVoters = "10000000";
             //////////////////////////////////////////////DEMO/////////////////////DEMO////////////////////DEMO/////////////////////////
 
 
