@@ -31,33 +31,26 @@ namespace Fingerprint_Voting.Controllers
             double totalFemale = 0; 
             double totalOthers = 0;
 
-            //to following is just for demo day ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
-            totalUusers = 1106500000;
-            totalVots = 905000000;
-
-            totalMale = 531120000; 
-            totalFemale = 442600000;
-            totalOthers = 132780000;
-            ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
 
 
 
-            //foreach (var item in users) // count total number of users in the system thats registered
-            //{
-            //    if (item.Gender == "Male")
-            //    {
-            //        totalMale++;
-            //    }
-            //    else if (item.Gender == "Female")
-            //    {
-            //        totalFemale++;
-            //    }
-            //    else
-            //    {
-            //        totalOthers++;
-            //    }
-            //    totalUusers++;
-            //}
+
+            foreach (var item in users) // count total number of users in the system thats registered
+            {
+                if (item.Gender == "Male")
+                {
+                    totalMale++;
+                }
+                else if (item.Gender == "Female")
+                {
+                    totalFemale++;
+                }
+                else
+                {
+                    totalOthers++;
+                }
+                totalUusers++;
+            }
 
 
             // checking the total numbers of votes given by each gender
@@ -65,31 +58,25 @@ namespace Fingerprint_Voting.Controllers
             double femaleVotes = 0; 
             double othersVotes = 0;
 
-            // the following values just for the demo ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
-            maleVotes = 470600000;
-            femaleVotes = 362000000;
-            othersVotes = 72400000;
-            ////////////////////////////////////DEMO////////////DEMO/////////////DEMO//////////////DEMO////////////////DEMO//////////////DEMO//////////////
-
-            //foreach (var vote in vots) // count total number of votes
-            //{
-            //    foreach(var user in users)
-            //    {
-            //        if(vote.UserId == user.UserId && user.Gender == "Male")
-            //        {
-            //            maleVotes++;
-            //        }
-            //        else if(vote.UserId == user.UserId && user.Gender == "Female")
-            //        {
-            //            femaleVotes++; 
-            //        }
-            //        else if(vote.UserId == user.UserId && user.Gender == "Other")
-            //        {
-            //            othersVotes++; 
-            //        }
-            //    }
-            //    totalVots++;
-            //}
+            foreach (var vote in vots) // count total number of votes
+            {
+                foreach (var user in users)
+                {
+                    if (vote.UserId == user.UserId && user.Gender == "Male")
+                    {
+                        maleVotes++;
+                    }
+                    else if (vote.UserId == user.UserId && user.Gender == "Female")
+                    {
+                        femaleVotes++;
+                    }
+                    else if (vote.UserId == user.UserId && user.Gender == "Other")
+                    {
+                        othersVotes++;
+                    }
+                }
+                totalVots++;
+            }
 
 
 
@@ -118,6 +105,19 @@ namespace Fingerprint_Voting.Controllers
             // NEXT BAR CHART
             // you can get the country now and within that you need to get how many campaigns are in the country and how many candidates are in each campaign
 
+            //to following is just for demo day ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
+            totalUusers = 1106500000;
+            totalVots = 905000000;
+
+            totalMale = 531120000;
+            totalFemale = 442600000;
+            totalOthers = 132780000;
+            ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
+            // the following values just for the demo ///////////////////////////////////DEMO/////////////////////////DEMO///////////////////DEMO/////////////DEMO
+            maleVotes = 470600000;
+            femaleVotes = 362000000;
+            othersVotes = 72400000;
+            ////////////////////////////////////DEMO////////////DEMO/////////////DEMO//////////////DEMO////////////////DEMO//////////////DEMO//////////////
 
 
             ViewBag.totalUsers = totalUusers;

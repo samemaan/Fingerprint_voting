@@ -16,9 +16,9 @@
 <hr />
 
 
-<div id="regions_div" style="width: 1200px; height: 800px;"></div>
-<div id="Areachart_div" style="width: 1200px; height: 800px;"></div>
-<div id="ScatterChart_div" style="width: 1200px; height: 800px;"></div>
+<div id="regions_div" style="width: 1200px; height: 800px;"></div><br />
+<div id="Areachart_div" style="width: 1200px; height: 800px;"></div><br />
+<div id="ScatterChart_div" style="width: 1200px; height: 800px;"></div><br />
 <div id="LineChart_div" style="width: 1200px; height: 800px;"></div>
 <script async defer type="text/javascript">
 
@@ -82,13 +82,48 @@
 
         var options = {
             title: 'Area Chart, Registerd users and Total Votes to a specific Region',
-            hAxis: {
-                title: '@Model.CountryTitle', titleTextStyle: { color: 'blue' }
+            animation: { "duration": 6000, "easing": "inAndOut", "startup": true },
+            @*hAxis: {
+                title: '@Model.CountryTitle', titleTextStyle: { color: '#0a2d20' }
             },
             vAxis: {
-                title: '@Model.RegisterdTitle', titleTextStyle: { color: 'blue' }
+                title: '@Model.RegisterdTitle', titleTextStyle: { color: '#0a2d20', fountSize: '16px' }
+            },*@
+            titleTextStyle: {
+                color: 'white',
+                fontSize: 20
             },
-            animation: { "duration": 6000, "easing": "inAndOut", "startup": true }
+            colors: ['35b24c', '#FBBC05'],
+            backgroundColor: '#595959',
+            hAxis:
+            {
+                title: '@Model.CountryTitle',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: '@Model.RegisterdTitle',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            }
 
         };
         //Different chart types >> AreaChart , BubbleChart ,LineChart ,ScatterChart
@@ -97,25 +132,95 @@
 
         var optionsScatter = {
              title: 'Scatter Chart,Registerd users and Total Votes to a specific Region',
-             hAxis: {
+             @*hAxis: {
                  title: '@Model.CountryTitle', titleTextStyle: { color: 'Black' }
              },
              vAxis: {
                  title: '@Model.RegisterdTitle', titleTextStyle: { color: 'Black' }
+            },*@
+            animation: { "duration": 8000, "easing": "linear", "startup": true },
+             titleTextStyle: {
+                color: 'white',
+                fontSize: 20
             },
-            animation: { "duration": 8000, "easing": "linear", "startup": true }
+            colors: ['35b24c', '#FBBC05'],
+            backgroundColor: '#595959',
+            hAxis:
+            {
+                title: '@Model.CountryTitle',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: '@Model.RegisterdTitle',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            }
         };
         var ScatterChart = new google.visualization.ScatterChart(document.getElementById('ScatterChart_div'));
 
         var optionsLiner = {
              title: 'Liner Chart,Registerd users and Total Votes to a specific Region',
-             hAxis: {
+             @*hAxis: {
                  title: '@Model.CountryTitle', titleTextStyle: { color: 'Black' }
              },
              vAxis: {
                  title: '@Model.RegisterdTitle', titleTextStyle: { color: 'Black' }
-            }, 
-            animation: { "duration": 10000, "easing": "out", "startup": true }
+            },*@ 
+            animation: { "duration": 10000, "easing": "out", "startup": true },
+             titleTextStyle: {
+                color: 'white',
+                fontSize: 20
+            },
+            colors: ['35b24c', '#FBBC05'],
+            backgroundColor: '#595959',
+            hAxis:
+            {
+                title: '@Model.CountryTitle',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: '@Model.RegisterdTitle',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            }
         };
         var lineChart = new google.visualization.LineChart(document.getElementById('LineChart_div'));
 

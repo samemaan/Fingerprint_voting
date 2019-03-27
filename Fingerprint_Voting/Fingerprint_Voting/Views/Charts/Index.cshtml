@@ -10,46 +10,32 @@
 
 
 
-<p>@ViewBag.totalUsers</p>
-<p>@ViewBag.totalVots</p>
+@*<p>@ViewBag.totalUsers</p>
+    <p>@ViewBag.totalVots</p>*@
 
-            @*ViewBag.totalUsers = totalUusers;
-            ViewBag.totalVots = totalVots;
-            ViewBag.totalMale = totalMale;
-            ViewBag.totalFemale = totalFemale;
-            ViewBag.totalOters = totalOthers;*@
-
-<table class="columns">
-    <tr>
-        <td> <div id="piechart"style="border: 1px solid #ccc"></div></td>
-        <td> <div id="bar-chart"style="border: 1px solid #ccc"></div></td>
-        
-    </tr>
-    @*<tr>
-        
-        <td> <div id="area-chart" style="border: 1px solid #ccc"></div></td>
-        
-    </tr>*@
-    
-</table>
+@*ViewBag.totalUsers = totalUusers;
+    ViewBag.totalVots = totalVots;
+    ViewBag.totalMale = totalMale;
+    ViewBag.totalFemale = totalFemale;
+    ViewBag.totalOters = totalOthers;*@
 
 
-   
-   
+<div id="piechart" style="height: 800px; width: 100%; border: 1px solid #ccc"></div><br />
+<div id="bar-chart" style="height: 800px; width: 100%; border: 1px solid #ccc"></div>
 
-   
+
 
 
 
 <script type="text/javascript">
     // Load google charts
     google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(PieChart); // pie chart 
+    google.charts.setOnLoadCallback(PieChart); // pie chart
 
-    
-    google.charts.setOnLoadCallback(BarChart);// bar chart 
 
-    //google.charts.setOnLoadCallback(AreaChart);// area chart 
+    google.charts.setOnLoadCallback(BarChart);// bar chart
+
+    //google.charts.setOnLoadCallback(AreaChart);// area chart
 
     // Draw the chart and set the chart values
     function PieChart() {
@@ -67,8 +53,41 @@
                 'easing': 'out',
                 'startup': true
             },
+            titleTextStyle: {
+                color: 'white',
+                fontSize: 20
+            },
+            colors: ['35b24c', '#FBBC05', '#003366', '#660033', '#cc00cc', '#6629a3', '#cccc00', '#5b716a'],
             backgroundColor: '#595959',
-            'width': 550, 'height': 400,
+            hAxis:
+            {
+                title: 'Users-Votes',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: 'System total users',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            }
 
         };
 
@@ -93,12 +112,12 @@
         //var chart = new google.visualization.BarChart(document.getElementById('BarChart'));
         chart.draw(data, options);
 
-       
+
     }
     function BarChart() {
         //ViewBag.maleVotes = maleVotes;
         //ViewBag.femaleVotes = femaleVotes;
-        //ViewBag.othersVotes = othersVotes; 
+        //ViewBag.othersVotes = othersVotes;
         // actual bar chart data
         var barData = google.visualization.arrayToDataTable([
             ['System', 'Users', 'Votes'],
@@ -110,9 +129,12 @@
         // set bar chart options
         var barOptions = {
             title: 'Votes Analysis Of System',
+            titleTextStyle: {
+                color: 'white',
+                fontSize: 20
+            },
             focusTarget: 'category',
-            'width': 550, 'height': 400, backgroundColor: '#E4E4E4',
-            colors: ['cornflowerblue', 'tomato'],
+            colors: ['35b24c', '#FBBC05'],
             fontName: 'Open Sans',
             backgroundColor: '#595959',
             chartArea: {
@@ -122,24 +144,37 @@
                 height: '70%'
             },
             bar: {
-                groupWidth: '80%'
+                groupWidth: '80%',
+
             },
-            hAxis: {
-                textStyle: {
-                    fontSize: 11
-                }
-            },
-            vAxis: {
-                minValue: 0,
-                maxValue: 20,
-                baselineColor: '#DDD',
-                gridlines: {
-                    color: '#DDDD',
-                    count: 4
+            hAxis:
+            {
+                title: 'Users-Votes',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
                 },
-                textStyle: {
-                    fontSize: 11
+                textStyle:
+                {
+                    color: '#f5f5f5'
                 }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: 'System total users',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
             },
             legend: {
                 position: 'bottom',

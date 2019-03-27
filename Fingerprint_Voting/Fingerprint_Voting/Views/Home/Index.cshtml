@@ -4,7 +4,11 @@
 @* The following Link is just fot the Image carousel  *@
 
 
+<div>
+    <p>
 
+    </p>
+</div>
 
 <div id="myCarousel" class="carousel slide vertical" data-ride="carousel" style="height:400px; overflow: hidden">
     <!-- Indicators -->
@@ -21,6 +25,7 @@
 
         <div class="item">
             <img src="~/Images/PlaceFinger.bmp" alt="" style="width: 100%;">
+
         </div>
 
         <div class="item">
@@ -54,30 +59,32 @@
         </h1>
 
         <h3>Hi Dear your vote is valuable to a better future!.</h3>
+        <h4>You'll be guide @Html.ActionLink("How to?", "About", "Home") Vote in the System</h4>
+        <h5>Any question please viste @Html.ActionLink("Contact", "Contact", "Home") page, leave us an email we will get back to you as soon as possiable</h5>
 
     </div>
 }
 
-    <div class="row">
-        @if (!Request.IsAuthenticated)
-        {
-            <div class="col-md-4">
-                <h2>How To Register in the System</h2>
-                <p>
-                    write some kind of instruction how to
-                </p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-            </div>
-        }
+<div class="row">
+    @if (!Request.IsAuthenticated)
+    {
+        <div class="col-md-4">
+            <h2>How To Register in the System</h2>
+            <p>
+                write some kind of instruction how to
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+    }
 
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
     </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
