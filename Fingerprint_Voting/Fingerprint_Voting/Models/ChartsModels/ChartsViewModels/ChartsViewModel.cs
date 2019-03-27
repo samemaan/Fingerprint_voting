@@ -47,6 +47,37 @@ namespace Fingerprint_Voting.Models.ChartsViewModels
             }
             return list;
         }
+        public RegisterViewModel GetUserDetailsById(string id)
+        {
+            SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+
+            // get candidate id from the model
+            RegisterViewModel registerUser = new RegisterViewModel();
+
+            using (sqlconn)
+            {
+                using (SqlCommand cmd = new SqlCommand("getOneUserDetails", sqlconn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlconn.Open();
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        rdr.Read();
+
+                        registerUser.FirstName = rdr["FirstName"].ToString();
+                        registerUser.Surname = rdr["Surname"].ToString();
+                        registerUser.Gender = rdr["Gender"].ToString();
+                        registerUser.Country = rdr["Country"].ToString();
+                        registerUser.City = rdr["City"].ToString();
+                        registerUser.DOB = rdr["DOB"].ToString();
+                        
+                    }
+                }
+            }
+            return registerUser;
+        }
         public List<VotesDTO> GetAllVotes()
         {
             SqlConnection sqlconn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);

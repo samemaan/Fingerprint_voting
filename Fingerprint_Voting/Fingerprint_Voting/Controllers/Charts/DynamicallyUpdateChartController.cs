@@ -52,11 +52,25 @@ namespace Fingerprint_Voting.Controllers.Charts
                     allCampaignsOfCountry.Add(cam.Description); // get all the campaigns related to the country 
                 }
             }
-            dM.Campaigns = allCampaignsOfCountry;
-            dM.Campagin = allCampaignsOfCountry.First();
+          
 
-            CampaignDashBoardList(dM.Country, dM.Campagin); // default draw of the data 
-            return View("~/Views/DynamicallyUpdateChart/CountryChart.cshtml", dM);
+            bool isEmpty = !allCampaignsOfCountry.Any();
+
+            if (!isEmpty) // check if the list is not null than add the values to the object , else redirect the user that there are no campaigns in the country 
+            {
+                dM.Campaigns = allCampaignsOfCountry;
+                dM.Campagin = allCampaignsOfCountry.First();
+                
+
+                CampaignDashBoardList(dM.Country, dM.Campagin); // default draw of the data 
+                return View("~/Views/DynamicallyUpdateChart/CountryChart.cshtml", dM);
+            }
+            else
+            {
+                return View("~/Views/Results/NotFound.cshtml"); // no ca
+            }
+
+           
 
         }
         public JsonResult CountryDashboardList(string country) // accepts the country and returns the list of campaigns by the JSON call 
