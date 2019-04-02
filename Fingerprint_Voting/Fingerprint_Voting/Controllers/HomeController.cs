@@ -34,6 +34,26 @@ namespace Fingerprint_Voting.Controllers
             return View();
         }
 
+        public ActionResult HowToRegister()
+        {
+            ViewBag.Message = "Voting Guid";
+
+            return View();
+        }
+        public ActionResult VotingGuide()
+        {
+            ViewBag.Message = "Voting Guid";
+
+            return View();
+        }
+
+        public ActionResult ResultGuid()
+        {
+            ViewBag.Message = "Voting Guid";
+
+            return View();
+        }
+
         public FileContentResult UserPhotos()
         {
             if (User.Identity.IsAuthenticated)

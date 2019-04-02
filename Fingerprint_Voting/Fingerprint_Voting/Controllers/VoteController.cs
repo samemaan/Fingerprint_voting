@@ -250,13 +250,13 @@ namespace Fingerprint_Voting.Controllers
                             {
                                 userVotedfound = true;
                             }
-                            else
-                            {
-                                userVotedfound = false;
-                            }
+                            //else
+                            //{
+                            //    userVotedfound = false;
+                            //}
                         }
                         //  than you can vote, check if the user and campaign are not the same 
-                        if (userVotedfound) // user can vote for multiple campaings but can vote for the second time in the same campaign
+                        if (userVotedfound == true) // user can vote for multiple campaings but can vote for the second time in the same campaign
                         {
                             //ViewBag.result = "The user already Voted in this campaign";
                             return View("AlreadyVoted");
