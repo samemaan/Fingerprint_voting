@@ -1,0 +1,125 @@
+﻿@model Fingerprint_Voting.Models.ExpandedUserDTO
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+
+@using (Html.BeginForm("Create", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.DOB, new { @type = "date", @class = "form-control datepicker" })
+            @Html.ValidationMessageFor(m => m.DOB, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "col-md-2 control-label" }) Male
+        </div>
+
+        <div class="col-md-offset-2 col-md-10">
+            @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "col-md-2 control-label" }) Female
+        </div>
+
+        <div class="col-md-offset-2 col-md-10">
+            @Html.RadioButtonFor(m => m.Gender, "Other", new { @class = "col-md-2 control-label" }) Other
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CountriesList, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.DropDownList("CountryList", new SelectList(Model.Countries), new { @class = "form-control" })*@
+            @Html.DropDownListFor(model => model.Country, new SelectList(Model.CountriesList, "Text"), new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserPic, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+
+            <input type="file" name="UserPhoto" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" required aria-required="true" />
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.HiddenFor(m => m.UserFingerprint, new { @class = "form-control" })
+            <img id="FPImage1" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger.bmp">
+            <div>
+                <input type="button" value="Click to Scan" onclick="CallSGIFPGetData(SuccessFunc1, ErrorFunc)">
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Roles,
+       htmlAttributes: new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("Roles")
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Create" />
+        </div>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index", "Admin")
+    </p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<h2>Data Analysis</h2>
+<hr />
+
+
+
+@*<p>@ViewBag.totalUsers</p>
+    <p>@ViewBag.totalVots</p>*@
+
+@*ViewBag.totalUsers = totalUusers;
+    ViewBag.totalVots = totalVots;
+    ViewBag.totalMale = totalMale;
+    ViewBag.totalFemale = totalFemale;
+    ViewBag.totalOters = totalOthers;*@
+
+
+<div id="piechart" style="height: 800px; width: 100%; border: 1px solid #ccc"></div><br />
+<div id="bar-chart" style="height: 800px; width: 100%; border: 1px solid #ccc"></div>
+
+
+
+
+
+<script type="text/javascript">
+    // Load google charts
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(PieChart); // pie chart
+
+
+    google.charts.setOnLoadCallback(BarChart);// bar chart
+
+    //google.charts.setOnLoadCallback(AreaChart);// area chart
+
+    // Draw the chart and set the chart values
+    function PieChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Sources', 'System Voters'],
+            ['Males', @ViewBag.totalMale],
+            ['Females', @ViewBag.totalFemale],
+            ['Others', @ViewBag.totalOters]
+        ]);
+
+        // Optional; add a title and set the width and height of the chart
+        var options = {
+            'title': 'Voters Gender Analysis Of the System', 'animation': {
+                'duration': 1000,
+                'easing': 'out',
+                'startup': true
+            },
+            titleTextStyle: {
+                color: 'white',
+                fontSize: 20
+            },
+            colors: ['35b24c', '#FBBC05', '#003366', '#660033', '#cc00cc', '#6629a3', '#cccc00', '#5b716a'],
+            backgroundColor: '#595959',
+            hAxis:
+            {
+                title: 'Users-Votes',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: 'System total users',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 20,
+                    color: 'white'
+                }
+            },
+
+        };
+
+        //var percent = 0;
+        //// start the animation loop
+        //var handler = setInterval(function () {
+        //    // values increment
+        //    percent += 1;
+        //    // apply new values
+        //    data.setValue(0, 1, percent);
+        //    data.setValue(1, 1, 100 - percent);
+        //    // update the pie
+        //    chart.draw(data, options);
+        //    // check if we have reached the desired value
+        //    if (percent > 99)
+        //        // stop the loop
+        //        clearInterval(handler);
+        //}, 30);
+
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        //var chart = new google.visualization.BarChart(document.getElementById('BarChart'));
+        chart.draw(data, options);
+
+
+    }
+    function BarChart() {
+        //ViewBag.maleVotes = maleVotes;
+        //ViewBag.femaleVotes = femaleVotes;
+        //ViewBag.othersVotes = othersVotes;
+        // actual bar chart data
+        var barData = google.visualization.arrayToDataTable([
+            ['System', 'Users', 'Votes'],
+            ['Total', @ViewBag.totalUsers, @ViewBag.totalVots],
+            ['Males', @ViewBag.totalMale, @ViewBag.maleVotes ],
+            ['Females', @ViewBag.totalFemale, @ViewBag.femaleVotes],
+            ['Others', @ViewBag.totalOters, @ViewBag.othersVotes],
+        ]);
+        // set bar chart options
+        var barOptions = {
+            title: 'Votes Analysis Of System',
+            titleTextStyle: {
+                color: 'white',
+                fontSize: 20
+            },
+            focusTarget: 'category',
+            colors: ['35b24c', '#FBBC05'],
+            fontName: 'Open Sans',
+            backgroundColor: '#595959',
+            chartArea: {
+                left: 70,
+                top: 30,
+                width: '100%',
+                height: '70%'
+            },
+            bar: {
+                groupWidth: '80%',
+
+            },
+            hAxis:
+            {
+                title: 'Users-Votes',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: 'System total users',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
+            animation: {
+                duration: 1200,
+                easing: 'out',
+                startup: true
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 20,
+                    color: 'white'
+                }
+            },
+        };
+        // draw bar chart twice so it animates
+        var barChart = new google.visualization.ColumnChart(document.getElementById('bar-chart'));
+        //barChart.draw(barZeroData, barOptions);
+        barChart.draw(barData, barOptions);
+    }
+    //function AreaChart() {
+    //    var data = google.visualization.arrayToDataTable([
+    //        ['Year', 'Sales', 'Expenses'],
+    //        ['2013', 1000, 400],
+    //        ['2014', 1170, 460],
+    //        ['2015', 660, 1120],
+    //        ['2016', 1030, 540]
+    //    ]);
+
+    //    var options = {
+    //        title: 'Company Performance',
+    //        hAxis: { title: 'Year', titleTextStyle: { color: '#333' } },
+    //        vAxis: { minValue: 0 }
+    //    };
+
+    //    var chart = new google.visualization.AreaChart(document.getElementById('area-chart'));
+    //    chart.draw(data, options);
+    //}
+</script>

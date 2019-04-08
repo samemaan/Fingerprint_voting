@@ -5,7 +5,20 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <img src="@Url.Action("UserPhotos", "Home" )" style="width:48px;height:48px; background: #222222;
+            margin: auto;
+            -moz-border-radius: 10px;
+            border-radius: 200px;
+            padding: 6px;
+            box-shadow: 0px 0px 10px #888;" />
+
+
+        }
+    </li>
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>

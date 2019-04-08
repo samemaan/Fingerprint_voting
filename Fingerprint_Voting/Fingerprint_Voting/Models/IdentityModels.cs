@@ -19,7 +19,7 @@ namespace Fingerprint_Voting.Models
         [StringLength(100)]
         public string Surname { get; set; }
 
-        [Display(Name = "DOB"), Required]
+        [Display(Name = "Date Of Birth"), Required]
         [StringLength(50)]
         public string DOB { get; set; }
 
@@ -35,8 +35,14 @@ namespace Fingerprint_Voting.Models
         [StringLength(100)]
         public string City { get; set; }
 
+        [Display(Name = "User Image")]
+        public byte[] UserPic { get; set; }
 
 
+        [Display(Name = "Fingerprint"), Required]
+        public string UserFingerprint { get; set; }
+
+        public string UserStatusId { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -58,5 +64,17 @@ namespace Fingerprint_Voting.Models
         {
             return new ApplicationDbContext();
         }
+
+
+
+        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.CandidateDTO> CandidateDTO { get; set; }
+
+        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.UserStatusDTO> UserStatusDTO { get; set; }
+
+        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.AdminModelsDTO.CampaignDTO> CampaignDTO { get; set; }
+
+        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.ExpandedUserDTO> ExpandedUserDTO { get; set; }
+
+        public System.Data.Entity.DbSet<Fingerprint_Voting.Models.VotesDTO> VotesDTO { get; set; }
     }
 }

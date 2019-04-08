@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Guide Page";
+}
+@* The following Link is just fot the Image carousel  *@
+
+
+<h2>Vote Guide</h2>
+
+<div class="table-responsive">
+
+    <table class="table">
+        <tr>
+            <td>
+                <h1>Step 1</h1>
+                <p> drag and drop a candidate card for the cadidate selection</p>
+                <img src="~/Images/drag.png" height="320" width="420">
+            </td>
+            <td>
+                <h1>Step 2</h1>
+                <p>Fingerprint verification</p>
+                <img src="~/Images/verify.png" height="320" width="420">
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>
+

@@ -1,0 +1,99 @@
+﻿@model Fingerprint_Voting.Models.VotesDTO
+
+@*@{
+        /**/
+
+        ViewBag.Title = "Scan Finger";
+    }*@
+
+<h3><b>Please Verify your fingerprint to Vote for the Selected Candidate</b></h3>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section voteScripts {
+
+    @*<link href="@Url.Content("~/MyScripts/voteScripts.js")" type="text/javascript" />*@
+    <script type="text/javascript" src="@Url.Content("~/MyScripts/voteScripts.js")"></script>
+}
+
+
+@using (Html.BeginForm("ThankYou", "Vote", FormMethod.Post, new { enctype = "multipart/form-data", id = "fingerConf" }))
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+
+    <table style="width:100%">
+        <tr type="hidden">
+            <td>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.CandidateId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th id="selectedCandidate">Step 1: Your Selected Candidate is done </th>
+            <th id="verifyFinger">Step 2: Now Verify Your Fingerprint </th>
+            <th id="pressButton">Step 3: Once fingerprint scanned Press Button</th>
+        </tr>
+        <tr>
+            <td headers="selectedCandidate">
+                <div class="row selectedCandidate">
+                    <div class="card col-md-4">
+                        @{
+                            var base64 = Convert.ToBase64String(ViewBag.Picture);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        }
+                        <img src="@imgSrc" style="width:160px;height:160px; background: #FFFFFF;
+                    margin: auto;
+                    -moz-border-radius: 60px;
+                    border-radius: 100px;
+                    padding: 6px;
+                    box-shadow: 0px 0px 20px #888;" />
+                        <!-- :  set the Id of the image to the CandidateId -->
+                        <!-- :  add onmousedown event to the image to capture the id of the selected image -->
+
+                        <div class="card-body">
+                            <h5 class="card-title">@ViewBag.Name</h5>
+                            <h5 class="card-body">@ViewBag.Surname</h5>
+                            <h5 class="card-body">@ViewBag.Gender</h5>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td headers="verifyFinger">
+                <img border="2" id="FPImage2" alt="Fingerpint Image" height=300 width=210 src="..\Images\PlaceFinger.bmp"> <br>
+                <input type="hidden" id="FPImage1" value="@ViewBag.fingerprint">
+                <input type="button" class="square_btn" value="Click to Scan" onclick="CallSGIFPGetData(SuccessFunc2, ErrorFunc)"> <br><br>
+            </td>
+            <td headers="pressButton">
+                <input class="pressVoteBtn" type="button" value="Vote" onclick="matchScore(succMatch, failureFunc)"> <br><br>
+            </td>
+        </tr>
+    </table>
+}
+
+<hr />
+
+<div>
+    you can change the selected candidted if you wish just select back button and chose another one if you wish
+</div>
+
+
+<hr />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

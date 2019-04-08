@@ -10,6 +10,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Fingerprint_Voting.Models;
 
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Configuration;
+using System.IO;
+using Fingerprint_Voting.Models.AdminModelsDTO.VoteViewModels;
+
 namespace Fingerprint_Voting.Controllers
 {
     [Authorize]
@@ -22,7 +27,7 @@ namespace Fingerprint_Voting.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +39,9 @@ namespace Fingerprint_Voting.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -57,6 +62,9 @@ namespace Fingerprint_Voting.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            // Create the Admin account using setting in Web.Config (if needed)
+            CreateAdminIfNeeded();
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -83,7 +91,7 @@ namespace Fingerprint_Voting.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -120,7 +128,7 @@ namespace Fingerprint_Voting.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -139,7 +147,13 @@ namespace Fingerprint_Voting.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+
+            RegisterViewModel rVM = new RegisterViewModel();
+            GetCountriesList getCountriesList = new GetCountriesList();
+
+            rVM.CountriesList = getCountriesList.CountriesList(); 
+
+            return View(rVM);
         }
 
         //
@@ -151,23 +165,70 @@ namespace Fingerprint_Voting.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {
+                // To convert the user uploaded Photo as Byte Array before save to DB
+                byte[] imageData = null;
+                if (Request.Files.Count > 0)
+                {
+                    HttpPostedFileBase poImgFile = Request.Files["UserPhoto"];
+
+                    using (var binary = new BinaryReader(poImgFile.InputStream))
+                    {
+                        imageData = binary.ReadBytes(poImgFile.ContentLength);
+                    }
+                }
+                // set default status Id by the following description 
+                var statusDescription = "";
+                var statusId = ""; 
+
+                VoteViewModel vvM = new VoteViewModel();
+                GetAgeCalculated gAge = new GetAgeCalculated();
+                int userAge = gAge.GetAge(model.DOB);
+                if (userAge >= 17)
+                {
+                    statusDescription = "Not Vote";
+                }
+                else
+                {
+                    statusDescription = "Age-rule"; 
+                }
+                statusId = vvM.GetUserStatusIdByDescriptio(statusDescription);
+                // check if the statusId is empty than add the values to the table 
+                if(statusId == null)
+                {
+                    // set the default vote to the vote status table
+                    VoteViewModel vM = new VoteViewModel();
+                    vM.InsertDescriptionToUserStatus("Vote");
+                    vM.InsertDescriptionToUserStatus("Not Vote");
+                    vM.InsertDescriptionToUserStatus("Age-rule");
+
+                    statusId = vM.GetUserStatusIdByDescriptio(statusDescription);
+                }
+
+
+
+                 var user = new ApplicationUser
+                {
                     FirstName = model.FirstName,
                     Surname = model.Surname,
                     DOB = model.DOB,
                     UserName = model.Email,
-                    
+
                     Email = model.Email,
                     Gender = model.Gender,
-                    Country = model.Country, 
-                    City = model.City
+                    Country = model.Country,
+                    City = model.City,
+                    UserPic = model.UserPic,
+                    UserFingerprint = model.UserFingerprint,
+                    UserStatusId = model.UserStatusId
 
                 };
+                user.UserPic = imageData;
+                user.UserStatusId = statusId;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -325,7 +386,7 @@ namespace Fingerprint_Voting.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         //
@@ -489,6 +550,50 @@ namespace Fingerprint_Voting.Controllers
                     properties.Dictionary[XsrfKey] = UserId;
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
+            }
+        }
+        #endregion
+
+        // Utility
+
+        // Add RoleManager
+        #region public ApplicationRoleManager RoleManager
+        private ApplicationRoleManager _roleManager;
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
+        #endregion
+
+        // Add CreateAdminIfNeeded
+        #region private void CreateAdminIfNeeded()
+        private void CreateAdminIfNeeded()
+        {
+            // Get Admin Account
+            string AdminUserName = ConfigurationManager.AppSettings["AdminUserName"];
+            string AdminPassword = ConfigurationManager.AppSettings["AdminPassword"];
+
+            // See if Admin exists
+            var objAdminUser = UserManager.FindByEmail(AdminUserName);
+
+            if (objAdminUser == null)
+            {
+                //See if the Admin role exists
+                if (!RoleManager.RoleExists("Administrator"))
+                {
+                    // Create the Admin Role (if needed)
+                    IdentityRole objAdminRole = new IdentityRole("Administrator");
+                    RoleManager.Create(objAdminRole);
+                }
+
+               
             }
         }
         #endregion

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace Fingerprint_Voting.Models
 {
@@ -65,13 +67,15 @@ namespace Fingerprint_Voting.Models
     public class RegisterViewModel
     {
 
+        public string UserId { get; set; }
+
         [Display(Name = "First Name"), Required]
         public string FirstName { get; set; }
 
         [Display(Name = "Surname"), Required]
         public string Surname { get; set; }
 
-        [Display(Name = "DOB"), Required]
+        [Display(Name = "Date Of Birth"), Required]
         public string DOB { get; set; }
 
         [Display(Name = "Gender"), Required]
@@ -80,8 +84,13 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Country"), Required]
         public string Country { get; set; }
 
+        public List<string> CountriesList { get; set; }
+
         [Display(Name = "City"), Required]
         public string City { get; set; }
+
+        [Display(Name = "User Image")]
+        public byte[] UserPic { get; set; }
 
 
         [Required]
@@ -99,6 +108,13 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
+        [Display(Name = "Fingerprint"), Required]
+        public string UserFingerprint { get; set; }
+
+        public string UserStatusId { get; set; }
+
     }
 
     public class ResetPasswordViewModel
@@ -129,4 +145,44 @@ namespace Fingerprint_Voting.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+
+    public class GetAgeCalculated
+    {
+        public int GetAge(string userDOB)
+        {
+            DateTime bday = Convert.ToDateTime(userDOB);
+            DateTime today = DateTime.Today;
+            int age = today.Year - bday.Year;
+
+            if (bday > today.AddYears(-age))
+                age--;
+
+            return age; 
+             
+        }
+    }
+
+    public class GetCountriesList
+    {
+        public List<string> CountriesList()
+        {
+            List<string> CountryList = new List<string>();
+            CultureInfo[] CInfoList = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+            foreach (CultureInfo CInfo in CInfoList)
+            {
+                RegionInfo R = new RegionInfo(CInfo.LCID);
+                if (!(CountryList.Contains(R.EnglishName)))
+                {
+                    CountryList.Add(R.EnglishName);
+                }
+            }
+
+            CountryList.Sort();
+
+            return CountryList;
+        }
+    }
+
+
 }

@@ -1,0 +1,93 @@
+﻿@model Fingerprint_Voting.Models.CandidateDTO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="col-lg-6">
+    <h4>Candidate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+        <dt>
+            @Html.DisplayName("Campaign")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CampaignID)
+        </dd>
+
+    </dl>
+</div>
+<div class="col-lg-6">
+    <h4>Candidate Picture</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            @*@Html.DisplayFor(model => model.CandidatePic)*@
+            @{
+                var base64 = Convert.ToBase64String(Model.CandidatePic);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
+
+            <img src="@imgSrc"
+                 style="width:400px;height:400px; background: #FFFFFF;
+                    margin: auto;
+                    -moz-border-radius: 1000px;
+                    border-radius: 200px;
+                    padding: 12px;
+                    box-shadow: 0px 0px 40px #182633;" />
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CandidateId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -3,10 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Fingerprint Election Voting</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <link href="@Url.Content("~/MyStyles/voteStyles.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("voteStyles", false)
+
+    <script src="https://cdn.jsdelivr.net/npm/interactjs@1.3/dist/interact.min.js"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/MyScripts/ScannerScripts.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/MyScripts/voteScripts.js")"></script>
+    @RenderSection("voteScripts", false)
+    @RenderSection("ScannerScripts", false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -17,18 +26,67 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Fingerprint Election Voting", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Administration
+                                <span class="caret"></span>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
+                                    <li>@Html.ActionLink("Candidates", "Index", "Candidate")</li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Create</li>
+                                    <li>@Html.ActionLink("User Status", "Index", "UserStatus")</li>
+                                    <li>@Html.ActionLink("Campaign", "Index", "Campaign")</li>
+                                    <li>@Html.ActionLink("Create User", "Create", "Admin")</li>
+                                    <li>@Html.ActionLink("Edit Roles", "ViewAllRoles", "Admin")</li>
+                                </ul>
+                            </a>
+                        </li>
+
+                    }
+                    
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Admin")|| User.IsInRole("Super Admin") || User.IsInRole("Staff"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Charts
+                                <span class="caret"></span>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="dropdown-header">Charts</li>
+                                    <li>@Html.ActionLink("System Data", "Index", "Charts")</li>
+                                    <li>@Html.ActionLink("Geo", "Index", "Geochart")</li>
+                                    <li>@Html.ActionLink("Location Based", "CountryChart", "DynamicallyUpdateChart")</li>
+                                </ul>
+                            </a>
+                        </li>
+
+                    }
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Vote", "Index", "Vote")</li>
+                        <li>@Html.ActionLink("Results", "ResultsChart", "Results")</li>
+                    }
+                    
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
+
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />

@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "How To Register";
+}
+
+<h2>How To Register</h2>
+
+
+@*<div class="table-responsive">
+
+    <table class="table">
+        <tr>
+            <td>
+                <h1>Step 1</h1>
+                <p> Fill in your names surname Data of Birth  </p>
+
+                <p><a class="btn btn-default" href="~/Images/details.png">Learn more &raquo;</a></p>
+                <img src="~/Images/drag.png" height="320" width="420">
+            </td>
+            <td>
+                <h1>Step 2</h1>
+                <p>Selecte your country, and type in your city</p>
+                <img src="~/Images/country.png" height="320" width="420">
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+</div>*@
+
+
+<div class="row">
+
+    <div class="col-md-4">
+        <h1>Step 1</h1>
+        <p> Fill in your names surname Data of Birth  </p>
+        <img src="~/Images/details.png" height="180" width="320">
+    </div>
+
+    <div class="col-md-4">
+        <h1>Step 2</h1>
+        <p>Selecte your country, and type in your city</p>
+        <img src="~/Images/country.png" height="100" width="320">
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <h1>Step 3</h1>
+        <p> Upload your picture, a valid email address, and a password</p>
+        <img src="~/Images/image.png" height="120" width="320">
+    </div>
+
+    <div class="col-md-4">
+        <h1>Step 4</h1>
+        <p>place your finger on the scanner in way that shows below</p>
+        <img src="~/Images/scann.png" height="380" width="420">
+        <img src="~/Images/scannFinger.png" height="480" width="420">
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>

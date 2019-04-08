@@ -45,10 +45,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.1\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -174,48 +185,110 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminControllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminControllers\CampaignController.cs" />
+    <Compile Include="Controllers\AdminControllers\CandidateController.cs" />
+    <Compile Include="Controllers\Charts\ChartsController.cs" />
+    <Compile Include="Controllers\Charts\DynamicallyUpdateChartController.cs" />
+    <Compile Include="Controllers\Charts\GeoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\AdminControllers\UserStatusController.cs" />
+    <Compile Include="Controllers\ResultsController.cs" />
+    <Compile Include="Controllers\VoteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902010447510_addFirstName.cs" />
-    <Compile Include="Migrations\201902010447510_addFirstName.Designer.cs">
-      <DependentUpon>201902010447510_addFirstName.cs</DependentUpon>
+    <Compile Include="Migrations\201902120241443_new.cs" />
+    <Compile Include="Migrations\201902120241443_new.Designer.cs">
+      <DependentUpon>201902120241443_new.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902010452124_addFirstName1.cs" />
-    <Compile Include="Migrations\201902010452124_addFirstName1.Designer.cs">
-      <DependentUpon>201902010452124_addFirstName1.cs</DependentUpon>
+    <Compile Include="Migrations\201902120329507_First.cs" />
+    <Compile Include="Migrations\201902120329507_First.Designer.cs">
+      <DependentUpon>201902120329507_First.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902010523137_addSurname.cs" />
-    <Compile Include="Migrations\201902010523137_addSurname.Designer.cs">
-      <DependentUpon>201902010523137_addSurname.cs</DependentUpon>
+    <Compile Include="Migrations\201902122101113_candidateIdAdded.cs" />
+    <Compile Include="Migrations\201902122101113_candidateIdAdded.Designer.cs">
+      <DependentUpon>201902122101113_candidateIdAdded.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902010532286_addDOB.cs" />
-    <Compile Include="Migrations\201902010532286_addDOB.Designer.cs">
-      <DependentUpon>201902010532286_addDOB.cs</DependentUpon>
+    <Compile Include="Migrations\201902130019060_testTableDataremoved.cs" />
+    <Compile Include="Migrations\201902130019060_testTableDataremoved.Designer.cs">
+      <DependentUpon>201902130019060_testTableDataremoved.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902010540565_addCountry.cs" />
-    <Compile Include="Migrations\201902010540565_addCountry.Designer.cs">
-      <DependentUpon>201902010540565_addCountry.cs</DependentUpon>
+    <Compile Include="Migrations\201902142227016_userStatus.cs" />
+    <Compile Include="Migrations\201902142227016_userStatus.Designer.cs">
+      <DependentUpon>201902142227016_userStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902010548306_addGender.cs" />
-    <Compile Include="Migrations\201902010548306_addGender.Designer.cs">
-      <DependentUpon>201902010548306_addGender.cs</DependentUpon>
+    <Compile Include="Migrations\201902150138050_campaign.cs" />
+    <Compile Include="Migrations\201902150138050_campaign.Designer.cs">
+      <DependentUpon>201902150138050_campaign.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902010616129_addCity.cs" />
-    <Compile Include="Migrations\201902010616129_addCity.Designer.cs">
-      <DependentUpon>201902010616129_addCity.cs</DependentUpon>
+    <Compile Include="Migrations\201902150141167_campaign1.cs" />
+    <Compile Include="Migrations\201902150141167_campaign1.Designer.cs">
+      <DependentUpon>201902150141167_campaign1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902010624463_addCity1.cs" />
-    <Compile Include="Migrations\201902010624463_addCity1.Designer.cs">
-      <DependentUpon>201902010624463_addCity1.cs</DependentUpon>
+    <Compile Include="Migrations\201902162212318_refreshDB.cs" />
+    <Compile Include="Migrations\201902162212318_refreshDB.Designer.cs">
+      <DependentUpon>201902162212318_refreshDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902182255376_addDropdown.cs" />
+    <Compile Include="Migrations\201902182255376_addDropdown.Designer.cs">
+      <DependentUpon>201902182255376_addDropdown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902190107316_CampaignIDinCandidateTable.cs" />
+    <Compile Include="Migrations\201902190107316_CampaignIDinCandidateTable.Designer.cs">
+      <DependentUpon>201902190107316_CampaignIDinCandidateTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902240202253_create_user_by_admin.cs" />
+    <Compile Include="Migrations\201902240202253_create_user_by_admin.Designer.cs">
+      <DependentUpon>201902240202253_create_user_by_admin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902271411249_VotingData.cs" />
+    <Compile Include="Migrations\201902271411249_VotingData.Designer.cs">
+      <DependentUpon>201902271411249_VotingData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902271434012_VotingData1.cs" />
+    <Compile Include="Migrations\201902271434012_VotingData1.Designer.cs">
+      <DependentUpon>201902271434012_VotingData1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903012345586_userStatusId.cs" />
+    <Compile Include="Migrations\201903012345586_userStatusId.Designer.cs">
+      <DependentUpon>201903012345586_userStatusId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903022257452_userStatusId1.cs" />
+    <Compile Include="Migrations\201903022257452_userStatusId1.Designer.cs">
+      <DependentUpon>201903022257452_userStatusId1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903022311372_Country_to_campaigen.cs" />
+    <Compile Include="Migrations\201903022311372_Country_to_campaigen.Designer.cs">
+      <DependentUpon>201903022311372_Country_to_campaigen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903101951064_CampaignId.cs" />
+    <Compile Include="Migrations\201903101951064_CampaignId.Designer.cs">
+      <DependentUpon>201903101951064_CampaignId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903112212060_CampaignId1.cs" />
+    <Compile Include="Migrations\201903112212060_CampaignId1.Designer.cs">
+      <DependentUpon>201903112212060_CampaignId1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Display.cs" />
+    <Compile Include="Models\AdminModelsDTO\CampaignDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\CampaignViewModels\CampaignViewModel.cs" />
+    <Compile Include="Models\AdminModelsDTO\CandidateDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\UserRolesDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\VoteViewModels\VoteViewModel.cs" />
+    <Compile Include="Models\ChartsModels\ChartsViewModels\ChartsViewModel.cs" />
+    <Compile Include="Models\ChartsModels\CountryModel.cs" />
+    <Compile Include="Models\ChartsModels\DynamicChartsModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AdminModelsDTO\CandidateViewModels\CandidatesViewModel.cs" />
+    <Compile Include="Models\AdminModelsDTO\UserStatusDTO.cs" />
+    <Compile Include="Models\AdminModelsDTO\UserStatusModels\UserStatusViewModel.cs" />
+    <Compile Include="Models\ResultsDTO.cs" />
+    <Compile Include="Models\ResultsViewModels\ResultsViewModel.cs" />
+    <Compile Include="Models\VotesDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -224,13 +297,43 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\chrome.jpg" />
+    <Content Include="Images\country.png" />
+    <Content Include="Images\details.png" />
+    <Content Include="Images\drag.png" />
+    <Content Include="Images\Geo.png" />
+    <Content Include="Images\geochart.png" />
+    <Content Include="Images\image.png" />
+    <Content Include="Images\MSEdge.jpg" />
+    <Content Include="Images\noImg.png" />
+    <Content Include="Images\PlaceFinger.bmp" />
+    <Content Include="Images\PlaceFinger2.bmp" />
+    <Content Include="Images\result.png" />
+    <Content Include="Images\scann.png" />
+    <Content Include="Images\scannFinger.png" />
+    <Content Include="Images\verify.png" />
+    <Content Include="Images\vote.PNG" />
+    <Content Include="Images\voteConfirm.png" />
+    <Content Include="Images\wait.gif" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="MyScripts\ScannerScripts.js" />
+    <Content Include="MyScripts\voteScripts.js" />
+    <Content Include="MyStyles\voteStyles.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -275,47 +378,105 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ViewAllRoles.cshtml" />
+    <Content Include="Views\Admin\AddRole.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\EditRoles.cshtml" />
+    <Content Include="Views\Candidate\Index.cshtml" />
+    <Content Include="Views\Candidate\Edit.cshtml" />
+    <Content Include="Views\Candidate\Details.cshtml" />
+    <Content Include="Views\UserStatus\Create.cshtml" />
+    <Content Include="Views\UserStatus\Index.cshtml" />
+    <Content Include="Views\UserStatus\Details.cshtml" />
+    <Content Include="Views\UserStatus\Delete.cshtml" />
+    <Content Include="Views\UserStatus\Edit.cshtml" />
+    <Content Include="Views\Campaign\Index.cshtml" />
+    <Content Include="Views\Campaign\Create.cshtml" />
+    <Content Include="Views\Campaign\Delete.cshtml" />
+    <Content Include="Views\Campaign\Edit.cshtml" />
+    <Content Include="Views\Campaign\Details.cshtml" />
+    <Content Include="Views\Candidate\Create.cshtml" />
+    <Content Include="Views\Vote\Scan_FingerForeVote.cshtml" />
+    <Content Include="Views\Vote\ThankYou.cshtml" />
+    <Content Include="Views\Candidate\Error.cshtml" />
+    <Content Include="Views\Vote\Rejected.cshtml" />
+    <Content Include="Views\Vote\Index.cshtml" />
+    <Content Include="Views\Vote\AlreadyVoted.cshtml" />
+    <Content Include="Views\Charts\Index.cshtml" />
+    <Content Include="Views\Geochart\Index.cshtml" />
+    <Content Include="Views\DynamicallyUpdateChart\CountryChart.cshtml" />
+    <Content Include="Views\Vote\NoCandidatesInSystem.cshtml" />
+    <Content Include="Views\Vote\NoCampaigns.cshtml" />
+    <Content Include="Views\Results\ResultsChart.cshtml" />
+    <Content Include="Views\Results\NotFound.cshtml" />
+    <Content Include="Views\Home\VotingGuide.cshtml" />
+    <Content Include="Views\Home\ResultGuid.cshtml" />
+    <Content Include="Views\Home\HowToRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201902010447510_addFirstName.resx">
-      <DependentUpon>201902010447510_addFirstName.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902120241443_new.resx">
+      <DependentUpon>201902120241443_new.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902010452124_addFirstName1.resx">
-      <DependentUpon>201902010452124_addFirstName1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902120329507_First.resx">
+      <DependentUpon>201902120329507_First.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902010523137_addSurname.resx">
-      <DependentUpon>201902010523137_addSurname.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902122101113_candidateIdAdded.resx">
+      <DependentUpon>201902122101113_candidateIdAdded.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902010532286_addDOB.resx">
-      <DependentUpon>201902010532286_addDOB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902130019060_testTableDataremoved.resx">
+      <DependentUpon>201902130019060_testTableDataremoved.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902010540565_addCountry.resx">
-      <DependentUpon>201902010540565_addCountry.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902142227016_userStatus.resx">
+      <DependentUpon>201902142227016_userStatus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902010548306_addGender.resx">
-      <DependentUpon>201902010548306_addGender.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902150138050_campaign.resx">
+      <DependentUpon>201902150138050_campaign.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902010616129_addCity.resx">
-      <DependentUpon>201902010616129_addCity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902150141167_campaign1.resx">
+      <DependentUpon>201902150141167_campaign1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902010624463_addCity1.resx">
-      <DependentUpon>201902010624463_addCity1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902162212318_refreshDB.resx">
+      <DependentUpon>201902162212318_refreshDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902182255376_addDropdown.resx">
+      <DependentUpon>201902182255376_addDropdown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902190107316_CampaignIDinCandidateTable.resx">
+      <DependentUpon>201902190107316_CampaignIDinCandidateTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902240202253_create_user_by_admin.resx">
+      <DependentUpon>201902240202253_create_user_by_admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902271411249_VotingData.resx">
+      <DependentUpon>201902271411249_VotingData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902271434012_VotingData1.resx">
+      <DependentUpon>201902271434012_VotingData1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903012345586_userStatusId.resx">
+      <DependentUpon>201903012345586_userStatusId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903022257452_userStatusId1.resx">
+      <DependentUpon>201903022257452_userStatusId1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903022311372_Country_to_campaigen.resx">
+      <DependentUpon>201903022311372_Country_to_campaigen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903101951064_CampaignId.resx">
+      <DependentUpon>201903101951064_CampaignId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903112212060_CampaignId1.resx">
+      <DependentUpon>201903112212060_CampaignId1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

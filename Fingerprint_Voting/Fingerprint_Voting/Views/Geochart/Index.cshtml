@@ -1,0 +1,256 @@
+﻿﻿
+@using Fingerprint_Voting.Models
+@model CountryModel
+
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMFWoq3d1bXAy_DngaLXGnALio75c8kjc&callback=initMap"
+        type="text/javascript"></script>
+
+@*@ViewBag.Test <br />
+    @ViewBag.Test1<br />
+    @ViewBag.Test2*@
+<h1>System Data Analysis Around The World</h1>
+<hr />
+
+
+<div id="regions_div" style="width: 1200px; height: 800px;"></div><br />
+<div id="Areachart_div" style="width: 1200px; height: 800px;"></div><br />
+<div id="ScatterChart_div" style="width: 1200px; height: 800px;"></div><br />
+<div id="LineChart_div" style="width: 1200px; height: 800px;"></div>
+<script async defer type="text/javascript">
+
+    // Note: you will need to get a mapsApiKey for your project.
+
+    //var myMapsApiKey = 'AIzaSyDMFWoq3d1bXAy_DngaLXGnALio75c8kjc';
+    google.load("visualization", "1.0", {packages: ["geochart"]});
+    google.setOnLoadCallback(drawRegionsMap);
+
+
+
+
+    function drawRegionsMap() {
+
+
+        // Create and populate the data table.
+
+        var country = '@Model.CountrytData.CountryName';
+        //Pereparing string into array
+        var countryarray = country.split(',');
+        var population = [@Model.CountrytData.Registerd];
+        var votes = [@Model.CountrytData.Vote];
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', '@Model.CountryTitle');
+        data.addColumn('number', '@Model.RegisterdTitle');
+        data.addColumn('number', '@Model.VoteTitle');
+
+        for (i = 0; i < countryarray.length; i++)
+        {
+            data.addRow([countryarray[i].toString(), population[i], votes[i]]);
+        }
+
+        var options = {
+            sizeAxis: { minValue: 0, maxValue: 100 },
+            displayMode: 'map',
+            colorAxis: { colors: ['#0066ff', '#40ff00', '#990099', '#ffff00', '#000080', '#ffff00'] },
+            backgroundColor: '#ffffff',
+            datalessRegionColor: '#433d3d',
+            defaultColor: '#f5d6d6',
+        };
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+        chart.draw(data, options);
+    }
+        google.load("visualization", "1", { packages: ["corechart"] });
+    google.setOnLoadCallback(drawAreaChart);
+
+    function drawAreaChart() {
+
+        var country = '@Model.CountrytData.CountryName';
+        var countryarray = country.split(',');
+        var population = [@Model.CountrytData.Registerd];
+        var votes = [@Model.CountrytData.Vote];
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '@Model.CountryTitle');
+        data.addColumn('number', '@Model.RegisterdTitle');
+        data.addColumn('number', '@Model.VoteTitle');
+        for (i = 0; i < countryarray.length; i++) {
+            data.addRow([countryarray[i].toString(), population[i], votes[i]]);
+        }
+
+        var options = {
+            title: 'Area Chart, Registerd users and Total Votes to a specific Region',
+            animation: { "duration": 6000, "easing": "inAndOut", "startup": true },
+            @*hAxis: {
+                title: '@Model.CountryTitle', titleTextStyle: { color: '#0a2d20' }
+            },
+            vAxis: {
+                title: '@Model.RegisterdTitle', titleTextStyle: { color: '#0a2d20', fountSize: '16px' }
+            },*@
+            titleTextStyle: {
+                color: 'white',
+                fontSize: 20
+            },
+            colors: ['35b24c', '#FBBC05'],
+            backgroundColor: '#595959',
+            hAxis:
+            {
+                title: '@Model.CountryTitle',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: '@Model.RegisterdTitle',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 20,
+                    color: 'white'
+                }
+            },
+
+        };
+        //Different chart types >> AreaChart , BubbleChart ,LineChart ,ScatterChart
+        var areaChart = new google.visualization.AreaChart(document.getElementById('Areachart_div'));
+
+
+        var optionsScatter = {
+             title: 'Scatter Chart,Registerd users and Total Votes to a specific Region',
+             @*hAxis: {
+                 title: '@Model.CountryTitle', titleTextStyle: { color: 'Black' }
+             },
+             vAxis: {
+                 title: '@Model.RegisterdTitle', titleTextStyle: { color: 'Black' }
+            },*@
+            animation: { "duration": 8000, "easing": "linear", "startup": true },
+             titleTextStyle: {
+                color: 'white',
+                fontSize: 20
+            },
+            colors: ['35b24c', '#FBBC05'],
+            backgroundColor: '#595959',
+            hAxis:
+            {
+                title: '@Model.CountryTitle',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: '@Model.RegisterdTitle',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 20,
+                    color: 'white'
+                }
+            },
+        };
+        var ScatterChart = new google.visualization.ScatterChart(document.getElementById('ScatterChart_div'));
+
+        var optionsLiner = {
+             title: 'Liner Chart,Registerd users and Total Votes to a specific Region',
+             @*hAxis: {
+                 title: '@Model.CountryTitle', titleTextStyle: { color: 'Black' }
+             },
+             vAxis: {
+                 title: '@Model.RegisterdTitle', titleTextStyle: { color: 'Black' }
+            },*@ 
+            animation: { "duration": 10000, "easing": "out", "startup": true },
+             titleTextStyle: {
+                color: 'white',
+                fontSize: 20
+            },
+            colors: ['35b24c', '#FBBC05'],
+            backgroundColor: '#595959',
+            hAxis:
+            {
+                title: '@Model.CountryTitle',
+                titleTextStyle:
+                {
+                    italic: true,
+                    color: '#00BBF1',
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                }
+            },
+            vAxis:
+            {
+                baselineColor: '#f5f5f5',
+                title: '@Model.RegisterdTitle',
+                titleTextStyle:
+                {
+                    color: '#00BBF1',
+                    italic: true,
+                    fontSize: '30'
+                },
+                textStyle:
+                {
+                    color: '#f5f5f5'
+                },
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 20,
+                    color: 'white'
+                }
+            },
+        };
+        var lineChart = new google.visualization.LineChart(document.getElementById('LineChart_div'));
+
+        areaChart.draw(data, options);
+
+        ScatterChart.draw(data, optionsScatter);
+
+        lineChart.draw(data, optionsLiner);
+
+
+    }
+</script>

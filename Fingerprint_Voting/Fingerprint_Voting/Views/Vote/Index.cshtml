@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Fingerprint_Voting.Models.CandidateDTO>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>List Of Candidates</h2>
+
+
+@section voteStyles {
+    <link href="@Url.Content("~/MyStyles/voteStyles.css")" rel="stylesheet" type="text/css" />
+}
+@section voteScripts {
+    @*<link href="@Url.Content("~/MyScripts/voteScripts.js")" type="text/javascript" />*@
+    <script type="text/javascript" src="@Url.Content("~/MyScripts/voteScripts.js")"></script>
+}
+
+
+
+@foreach (var group in Model.GroupBy(item => item.Country))
+{
+    <hr />
+    <h1>
+        @Html.Encode(group.Key)
+
+    </h1>
+    <br />
+    <hr />
+    for (int i = 0; i < group.Count(); i += 5)
+    {
+        <div class="row">
+            @foreach (var item in group.Skip(i).Take(5))
+            {
+                <div class="col-md-2 portfolio-item" id="@item.CandidateId, @item.CampaignID" onmousedown="getImageId(this)">
+                    <div class="row drag-drop" id="yes-drop">
+                        <div class="card col-md-4">
+                            @{
+                                var base64 = Convert.ToBase64String(item.CandidatePic);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            }
+                            <img src="@imgSrc" style="width:160px;height:160px; background: #FFFFFF;
+                    margin: auto;
+                    -moz-border-radius: 60px;
+                    border-radius: 100px;
+                    padding: 6px;
+                    box-shadow: 0px 0px 20px #888;" />
+                            <!-- :  set the Id of the image to the CandidateId -->
+                            <!-- :  add onmousedown event to the image to capture the id of the selected image -->
+
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.FirstName)</h5>
+                                <h5 class="card-body">@Html.DisplayFor(modelItem => item.Surname)</h5>
+                                <h5 class="card-body">@Html.DisplayFor(modelItem => item.Gender)</h5>
+                                <h5 class="card-body">@Html.DisplayFor(modelItem => item.City)</h5>
+
+
+                                @*<h5 id="@ViewBag.fingerPrint" onmousedown="getFingerprint(this)"></h5>
+                                    <h5 id="@ViewBag.userId" onmousedown="getUserId(this)">@ViewBag.userId</h5>*@
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    }
+}
+
+@using (Html.BeginForm("Scan_FingerForeVote", "Vote", FormMethod.Post, new { enctype = "multipart/form-data", id = "leForm" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- :  Move the hidden fields outside the loop, otherwise they all have the same Id which won't work -->
+    <input type="hidden" name="CandidateId" id="CandidateId" value="" />
+    <input type="hidden" name="CampaignID" id="CampaignID" value="" />
+}
+
+<div type="hidden" id="outer-dropzone" class="dropzone">
+    @*The is drop zone, drop a candidated here and vote*@
+</div>
+@*<div>
+        <button class="btn btn-success" value="Refresh Page" onClick="window.location.reload()">Reload page</button>
+    </div>*@
+
+

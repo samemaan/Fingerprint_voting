@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Fingerprint_Voting.Models.CandidateDTO>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Select a Candidate to Vote</h2>
+
+
+
+
+
+
+@foreach (var item in Model)
+{
+
+        <div class="col-1"></div>
+
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-5">
+
+            <div class="card kl-card kl-xl kl-reveal kl-fade kl-overlay kl-show kl-slide-in kl-shine">
+                <div class="kl-card-block bg-primary">
+
+                </div>
+                <div class="kl-card-block kl-lg bg-success kl-shadow-br kl-overlay">
+                    <div class="kl-background">
+                        @{
+                            var base64 = Convert.ToBase64String(item.CandidatePic);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        }
+                        <img src="@imgSrc" />
+
+
+
+                    </div>
+                    <div class="kl-card-overlay kl-card-overlay-split-v-4 kl-dark kl-inverse kl-top-in">
+                        <div class="kl-card-overlay-item">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </div>
+                        <div class="kl-card-overlay-item"></div>
+                        <div class="kl-card-overlay-item"></div>
+                        <div class="kl-card-overlay-item">
+                            @Html.DisplayFor(modelItem => item.City)
+                        </div>
+                    </div>
+                    <div class="kl-card-item kl-pbl kl-show text-primary kl-txt-shadow">
+                        <div class="kl-figure-block">
+                            <span class="kl-figure">
+                                @Html.DisplayFor(modelItem => item.Surname)
+                            </span>
+                            <span class="kl-title text-primary">
+                                @Html.DisplayFor(modelItem => item.DOB)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kl-card-item kl-pbr kl-show text-primary kl-txt-shadow">
+                        <div class="kl-figure-block">
+                            <span class="kl-figure">
+
+                            </span>
+                            <span class="kl-title text-primary"></span>
+                        </div>
+                    </div>
+                    <div class="kl-card-item kl-pm kl-show text-white kl-txt-shadow text-center">
+                        <h3 class="mb-0"></h3>
+                        <div class="text-white small"></div>
+                    </div>
+                </div>
+            </div> <!-- card end -->
+
+        </div>
+
+}
+
+
+
+
